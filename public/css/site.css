@@ -1,0 +1,87 @@
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	font-size: 14pt;
+}
+
+body {
+	background: #dedede;
+	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+	max-width: 75%;
+	margin: auto;
+}
+
+header {
+	border-bottom: 1px solid #afafaf;
+}
+
+h1 {
+	color: #222;
+	margin-bottom: 20px;
+	font-size: 1.5rem;
+	font-style: italic;
+}
+
+p {
+	font-size: 1rem;
+	line-height: 1.25;
+
+}
+
+.index, .result {
+	width: 75%;
+	padding-bottom: 1em;
+}
+
+.p-form .full-width-input {
+	max-width: 300px;
+	display: block;
+	min-height: 3em;
+	margin: 10px 0;
+	width: 100%;
+}
+
+label {
+	font-weight: normal;
+}
+
+#error {
+	color: #ff0000;
+	margin-bottom: 5px;
+}
+
+.result p {
+	display: inline;
+}
+
+.is-palindrome {
+	color: #0000FF;
+}
+
+.not-palindrome {
+	color:#FF0000;
+}
+
+.result a {
+	color: blue;
+	text-decoration: underline;
+	display: block;
+	margin-top: 20px;
+}
+
+.result a:hover {
+	color: darkblue;
+	text-decoration: underline;
+}
+
+.result a:active {
+	color: tomato;
+	text-decoration: underline;
+}
+
+footer {
+	border-top: 1px solid #afafaf;
+}
