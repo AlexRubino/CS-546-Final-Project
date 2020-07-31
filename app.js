@@ -9,6 +9,21 @@ app.use('/public', static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(session({
+  name: 'AuthCookie',
+  secret: 'secret string!',
+  user: undefined,
+  resave: false,
+  saveUninitialized: true
+}))
+
+app.use('/profile', async (req, res, next) => {
+  if (!req.session.user) {
+    return res.status(403).redirect('/');
+  }
+  next();
+});
+
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 

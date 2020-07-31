@@ -1,0 +1,23 @@
+<article class="index">
+  <h3>Login:</h3>
+  <form action="/login" method="POST" id="login-form">
+    <p>
+      <label for="username">
+        Username:
+        <input type="text" name="username" id="username"/>
+      </label>
+    </p>
+    <p>
+      <label for="password">
+        Password:
+        <input type="password" name="password" id="password"/>
+      </label>
+    </p>
+    <p>
+      <button type="submit">Login</button>
+    </p>
+  </form>
+  {{#if err}}
+  <p>Invalid username/password combination eneterd. Try again.</p>
+  {{/if}}
+</article>
