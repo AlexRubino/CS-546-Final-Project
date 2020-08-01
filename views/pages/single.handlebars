@@ -1,0 +1,35 @@
+<article>
+    <h1>{{item.itemName}}</h1>
+    <address>Listed by {{seller.firstName}} {{seller.lastName}}</address>
+    <img src="/public/images/{{item.itemImage}}"/>
+    <p>{{item.itemDescription}}</p>
+    <section>
+        <p>Asking Price: ${{item.askingPrice}}</p>
+        <p>Current Bid: ${{item.currentBid}}</p>
+        <p>This is where you will be able to place a bid</p>
+    </section>
+    <section>
+        <p>Start Date: {{item.startDate}}</p>
+        <p>End Date: {{item.endDate}}</p>
+    </section>
+    {{#if item.tags.length}}
+    <section>
+        <h2>Tags:</h2>
+        <ul>
+            {{#each item.tags}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </section>
+    {{/if}}
+    <section>
+        <h2>Comments:</h2>
+        <ul>
+            {{#each comments}}
+            <li>{{this.date}} - {{this.commenter}}: {{this.comment}}</li>
+            {{/each}}
+            <li>This is where you will be able to add a new comment</li>
+        </ul>
+    </section>
+    <p><a href="/">Back to Home</a></p>
+</article>

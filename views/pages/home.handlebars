@@ -1,0 +1,17 @@
+<section>
+    <h1>Home Page</h1>
+    <p>Put search here</p>
+    <div>
+        <aside>
+            Put sorting options here
+        </aside>
+        <div>
+            {{#each items}}
+                <article>
+                    <h2><a href="/items/{{_id}}">{{itemName}}</a></h2>
+                    <img src="/public/images/{{itemImage}}"/>
+                </article>
+            {{/each}}
+        </div>
+    </div>
+</section>
