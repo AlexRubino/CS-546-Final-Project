@@ -1,0 +1,21 @@
+<article>
+    <h1>My Profile</h1>
+    <section>
+        <h2>My Items Up For Bid</h2>
+        {{#each myItems}}
+            <div>
+                <h2><a href="/items/{{_id}}">{{itemName}}</a></h2>
+                <img src="/public/images/{{itemImage}}"/>
+            </div>
+        {{/each}}
+    </section>
+    <section>
+        <h2>My Bids</h2>
+        {{#each myBids}}
+            <div>
+                <h2><a href="/items/{{_id}}">{{itemName}}</a></h2>
+                <img src="/public/images/{{itemImage}}"/>
+            </div>
+        {{/each}}
+    </section>
+</article>
