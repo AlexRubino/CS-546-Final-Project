@@ -21,8 +21,12 @@ const getComment = async function getComment(id) {
         throw "You must provide an id!"
     }
 
+    if (typeof id === "string") {
+        id = ObjectId(id)
+    }
+
     const commentCollection = await comments()
-    const comment = await commentCollection.findOne({ _id: ObjectId(id) })
+    const comment = await commentCollection.findOne({ _id: id })
 
     if (comment !== null) {
         return comment
@@ -41,7 +45,11 @@ const getAllComments = async function getAll() {
 const createComment = async function create(commenterId, comment, dateCommented) {
     verifyComment(commenterId, comment, dateCommented)
 
-    let newcomment = { commenterId: ObjectId(commenterId), comment: comment, dateCommented: dateCommented }
+    if (typeof commenterId === "string") {
+        commenterId = ObjectId(commenterId)
+    }
+
+    let newcomment = { commenterId: commenterId, comment: comment, dateCommented: dateCommented }
 
     const commentCollection = await comments()
     const insertInfo = await commentCollection.insertOne(newcomment)
@@ -58,37 +66,45 @@ const removeComment = async function remove(id) {
         throw "You must provide an id!"
     }
 
+    if (typeof id === "string") {
+        id = ObjectId(id)
+    }
+
     const commentCollection = await comments()
-    const deleteInfo = await commentCollection.removeOne({ _id: Objectid(id) })
+    const deleteInfo = await commentCollection.removeOne({ _id: id })
     if (deleteInfo.deletedCount === 0) {
         throw "Failed to delete comment with id: " + id
     }
     return true
 }
 
-const updateComment = async function update(id, updatedcomment) {
-    if (!id) {
-        throw "You must provide non-empty id and name!"
-    }
+// const updateComment = async function update(id, updatedcomment) {
+//     if (!id) {
+//         throw "You must provide non-empty id and name!"
+//     }
 
-    const commenterId = updatedcomment.commenterId
-    const comment = updatedcomment.comment
-    const dateCommented = updatedcomment.dateCommented
+//     const commenterId = updatedcomment.commenterId
+//     const comment = updatedcomment.comment
+//     const dateCommented = updatedcomment.dateCommented
 
-    verifyComment(commenterId, comment, dateCommented)
+//     verifyComment(commenterId, comment, dateCommented)
 
-    const commentCollection = await comments()
-    const updateInfo = await commentCollection.updateOne({ _id: id }, { $set: updatedcomment })
-    if (updateInfo.updatedCount === 0) {
-        throw "Could not update comment with id: " + id
-    }
+//     const commentCollection = await comments()
+//     const updateInfo = await commentCollection.updateOne({ _id: id }, { $set: updatedcomment })
+//     if (updateInfo.updatedCount === 0) {
+//         throw "Could not update comment with id: " + id
+//     }
 
-    return await get(id)
-}
+//     return await get(id)
+// }
 
 const patchComment = async function patch(id, updatedcomment) {
     if (!id) {
         throw "You must provide non-empty id and name!"
+    }
+
+    if (typeof id === "string") {
+        id = ObjectId(id)
     }
 
     const commenterId = updatedcomment.commenterId
@@ -99,7 +115,10 @@ const patchComment = async function patch(id, updatedcomment) {
     let emptyBody = true
 
     if (commenterId) {
-        updatedcommentData.commenterId = ObjectId(commenterId)
+        if (typeof commenterId === "string") {
+            commenterId = ObjectId(commenterId)
+        }
+        updatedcommentData.commenterId = commenterId
         emptyBody = false
     }
 
@@ -123,7 +142,7 @@ const patchComment = async function patch(id, updatedcomment) {
         throw "Could not update comment with id: " + id
     }
 
-    return await get(id)
+    return await getComment(id)
 }
 
 module.exports = {
@@ -131,6 +150,7 @@ module.exports = {
     getAllComments,
     createComment,
     removeComment,
-    updateComment,
+    //updateComment,
     patchComment
 }
+
