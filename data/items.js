@@ -177,10 +177,10 @@ const patchItem = async function patch(id, updateditem) {
 }
 
 module.exports = {
-    get,
-    getAll,
-    create,
-    remove,
-    update,
-    patch
+    getItem,
+    getAllItems,
+    createItem,
+    removeItem,
+    //update,
+    patchItem
 }
