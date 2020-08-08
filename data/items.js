@@ -5,6 +5,8 @@ const items = mongoCollections.items
 function verifyItem(item, strict) {
     var itemData = {}
     var empty = true
+
+    //Mandatory
     if (!item.itemName) {
         if (strict) {
             throw "You must provide a non-empty itemName!"
@@ -23,12 +25,34 @@ function verifyItem(item, strict) {
         empty = false
     }
 
+    if (!item.itemImage) {
+        if (strict) {
+            throw "You must provide an itemImage!"
+        }
+    } else {
+        itemData.itemImage = item.itemImage
+        empty = false
+    }
+
     if (!item.askingPrice || typeof item.askingPrice !== "number" || item.askingPrice < 0) {
         if (strict) {
             throw "You must provide a positive number as the askingPrice!"
         }
     } else {
         itemData.askingPrice = item.askingPrice
+        empty = false
+    }
+
+    if (!item.sellerId) {
+        if (strict) {
+            throw "You must provide a non-empty sellerId!"
+        }
+    } else {
+        if (typeof item.sellerId === "string") {
+            itemData.sellerId = ObjectId(item.sellerId)
+        } else {
+            itemData.sellerId = item.sellerId
+        }
         empty = false
     }
 
@@ -50,10 +74,43 @@ function verifyItem(item, strict) {
         empty = false
     }
 
+    //Non-mandatory
+    if (item.currentBid) {
+        itemData.currentBid = item.currentBid
+        empty = false
+    }
+
+    if (item.currentBidderId) {
+        if (typeof item.currentBidderId === "string") {
+            itemData.currentBidderId = ObjectId(item.currentBidderId)
+        } else {
+            itemData.currentBidderId = item.currentBidderId
+        }
+        empty = false
+    }
+
+    if (item.tags) {
+        if (Array.isArray(item.tags)) {
+            itemData.tags = item.tags
+            empty = false
+        } else if (strict) {
+            throw "tags must be an Array!"
+        }
+    }
+
+    if (item.commentIds) {
+        if (Array.isArray(item.commentIds)) {
+            itemData.commentIds = item.commentIds
+            empty = false
+        } else if (strict) {
+            throw "commentIds must be an Array!"
+        }
+    }
+
     if (!strict && !empty) {
         return itemData
     } else if (!strict && empty) {
-        throw "You must provide at least one field to update with valid value!"
+        throw "You must provide at least one non-empty item field to update!"
     }
 }
 
@@ -84,11 +141,11 @@ const getAllItems = async function getAll() {
 }
 
 //itemName, itemDescription, askingPrice, sellerId, startDate, endDate, tags
-const createItem = async function create(item) {
-    verifyItem(item, true)
+const createItem = async function create(newitem) {
+    verifyItem(newitem, true)
 
     const itemCollection = await items()
-    const insertInfo = await itemCollection.insertOne(item)
+    const insertInfo = await itemCollection.insertOne(newitem)
     if (insertInfo.insertCount === 0) {
         throw "item insertion failed."
     }
