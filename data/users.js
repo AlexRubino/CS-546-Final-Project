@@ -176,7 +176,7 @@ const patchUser = async function patch(id, updateduser) {
         id = ObjectId(id)
     }
 
-    let updateduser = verifyUser(updateduser, false)
+    updateduser = verifyUser(updateduser, false)
 
     const userCollection = await users()
     const updateInfo = await userCollection.updateOne({ _id: id }, { $set: updateduserData })
