@@ -1,4 +1,4 @@
-const mongoCollections = require("./mongoCollections")
+const mongoCollections = require("./config/mongoCollections")
 const ObjectId = require("mongodb").ObjectID
 const items = mongoCollections.items
 
@@ -43,18 +43,18 @@ function verifyItem(item, strict) {
         empty = false
     }
 
-    if (!item.sellerId) {
-        if (strict) {
-            throw "You must provide a non-empty sellerId!"
-        }
-    } else {
-        if (typeof item.sellerId === "string") {
-            itemData.sellerId = ObjectId(item.sellerId)
-        } else {
-            itemData.sellerId = item.sellerId
-        }
-        empty = false
-    }
+//     if (!item.sellerId) {
+//         if (strict) {
+//             throw "You must provide a non-empty sellerId!"
+//         }
+//     } else {
+//         if (typeof item.sellerId === "string") {
+//             itemData.sellerId = ObjectId(item.sellerId)
+//         } else {
+//             itemData.sellerId = item.sellerId
+//         }
+//         empty = false
+//     }
 
     if (!item.startDate || !item.startDate instanceof Date) {
         if (strict) {
@@ -150,7 +150,7 @@ const createItem = async function create(newitem) {
         throw "item insertion failed."
     }
 
-    const item = await get(insertInfo.insertedId)
+    const item = await getItem(insertInfo.insertedId)
     return item
 }
 

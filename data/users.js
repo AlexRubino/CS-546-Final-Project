@@ -1,5 +1,6 @@
-const mongoCollections = require("./mongoCollections")
+const mongoCollections = require("./config/mongoCollections")
 const users = mongoCollections.users
+const ObjectId = require("mongodb").ObjectID
 
 function verifyUser(user, strict) {
     var userData = {}
@@ -21,6 +22,14 @@ function verifyUser(user, strict) {
         }
     } else {
         userData.lastName = user.lastName
+        empty = false
+    }
+    if (!user.username) {
+        if (strict) {
+            throw "You must provide a non-empty firstName!"
+        }
+    } else {
+        userData.username = user.username;
         empty = false
     }
 
@@ -50,7 +59,22 @@ function verifyUser(user, strict) {
         userData.hashedPassword = user.hashedPassword
         empty = false
     }
-
+    if (!user.listedItems) {
+        if (strict) {
+            throw "You must provide a non-empty firstName!"
+        }
+    } else {
+        userData.listedItems = user.listedItems;
+        empty = false
+    }
+    if (!user.purchasedItems) {
+        if (strict) {
+            throw "You must provide a non-empty firstName!"
+        }
+    } else {
+        userData.purchasedItems = user.purchasedItems;
+        empty = false
+    }
     //Non-mandatory
     if (user.userItems && Array.isArray(user.userItems)) {
         userData.userItems = user.userItems
@@ -64,7 +88,7 @@ function verifyUser(user, strict) {
 
     if (!strict && !empty) {
         return userData
-    } else if (!strickt && empty) {
+    } else if (!strict && empty) {
         throw "You must provide at least one non-empty user field to update!"
     }
 }
@@ -104,7 +128,7 @@ const createUser = async function create(newuser) {
         throw "user insertion failed."
     }
 
-    const user = await get(insertInfo.insertedId)
+    const user = await getUser(insertInfo.insertedId)
     return user
 }
 
@@ -171,12 +195,15 @@ const patchUser = async function patch(id, updateduser) {
     if (!id) {
         throw "You must provide non-empty id and name!"
     }
+    console.log(id);
+    console.log(updateduser);
 
     if (typeof id === "string") {
         id = ObjectId(id)
     }
 
-    let updateduser = verifyUser(updateduser, false)
+    updateduserData = verifyUser(updateduser, false)
+    console.log(updateduserData);
 
     const userCollection = await users()
     const updateInfo = await userCollection.updateOne({ _id: id }, { $set: updateduserData })
@@ -184,8 +211,36 @@ const patchUser = async function patch(id, updateduser) {
         throw "Could not update user with id: " + id
     }
 
-    return await get(id)
+    return await getUser(id)
 }
+const checkUserName = async function checkUserName(username){
+    //This function is for searching if a username or email already exists in the collection. 
+        const lcUsername = username.toLowerCase();
+        const usersCollection = await users();
+       const checkUser= await usersCollection.findOne({username: lcUsername});
+       if(checkUser === null){
+         return true;
+       }
+       else{
+         return false;
+       }
+    }
+    
+    
+   const checkEmail = async function checkEmail(email){
+      //This function is for searching if a username or email already exists in the collection. 
+          const lcEmail = email.toLowerCase();
+          const usersCollection = await users();
+         const checkUser = await usersCollection.findOne({email: lcEmail});
+    
+         if(checkUser == null){
+           return true;
+         }
+         else{
+           return false;
+         }
+      }
+
 
 module.exports = {
     getUser,
@@ -193,5 +248,8 @@ module.exports = {
     createUser,
     removeUser,
     //updateduser,
-    patchUser
+    patchUser, 
+    checkUserName, 
+    checkEmail
 }
+
