@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const users = require('../data/users')
 const session = require('express-session');
 const data = require("../data/users");
-const connection = require("../mongoConnection");
 
 
 router.get("/signup", async (req, res) => {
