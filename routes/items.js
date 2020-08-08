@@ -4,7 +4,7 @@ const data = require("../data/items");
 
 
 
-router.get("/new", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
   res.render('pages/newItems');
   } catch (e) {
@@ -12,12 +12,12 @@ router.get("/new", async (req, res) => {
   }
 });
 
-router.post("/new", async (req, res) => {
+router.post("/", async (req, res) => {
   
     let name = req.body["name"];
     let short_description = req.body["short_description"];
     let item_image = req.body["item_img"]
-    let starting_bid = req.body["starting_bid"];
+    let starting_bid = parseInt(req.body["starting_bid"], 10);
     let seller = req.body["seller_id"];
     let start = req.body["start"];
     let end = req.body["end"];
