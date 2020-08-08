@@ -48,14 +48,20 @@ router.post("/signup", async (req, res) => {
         
       else{
       let userObject = {
+        username: user,
+        email: email,
         firstName: firstName,
         lastName: lastName,
         city: city, 
         state: state, 
-        hashedPassword: hashedPW
+        hashedPassword: hashedPW, 
+        listedItems: [], 
+        purchasedItems: []
       }
       const newUser = await data.createUser(userObject);
-      res.render("pages/homepage");   
+      req.session.user = newUser._id;
+      console.log(req.session.user);
+      res.redirect("/profile");   
          }}catch(e){
           console.log(e);
         }
