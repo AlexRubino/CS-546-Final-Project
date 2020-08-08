@@ -4,7 +4,7 @@ const myRoutes = require('./myRoutes');
 const constructorMethod = app => {
   app.use('/', myRoutes);
   app.use("/users", userRoutes);
-  app.use("/items", itemRoutes)
+  app.use("/newitems", itemRoutes)
   app.use('*', (req, res) => {
       res.status(404).render('pages/error');
   });
