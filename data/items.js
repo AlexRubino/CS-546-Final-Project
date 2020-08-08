@@ -43,18 +43,18 @@ function verifyItem(item, strict) {
         empty = false
     }
 
-    if (!item.sellerId) {
-        if (strict) {
-            throw "You must provide a non-empty sellerId!"
-        }
-    } else {
-        if (typeof item.sellerId === "string") {
-            itemData.sellerId = ObjectId(item.sellerId)
-        } else {
-            itemData.sellerId = item.sellerId
-        }
-        empty = false
-    }
+//     if (!item.sellerId) {
+//         if (strict) {
+//             throw "You must provide a non-empty sellerId!"
+//         }
+//     } else {
+//         if (typeof item.sellerId === "string") {
+//             itemData.sellerId = ObjectId(item.sellerId)
+//         } else {
+//             itemData.sellerId = item.sellerId
+//         }
+//         empty = false
+//     }
 
     if (!item.startDate || !item.startDate instanceof Date) {
         if (strict) {
