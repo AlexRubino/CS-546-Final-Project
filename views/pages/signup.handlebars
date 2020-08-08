@@ -1,0 +1,17 @@
+<p>Sign up form</p>
+    <form method ="POST" action="/users/signup" id="login-form">
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email" placeholder="Enter your email here"/>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" placeholder="Enter your username here"/>
+        <label for="password">Password:</label>
+        <input type="text" name="password" id="password" placeholder="Enter your password here"/>
+        <label for="confirm">Confirm Password: </label>
+        <input type="confirm" name="confirm" id="confirm" placeholder="Confirm your password"/>
+        <button type="submit">Submit</button>
+      </form>
+
+
+      {{#if hasErrors}}
+    <p class = "error">{{errorMessage}}</p>
+    {{/if}}
