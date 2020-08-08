@@ -57,7 +57,7 @@ router.post("/new", async (req, res) => {
           endDate: end, 
           
         }
-      const newItems = await data.create(listedItem);
+      const newItems = await data.createItem(listedItem);
 
       // const updateUserItems = await userData.updateListedItems(req.session.user["username"], newItems["_id"]);
       res.render("pages/itemConfirmation");   
