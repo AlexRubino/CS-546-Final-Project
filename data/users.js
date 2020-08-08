@@ -64,7 +64,7 @@ function verifyUser(user, strict) {
 
     if (!strict && !empty) {
         return userData
-    } else if (!strickt && empty) {
+    } else if (!strict && empty) {
         throw "You must provide at least one non-empty user field to update!"
     }
 }
@@ -186,6 +186,33 @@ const patchUser = async function patch(id, updateduser) {
 
     return await get(id)
 }
+const checkUserName = async function checkUserName(username){
+    //This function is for searching if a username or email already exists in the collection. 
+        const lcUsername = username.toLowerCase();
+        const usersCollection = await users();
+       const checkUser= await usersCollection.findOne({username: lcUsername});
+       if(checkUser === null){
+         return true;
+       }
+       else{
+         return false;
+       }
+    }
+    
+    
+   const checkEmail = async function checkEmail(email){
+      //This function is for searching if a username or email already exists in the collection. 
+          const lcEmail = email.toLowerCase();
+          const usersCollection = await users();
+         const checkUser = await usersCollection.findOne({email: lcEmail});
+    
+         if(checkUser == null){
+           return true;
+         }
+         else{
+           return false;
+         }
+      }
 
 module.exports = {
     getUser,
@@ -193,5 +220,7 @@ module.exports = {
     createUser,
     removeUser,
     //updateduser,
-    patchUser
+    patchUser, 
+    checkUserName, 
+    checkEmail
 }
