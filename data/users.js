@@ -1,4 +1,4 @@
-const mongoCollections = require("./mongoCollections")
+const mongoCollections = require("./config/mongoCollections")
 const users = mongoCollections.users
 
 function verifyUser(user, strict) {
@@ -104,7 +104,7 @@ const createUser = async function create(newuser) {
         throw "user insertion failed."
     }
 
-    const user = await get(insertInfo.insertedId)
+    const user = await getUser(insertInfo.insertedId)
     return user
 }
 
