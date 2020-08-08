@@ -1,4 +1,4 @@
-const mongoCollections = require("./mongoCollections")
+const mongoCollections = require("./config/mongoCollections")
 const ObjectId = require("mongodb").ObjectID
 const items = mongoCollections.items
 
@@ -150,7 +150,7 @@ const createItem = async function create(newitem) {
         throw "item insertion failed."
     }
 
-    const item = await get(insertInfo.insertedId)
+    const item = await getItem(insertInfo.insertedId)
     return item
 }
 
