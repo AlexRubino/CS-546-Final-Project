@@ -55,7 +55,7 @@ router.post("/signup", async (req, res) => {
         state: state, 
         hashedPassword: hashedPW
       }
-      const newUser = await data.create(userObject);
+      const newUser = await data.createUser(userObject);
       res.render("pages/homepage");   
          }}catch(e){
           console.log(e);
