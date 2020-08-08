@@ -4,7 +4,7 @@ const data = require("../data/items");
 const userData = require("../data/users");
 
 
-router.get("/new", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
   res.render('pages/newItems');
   } catch (e) {
@@ -12,7 +12,7 @@ router.get("/new", async (req, res) => {
   }
 });
 
-router.post("/new", async (req, res) => {
+router.post("/", async (req, res) => {
   
     let name = req.body["name"];
     let short_description = req.body["short_description"];

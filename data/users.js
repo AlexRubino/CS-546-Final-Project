@@ -203,7 +203,7 @@ const patchUser = async function patch(id, updateduser) {
     }
 
     updateduserData = verifyUser(updateduser, false)
-    console.log(updateduserData);
+
 
     const userCollection = await users()
     const updateInfo = await userCollection.updateOne({ _id: id }, { $set: updateduserData })
