@@ -4,15 +4,19 @@ const data = require("../data/items");
 const userData = require("../data/users");
 
 
-router.get("/", async (req, res) => {
+router.get('/', async (req,res) => {
+  res.redirect("/");
+})
+
+router.get("/new", async (req, res) => {
   try {
-  res.render('pages/newItems');
+  res.render('pages/newItems' , {loggedIn: req.session.user});
   } catch (e) {
     res.status(500).json(e);
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/new", async (req, res) => {
   
     let name = req.body["name"];
     let short_description = req.body["short_description"];
@@ -25,26 +29,26 @@ router.post("/", async (req, res) => {
     try{
      
     if(!name){
-        return res.render("pages/newItems", {hasErrors: true, errorMessage: "Must input item name"})
+        return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input item name"})
       }
 
       if(!short_description){
-        return res.render("pages/newItems", {hasErrors: true, errorMessage: "Must input short description"})      }
+        return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input short description"})      }
 
       if(!item_image){
-        return res.render("pages/newItems", {hasErrors: true, errorMessage: "Must input image of item"})      }
+        return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input image of item"})      }
        
       if(!starting_bid){
-        return res.render("pages/newItems", {hasErrors: true, errorMessage: "Must set starting bid"})      }
+        return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must set starting bid"})      }
       
         // if(!seller){
         //   return res.render("pages/newItems", {hasErrors: true, errorMessage: "Must input seller ID"})      }
           
       if(!start){
-          return res.render("pages/newItems", {hasErrors: true, errorMessage: "Must set starting date"})      }
+          return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must set starting date"})      }
         
       if(!end){
-            return res.render("pages/newItems", {hasErrors: true, errorMessage: "Must set ending date"})      }
+            return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must set ending date"})      }
             
       else{
         let listedItem = {
@@ -63,18 +67,13 @@ router.post("/", async (req, res) => {
       getUser.listedItems.push(newItems._id);
       const updatedUser = await userData.patchUser(req.session.user, getUser);
       // const updateUserItems = await userData.updateListedItems(req.session.user["username"], newItems["_id"]);
-      res.render("pages/itemConfirmation");   
+      res.render("pages/itemConfirmation", { loggedIn: req.session.user });   
          }}catch(e){
           console.log(e);
         }
      
       }
-    
- 
 );
-router.get('/', async (req,res) => {
-  res.redirect("/");
-})
 
 router.get('/view/:id', async (req,res) => {
   let myItem = {
@@ -123,7 +122,7 @@ router.get('/view/:id', async (req,res) => {
   // my comments will be a list of comments as a result of get calls
   // to the database based on Comment IDs
 
-  res.render('pages/single', {item: myItem, seller: mySeller, comments: myComments});
+  res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments});
 })
 
 

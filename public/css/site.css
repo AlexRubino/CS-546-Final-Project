@@ -95,17 +95,6 @@ footer {
 	border-top: 1px solid #afafaf;
 }
 
-ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-	position: fixed;
-  	top: 0;
- 	width: 100%;
-}
-
 .topnav {
 	background-color: goldenrod;
 	overflow: hidden;

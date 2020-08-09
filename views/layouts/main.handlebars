@@ -11,13 +11,13 @@
     <header>
         <img src="..\..\public\img\NerdBay.png" class="logo"> <br>
         <div class="topnav">
-            <a href="../"> Home </a>
+            <a href="/"> Home </a>
             {{#if loggedIn}}
             <a href="..\profile"> My Profile </a>
             <a href="..\logout"> Logout </a>
             {{else}}
             <a href="..\login"> Login </a>
-            <a href="..\signup"> Sign Up </a>
+            <a href="..\users\signup"> Sign Up </a>
             {{/if}}
             <form action="/search" class="search" method="POST" id="search-form">
                 <label>
@@ -36,7 +36,7 @@
     <footer>
         <img src="..\..\public\img\NerdBay.png" class="logo"> <br>
         <div class="bottomnav">
-            <a href="../"> Home </a>
+            <a href="/"> Home </a>
         </div>
         <br>
         Team Members: James Lepore || Alex Rubino || Justin Wing || Steven Zhao
