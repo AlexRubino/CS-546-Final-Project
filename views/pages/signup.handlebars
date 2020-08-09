@@ -1,25 +1,24 @@
 <p>Sign up form</p>
-    <form method ="POST" action="/users/signup" id="login-form">
-        <label for="fname">First Name:</label>
-        <input type="text" name="fname" id="fname" placeholder="Enter your first name here"/>
-        <label for="lname">Last Name:</label>
-        <input type="text" name="lname" id="lname" placeholder="Enter your last name here"/>
-        <label for="city">City:</label>
-        <input type="text" name="city" id="city" placeholder="Enter your city here"/>
-        <label for="firstName">State:</label>
-        <input type="text" name="state" id="state" placeholder="Enter your state here"/>
-        <label for="email">Email:</label>
-        <input type="text" name="email" id="email" placeholder="Enter your email here"/>
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" placeholder="Enter your username here"/>
-        <label for="password">Password:</label>
-        <input type="text" name="password" id="password" placeholder="Enter your password here"/>
-        <label for="confirm">Confirm Password: </label>
-        <input type="confirm" name="confirm" id="confirm" placeholder="Confirm your password"/>
-        <button type="submit">Submit</button>
-      </form>
+<form method="POST" action="/users/signup" id="login-form">
+  <label for="fname">First Name:</label>
+  <input type="text" name="fname" id="fname" placeholder="Enter your first name here" />
+  <label for="lname">Last Name:</label>
+  <input type="text" name="lname" id="lname" placeholder="Enter your last name here" />
+  <label for="city">City:</label>
+  <input type="text" name="city" id="city" placeholder="Enter your city here" />
+  <label for="state">State:</label>
+  <input type="text" name="state" id="state" placeholder="Enter your state here" />
+  <label for="email">Email:</label>
+  <input type="text" name="email" id="email" placeholder="Enter your email here" />
+  <label for="username">Username:</label>
+  <input type="text" name="username" id="username" placeholder="Enter your username here" />
+  <label for="password">Password:</label>
+  <input type="text" name="password" id="password" placeholder="Enter your password here" />
+  <label for="confirm">Confirm Password: </label>
+  <input type="confirm" name="confirm" id="confirm" placeholder="Confirm your password" />
+  <button type="submit">Submit</button>
+</form>
 
-
-      {{#if hasErrors}}
-    <p class = "error">{{errorMessage}}</p>
-    {{/if}}
+{{#if hasErrors}}
+<p class="error">{{errorMessage}}</p>
+{{/if}}

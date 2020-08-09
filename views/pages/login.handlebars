@@ -1,15 +1,14 @@
+<form method="POST" action="/login" id="login-form">
+  <label for="username">Username:</label>
+  <input type="text" name="username" id="username" placeholder="Enter your username here" />
+  <label for="password">Password:</label>
+  <input type="text" name="password" id="password" placeholder="Enter your password here" />
+  <button type="submit">Submit</button>
+</form>
+{{#if hasErrors}}
+<p class="error">You have supplied a wrong username and or password.</p>
+{{/if}}
 
-    <form method ="POST" action="/login" id="login-form">
-        <label for="username">username:</label>
-        <input type="text" name="username" id="username" placeholder="Enter your username here"/>
-        <label for="password">password:</label>
-        <input type="text" name="password" id="password" placeholder="Enter your password here"/>
-        <button type="submit">Submit</button>
-      </form>
-      {{#if hasErrors}}
-    <p class = "error">You have supplied a wrong username and or password.</p>
-    {{/if}}
-     
-        {{#if unknown}}
-    <p class = "error">You must log in to view the private page.</p>
-    {{/if}}
+{{#if unknown}}
+<p class="error">You must log in to view the private page.</p>
+{{/if}}
