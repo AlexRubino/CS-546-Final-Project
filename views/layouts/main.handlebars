@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>NerdBay</title>
     <link rel="stylesheet" href="/public/css/site.css">
 </head>
+
 <body>
     <header>
-        <h1>header</h1>
+        <img src="..\..\public\img\NerdBay.png" class="logo"> <br>
+        <div class="topnav">
+            <a href="../"> Home </a>
+            {{#if loggedIn}}
+            <a href="..\profile"> My Profile </a>
+            <a href="..\logout"> Logout </a>
+            {{else}}
+            <a href="..\login"> Login </a>
+            <a href="..\signup"> Sign Up </a>
+            {{/if}}
+            <form action="/search" class="search" method="POST" id="search-form">
+                <label>
+                    Search
+                    <input type="text" name="search" id="search" />
+                </label>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </header>
     <main>
+        <br>
         {{{body}}}
+        <br>
     </main>
     <footer>
-        footer
+        <img src="..\..\public\img\NerdBay.png" class="logo"> <br>
+        <div class="bottomnav">
+            <a href="../"> Home </a>
+        </div>
+        <br>
+        Team Members: James Lepore || Alex Rubino || Justin Wing || Steven Zhao
+        <br>
+        <br>
     </footer>
-    {{!-- <script src="/public/js/script.js"></script> --}}
 </body>
+
 </html>
