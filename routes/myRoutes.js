@@ -7,11 +7,7 @@ let err = false;
 
 router.get("/", async (req, res) => {
     const allItems = await itemData.getAllItems();
-    if (req.session.user) {
-        res.render("pages/home", { loggedIn: true, items: allItems });
-    } else {
-        res.render("pages/home", { loggedIn: false, items: allItems });
-    }
+    res.render("pages/home", { loggedIn: req.session.user, items: allItems });
 });
 
 router.get("/login", async (req, res) => {
@@ -19,7 +15,7 @@ router.get("/login", async (req, res) => {
         err = false;
         res.redirect("/profile");
     } else {
-        res.render("pages/login", { err: err });
+        res.render("pages/login", { loggedIn: req.session.user, err: err });
     }
 });
 
@@ -27,7 +23,6 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     users = await userData.getAllUsers();
-    console.log(users);
     for (user of users) {
 
         if ((user.username).toUpperCase() == username.toUpperCase()) {
@@ -62,16 +57,16 @@ router.get('/profile', async (req, res) => {
             newMyBids.push(await itemData.getItem(item));;
         }
 
-        res.render('pages/profile', { myItems: newMyItems, myBids: newMyBids });
+        res.render('pages/profile', { loggedIn: req.session.user, myItems: newMyItems, myBids: newMyBids });
     } else {
-        res.render('pages/login');
+        res.render('pages/login', {loggedIn: req.session.user});
     }
 });
 
 
 router.get('/logout', async (req, res) => {
     req.session.destroy();
-    res.render('pages/home');
+    res.redirect('/');
 });
 
 module.exports = router;

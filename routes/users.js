@@ -8,7 +8,7 @@ const data = require("../data/users");
 
 router.get("/signup", async (req, res) => {
   try {
-  res.render('pages/signup');
+  res.render('pages/signup', {loggedIn: req.session.user});
   } catch (e) {
     res.status(500).json(e);
   }
@@ -36,14 +36,14 @@ router.post("/signup", async (req, res) => {
       const hashedPW = await bcrypt.hash(password, 5);
 
       if(!checkEmail){
-        return res.render("pages/signup", {hasErrors: true, errorMessage: "This email is already in use"})
+        return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "This email is already in use"})
       }
 
       if(!checkUser){
-       return res.render("pages/signup", {hasErrors: true, errorMessage: "This username is already in use"})
+       return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "This username is already in use"})
       }
        if(password !== confirm){
-       return res.render("pages/signup", {hasErrors: true, errorMessage: "Passwords do not match"})
+       return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Passwords do not match"})
       }
         
       else{
