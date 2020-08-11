@@ -59,7 +59,7 @@ router.get('/profile', async (req, res) => {
 
         res.render('pages/profile', { loggedIn: req.session.user, myItems: newMyItems, myBids: newMyBids });
     } else {
-        res.render('pages/login', {loggedIn: req.session.user});
+        res.render('pages/login', { loggedIn: req.session.user });
     }
 });
 

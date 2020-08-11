@@ -12,6 +12,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 app.use(session({
   name: 'AuthCookie',
   secret: 'secret string!',
@@ -27,9 +28,16 @@ app.use('/profile', async (req, res, next) => {
   next();
 });
 
+app.use('/items/new', async (req, res, next) => {
+  if (!req.session.user) {
+    return res.status(403).redirect('/login');
+  }
+  next();
+});
+
 app.use(async (req, res, next) => {
-  console.log(`[` + new Date().toUTCString() + "] " + 
-    req.method + " " + req.originalUrl + 
+  console.log(`[` + new Date().toUTCString() + "] " +
+    req.method + " " + req.originalUrl +
     (req.session.user ? " (Authenticated User)" : " (Non-Authenticated User)"));
   next();
 });

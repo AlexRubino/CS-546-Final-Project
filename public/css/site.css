@@ -50,9 +50,19 @@ label {
 	font-weight: normal;
 }
 
+.input-error {
+	border: 1px solid #DDDDDD;
+	border-radius: 7px;
+	border-color: #EE0000;
+}
+
 #error {
 	color: #ff0000;
 	margin-bottom: 5px;
+}
+
+.hidden {
+	display: none;
 }
 
 .result p {
@@ -157,4 +167,14 @@ footer {
   	margin-left: auto;
   	margin-right: auto;
   	width: 50%;
+}
+
+.single-page-img {
+	width: 1000px;
+	height: 1000px
+}
+
+.listing-page-img {
+	width: 100px;
+	height: 100px
 }
