@@ -76,21 +76,32 @@ function verifyUser(user, strict) {
     //     empty = false
     // }
     //Non-mandatory
-    if (user.userItems && Array.isArray(user.userItems)) {
-        userData.userItems = user.userItems
-        empty = false
+    if (user.listedItems) {
+        if (Array.isArray(user.listedItems)) {
+            userData.listedItems = user.listedItems
+            empty = false
+        } else if (strict) {
+            throw "listed items must be an Array!"
+        }
+    } else {
+        userData.listedItems = [];
     }
 
-    if (user.userPurchases && Array.isArray(user.userPurchases)) {
-        userData.userPurchases = user.userPurchases
-        empty = false
+    if (user.purchasedItems) {
+        if (Array.isArray(user.purchasedItems)) {
+            userData.purchasedItems = user.purchasedItems
+            empty = false
+        } else if (strict) {
+            throw "purchased items must be an Array!"
+        }
+    } else {
+        userData.purchasedItems = [];
     }
 
-    if (!strict && !empty) {
-        return userData
-    } else if (!strict && empty) {
+    if (!strict && empty) {
         throw "You must provide at least one non-empty user field to update!"
     }
+    return userData;
 }
 
 const getUser = async function get(id) {
@@ -120,7 +131,7 @@ const getAllUsers = async function getAll() {
 }
 
 const createUser = async function create(newuser) {
-    verifyUser(newuser, true)
+    newuser = verifyUser(newuser, true)
 
     const userCollection = await users()
     const insertInfo = await userCollection.insertOne(newuser)
