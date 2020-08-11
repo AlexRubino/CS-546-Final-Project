@@ -1,11 +1,20 @@
 <section>
     <h1>Home Page</h1>
-    <p>Put search here</p>
     <div>
         <aside>
-            Put sorting options here
+            <form action="/sort" method="POST" class="sort" name="sort-form" id="sort-form"></form>
+                <label for="sort">Sort by:</label>
+                <select size="1" name="sort" id='sort'>
+                    <option value='cat'>cat</option>
+                    <option value='dog'>dog</option>
+                    <option value='mouse'>mouse</option>
+                </select>
+            </form>
         </aside>
-        <div>
+        {{#if message}}
+            <p>Displaying results for "{{message}}"</p>
+        {{/if}}
+        <div id='item_list'>
             {{#each items}}
             <article>
                 <h2><a href="/items/view/{{_id}}">{{itemName}}</a></h2>
