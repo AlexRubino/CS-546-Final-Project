@@ -13,11 +13,12 @@
         <div class="topnav">
             <a href="/"> Home </a>
             {{#if loggedIn}}
-            <a href="..\profile"> My Profile </a>
-            <a href="..\logout"> Logout </a>
+            <a href="/profile"> My Profile </a>
+            <a href="/logout"> Logout </a>
+            <a href="/items/new"> Auction Item! </a>
             {{else}}
-            <a href="..\login"> Login </a>
-            <a href="..\users\signup"> Sign Up </a>
+            <a href="/login"> Login </a>
+            <a href="/users/signup"> Sign Up </a>
             {{/if}}
             <form action="/search" class="search" method="POST" id="search-form">
                 <label>
@@ -43,6 +44,7 @@
         <br>
         <br>
     </footer>
+    <script src="/public/js/validate.js"></script>
 </body>
 
 </html>

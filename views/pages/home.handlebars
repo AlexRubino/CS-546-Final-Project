@@ -7,10 +7,10 @@
         </aside>
         <div>
             {{#each items}}
-                <article>
-                    <h2><a href="/items/view/{{_id}}">{{itemName}}</a></h2>
-                    <img src="/public/images/{{itemImage}}"/>
-                </article>
+            <article>
+                <h2><a href="/items/view/{{_id}}">{{itemName}}</a></h2>
+                <img src="../../public/items/{{itemImage}}" class="listing-page-img" />
+            </article>
             {{/each}}
         </div>
     </div>
