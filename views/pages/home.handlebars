@@ -5,9 +5,13 @@
             <form action="/sort" method="POST" class="sort" name="sort-form" id="sort-form"></form>
                 <label for="sort">Sort by:</label>
                 <select size="1" name="sort" id='sort'>
-                    <option value='cat'>cat</option>
-                    <option value='dog'>dog</option>
-                    <option value='mouse'>mouse</option>
+                    <option selected disabled></option>
+                    <option value='dl'>Date Listed</option>
+                    <option value='de'>End Date</option>
+                    <option value='al'>Alphabetical</option>
+                    <option value='r-al'>Reverse Alphabetical</option>
+                    <option value='p'>Asking Price - Low to High</option>
+                    <option value='r-p'>Asking Price - High to Low</option>
                 </select>
             </form>
         </aside>
@@ -16,9 +20,13 @@
         {{/if}}
         <div id='item_list'>
             {{#each items}}
-            <article>
+            <article dl='{{startDate}}' de='{{endDate}}' p='{{askingPrice}}'>
                 <h2><a href="/items/view/{{_id}}">{{itemName}}</a></h2>
                 <img src="../../public/items/{{itemImage}}" class="listing-page-img" />
+                <p>Date Listed: {{startDate}}</p>
+                <p>End Date: {{endDate}}</p>
+                <p>Asking Price: ${{askingPrice}}</p>
+                <hr/>
             </article>
             {{/each}}
         </div>
