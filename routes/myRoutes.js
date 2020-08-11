@@ -46,11 +46,13 @@ router.post('/login', async (req, res) => {
 router.get('/profile', async (req, res) => {
     if (req.session.user) {
         const user = await userData.getUser(req.session.user);
+        
         let myItems = user.listedItems;
         let newMyItems = [];
         for (item of myItems) {
             newMyItems.push(await itemData.getItem(item));
         }
+        
         let myBids = user.purchasedItems;
         let newMyBids = [];
         for (item of myBids) {

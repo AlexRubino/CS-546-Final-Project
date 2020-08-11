@@ -43,7 +43,6 @@ const getAllComments = async function getAll() {
 }
 
 const createComment = async function create(newcomment) {
-    console.log(newcomment)
     verifyComment(newcomment)
 
     if (typeof newcomment.commenterId === "string") {

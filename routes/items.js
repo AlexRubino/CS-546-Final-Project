@@ -10,7 +10,7 @@ const commentData = require("../data/comments")
 const multer = require('multer')
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dest = path.resolve("./public/img")
+    const dest = path.resolve("./public/items")
     if (!fs.existsSync(dest)) {
       fs.mkdirSync(dest)
     }
@@ -123,62 +123,23 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
 );
 
 router.get('/view/:id', async (req, res) => {
-  // let myItem = {
-  //   'itemId': '7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310',
-  //   'itemDescription': 'Whoever buys this will have way too much power',
-  //   'itemName': 'The Infinity Gauntlet',
-  //   'itemImage': 'gauntlet.jpeg',
-  //   'askingPrice': 3,
-  //   'sellerId': "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-  //   'startDate': '7/10/2020',
-  //   'endDate': '7/17/2020',
-  //   'currentBid': 75,
-  //   'currentBidderId': "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-  //   'tags': ['power', 'space', 'reality', 'soul', 'time', 'mind'],
-  //   'commentIds': ['7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310']
-  // }
-  const myItem = await data.getItem(req.params.id)
-  // my item will be the result of a get call to the database
-  // based on the ID in the url
-
-  // let mySeller = {
-  //   "firstName": "John",
-  //   "lastName": "Doe",
-  //   "Email": "JDoe@gmail.com",
-  //   "City": "Hoboken",
-  //   "State": "NJ",
-  //   "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-  //   "hashedPassword": "$2a$08$XdvNkfdNIL8F8xsuIUeSbNOFgK0M0iV5HOskfVn7.PWncShU.O",
-  //   "usersItems": ["7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b696a2-d0f2-4g8g-h67d-7a1d4b6b6710"],
-  //   "usersPurchases": ["7b972c3-a0e2-4y9g-h67d-7a1d4b6b6710"]
-  // }
-  const mySeller = await userData.getUser(myItem.sellerId)
-  // my seller will be the result of a get call to the database
-  // based on Seller ID in myItem
-
-  // let myComments = [
-  //   {
-  //     "commenter": "Loki",
-  //     "comment": "Is this infinity stone compatible with my scepter?",
-  //     "date": "7/10/2019"
-  //   },
-  //   {
-  //     "commenter": "Hela",
-  //     "comment": "Fake!",
-  //     "date": "7/12/2019"
-  //   }
-  // ];
-  let myComments = []
-  for (commentId of myItem.commentIds) {
-    let comment = await commentData.getComment(commentId)
-    const commenter = await userData.getUser(comment.commenterId)
-    comment.commenter = commenter.firstName + " " + commenter.lastName
-    myComments.push(comment)
+  try{
+    const myItem = await data.getItem(req.params.id);
+    const mySeller = await userData.getUser(myItem.sellerId)
+    let myComments = []
+    for (commentId of myItem.commentIds) {
+      let comment = await commentData.getComment(commentId)
+      const commenter = await userData.getUser(comment.commenterId)
+      comment.commenter = commenter.firstName + " " + commenter.lastName
+      myComments.push(comment)
+    }
+    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments });
+  } catch(e) {
+    console.log("oops");
+    res.redirect("/");
   }
-  // my comments will be a list of comments as a result of get calls
-  // to the database based on Comment IDs
 
-  res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments });
+  
 })
 
 

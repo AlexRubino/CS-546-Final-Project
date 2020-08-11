@@ -42,7 +42,10 @@ router.post("/signup", async (req, res) => {
       if(!checkUser){
        return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "This username is already in use"})
       }
-       if(password !== confirm){
+      if(!password || !confirm){
+        return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "You must enter a password"})
+      }
+      if(password !== confirm){
        return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Passwords do not match"})
       }
         

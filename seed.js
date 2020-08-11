@@ -33,7 +33,7 @@ async function run() {
         firstName: "Yuezheng",
         lastName: "Ling",
         username: "ILLTY",
-        email: "test",
+        email: "test@gmail.com",
         city: "internet",
         state: "internet",
         hashedPassword: "$2a$05$AosPY7QIUIwL4OslVfuQy.RpLWz/yX6YqKb1l8ZKSiPDwdG6pgAy6"
@@ -70,7 +70,7 @@ async function run() {
     }
     gauntlet = await itemData.createItem(gauntlet)
 
-    luotianyi = await userData.patchUser(luotianyi._id, { userItems: [gauntlet._id] })
+    luotianyi = await userData.patchUser(luotianyi._id, { listedItems: [gauntlet._id] })
 
     const db = await connection();
     await db.serverConfig.close();
