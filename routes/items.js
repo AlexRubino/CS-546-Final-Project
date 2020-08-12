@@ -54,9 +54,10 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
   let short_description = req.body["short_description"];
   let item_image
   let starting_bid = parseInt(req.body["starting_bid"], 10);
-  let seller = req.body["seller_id"];
-  let start = req.body["start"];
   let end = req.body["end"];
+  let tags = req.body["tags"].split(",");
+  var today = new Date();
+  var date = (today.getMonth()+1)+'-'+today.getDate() + '-' + today.getFullYear();
 
   //console.log(req.file)
 
@@ -103,9 +104,9 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
         itemImage: item_image,
         askingPrice: starting_bid,
         sellerId: req.session.user,
-        startDate: start,
+        startDate: date,
         endDate: end,
-
+        tags: tags
       }
       const newItems = await data.createItem(listedItem);
       let getUser = await userData.getUser(req.session.user);
@@ -125,6 +126,7 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
 router.get('/view/:id', async (req, res) => {
   try{
     const myItem = await data.getItem(req.params.id);
+    req.session.item = myItem._id;
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
     for (commentId of myItem.commentIds) {
@@ -134,6 +136,57 @@ router.get('/view/:id', async (req, res) => {
       myComments.push(comment)
     }
     res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments });
+  } catch(e) {
+    console.log("oops");
+    res.redirect("/");
+  }
+
+  
+})
+
+
+router.post("/bid", async(req, res)  => {
+  try{
+    const myItem = await data.getItem(req.session.item);
+    const newBid = req.body.new_bid.parseInt();
+    if(newBid <= myItem.currentBid || newBid < myItem.askingPrice){
+      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, bidErrorMessage: "You must bid higher than the current bid." });
+    }
+    else{
+      const updateItem = {
+        currentBid: newBid, 
+        currentbidderId: req.session.user
+    }
+
+    const newItem = await data.patchItem(req.session.item, updateItem)
+    return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments});
+  }
+  } catch(e) {
+    console.log("oops");
+    res.redirect("/");
+  }
+
+  
+})
+
+router.post("/comments", async(req, res)  => {
+  try{
+    var today = new Date();
+    var date = (today.getMonth()+1)+'-'+today.getDate() + '-' + today.getFullYear();
+    if(!req.body.new_comment){
+      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
+    }
+
+    const newComment = {
+      commenterId: req.session.user, 
+      comment: req.body.new_comment, 
+      dateCommented: date
+    }
+
+    const comment = await commentData.createComment(newComment);
+    let getItem = await itemData.getItem(req.session.item);
+    getItem.commentIds.push(comment._id);
+    const updateItem = await itemData.patchItem(req.session.item, getItem);  
   } catch(e) {
     console.log("oops");
     res.redirect("/");
