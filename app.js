@@ -17,6 +17,7 @@ app.use(session({
   name: 'AuthCookie',
   secret: 'secret string!',
   user: undefined,
+  item: undefined,
   resave: false,
   saveUninitialized: true
 }));
