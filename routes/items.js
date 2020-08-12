@@ -144,7 +144,7 @@ router.get('/view/:id', async (req, res) => {
 })
 
 
-router.post("/bid", async(req, res)  => {
+router.post("/bid/:id", async(req, res)  => {
   try{
     const myItem = await data.getItem(req.params.id);
     const newBid = req.body.new_bid.parseInt();
@@ -176,7 +176,7 @@ router.post("/bid", async(req, res)  => {
   
 })
 
-router.post("/comments", async(req, res)  => {
+router.post("/comments/:id", async(req, res)  => {
   try{
     var today = new Date();
     var date = (today.getMonth()+1)+'-'+today.getDate() + '-' + today.getFullYear();
