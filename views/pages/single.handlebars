@@ -38,7 +38,7 @@
             <li>{{this.dateCommented}} - {{this.commenter}}: {{this.comment}}</li>
             {{/each}}
             {{#if loggedIn}}
-                <form method="POST" action="items/comments/" id="new_comment_form" enctype="multipart/form-data">
+                <form method="POST" action="/items/comments/" id="new_comment_form" enctype="multipart/form-data">
                 <label for="new_comment">Place Comment</label>
                 <input type="text" name="new_comment" id="new_comment" placeholder="Enter your comment" />
                 </form>
