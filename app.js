@@ -4,6 +4,9 @@ const session = require('express-session');
 const static = express.static(__dirname + '/public');
 const cookieParser = require('cookie-parser');
 
+
+
+
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 
@@ -17,6 +20,7 @@ app.use(session({
   name: 'AuthCookie',
   secret: 'secret string!',
   user: undefined,
+  item: undefined,
   resave: false,
   saveUninitialized: true
 }));
