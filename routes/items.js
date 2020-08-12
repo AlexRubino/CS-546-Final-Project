@@ -149,6 +149,14 @@ router.post("/bid", async(req, res)  => {
   try{
     const myItem = await data.getItem(req.session.item);
     const newBid = req.body.new_bid.parseInt();
+    const mySeller = await userData.getUser(myItem.sellerId)
+    let myComments = []
+    for (commentId of myItem.commentIds) {
+      let comment = await commentData.getComment(commentId)
+      const commenter = await userData.getUser(comment.commenterId)
+      comment.commenter = commenter.firstName + " " + commenter.lastName
+      myComments.push(comment)
+    }
     if(newBid <= myItem.currentBid || newBid < myItem.askingPrice){
       return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, bidErrorMessage: "You must bid higher than the current bid." });
     }
@@ -159,7 +167,7 @@ router.post("/bid", async(req, res)  => {
     }
 
     const newItem = await data.patchItem(req.session.item, updateItem)
-    return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments});
+    res.redirect('back');
   }
   } catch(e) {
     console.log("oops");
@@ -173,6 +181,17 @@ router.post("/comments", async(req, res)  => {
   try{
     var today = new Date();
     var date = (today.getMonth()+1)+'-'+today.getDate() + '-' + today.getFullYear();
+    const myItem = await data.getItem(req.session.item);
+    const newBid = req.body.new_bid.parseInt();
+    const mySeller = await userData.getUser(myItem.sellerId)
+    let myComments = []
+    for (commentId of myItem.commentIds) {
+      let comment = await commentData.getComment(commentId)
+      const commenter = await userData.getUser(comment.commenterId)
+      comment.commenter = commenter.firstName + " " + commenter.lastName
+      myComments.push(comment)
+    }
+    
     if(!req.body.new_comment){
       return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
     }
@@ -187,6 +206,7 @@ router.post("/comments", async(req, res)  => {
     let getItem = await itemData.getItem(req.session.item);
     getItem.commentIds.push(comment._id);
     const updateItem = await itemData.patchItem(req.session.item, getItem);  
+    res.redirect('back');
   } catch(e) {
     console.log("oops");
     res.redirect("/");
