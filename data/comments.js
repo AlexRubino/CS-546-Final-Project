@@ -1,17 +1,17 @@
-const mongoCollections = require("./mongoCollections")
-const ObjectId = require("mogodb").ObjectId
+const mongoCollections = require("./config/mongoCollections")
 const comments = mongoCollections.comments
+const ObjectId = require("mongodb").ObjectID
 
-function verifyComment(comenterId, comment, dateCommented) {
-    if (!commenterId) {
+function verifyComment(comment) {
+    if (!comment.commenterId) {
         throw "You must provide non-empty commenterId!"
     }
 
-    if (!comment) {
+    if (!comment.comment) {
         throw "You must provide a non-empty comment!"
     }
 
-    if (!dateCommented instanceof Date || !dateCommented) {
+    if (!comment.dateCommented instanceof Date || !comment.dateCommented) {
         throw "dateCommented must a non-empty date!"
     }
 }
@@ -42,14 +42,12 @@ const getAllComments = async function getAll() {
     return all
 }
 
-const createComment = async function create(commenterId, comment, dateCommented) {
-    verifyComment(commenterId, comment, dateCommented)
+const createComment = async function create(newcomment) {
+    verifyComment(newcomment)
 
-    if (typeof commenterId === "string") {
-        commenterId = ObjectId(commenterId)
+    if (typeof newcomment.commenterId === "string") {
+        newcomment.commenterId = ObjectId(newcomment.commenterId)
     }
-
-    let newcomment = { commenterId: commenterId, comment: comment, dateCommented: dateCommented }
 
     const commentCollection = await comments()
     const insertInfo = await commentCollection.insertOne(newcomment)
@@ -57,8 +55,8 @@ const createComment = async function create(commenterId, comment, dateCommented)
         throw "comment insertion failed."
     }
 
-    const comment = await get(insertInfo.insertedId)
-    return comment
+    const createdComment = await getComment(insertInfo.insertedId)
+    return createdComment
 }
 
 const removeComment = async function remove(id) {

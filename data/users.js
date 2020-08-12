@@ -59,38 +59,49 @@ function verifyUser(user, strict) {
         userData.hashedPassword = user.hashedPassword
         empty = false
     }
-    if (!user.listedItems) {
-        if (strict) {
-            throw "You must provide a non-empty firstName!"
-        }
-    } else {
-        userData.listedItems = user.listedItems;
-        empty = false
-    }
-    if (!user.purchasedItems) {
-        if (strict) {
-            throw "You must provide a non-empty firstName!"
-        }
-    } else {
-        userData.purchasedItems = user.purchasedItems;
-        empty = false
-    }
+    // if (!user.listedItems) {
+    //     if (strict) {
+    //         throw "You must provide a non-empty firstName!"
+    //     }
+    // } else {
+    //     userData.listedItems = user.listedItems;
+    //     empty = false
+    // }
+    // if (!user.purchasedItems) {
+    //     if (strict) {
+    //         throw "You must provide a non-empty firstName!"
+    //     }
+    // } else {
+    //     userData.purchasedItems = user.purchasedItems;
+    //     empty = false
+    // }
     //Non-mandatory
-    if (user.userItems && Array.isArray(user.userItems)) {
-        userData.userItems = user.userItems
-        empty = false
+    if (user.listedItems) {
+        if (Array.isArray(user.listedItems)) {
+            userData.listedItems = user.listedItems
+            empty = false
+        } else if (strict) {
+            throw "listed items must be an Array!"
+        }
+    } else {
+        userData.listedItems = [];
     }
 
-    if (user.userPurchases && Array.isArray(user.userPurchases)) {
-        userData.userPurchases = user.userPurchases
-        empty = false
+    if (user.purchasedItems) {
+        if (Array.isArray(user.purchasedItems)) {
+            userData.purchasedItems = user.purchasedItems
+            empty = false
+        } else if (strict) {
+            throw "purchased items must be an Array!"
+        }
+    } else {
+        userData.purchasedItems = [];
     }
 
-    if (!strict && !empty) {
-        return userData
-    } else if (!strict && empty) {
+    if (!strict && empty) {
         throw "You must provide at least one non-empty user field to update!"
     }
+    return userData;
 }
 
 const getUser = async function get(id) {
@@ -99,7 +110,7 @@ const getUser = async function get(id) {
     }
 
     if (typeof id === "string") {
-        id = ObjectId(id)
+        id = new ObjectId(id)
     }
 
     const userCollection = await users()
@@ -120,7 +131,7 @@ const getAllUsers = async function getAll() {
 }
 
 const createUser = async function create(newuser) {
-    verifyUser(newuser, true)
+    newuser = verifyUser(newuser, true)
 
     const userCollection = await users()
     const insertInfo = await userCollection.insertOne(newuser)
@@ -195,8 +206,8 @@ const patchUser = async function patch(id, updateduser) {
     if (!id) {
         throw "You must provide non-empty id and name!"
     }
-    console.log(id);
-    console.log(updateduser);
+    // console.log(id);
+    // console.log(updateduser);
 
     if (typeof id === "string") {
         id = ObjectId(id)
@@ -213,33 +224,33 @@ const patchUser = async function patch(id, updateduser) {
 
     return await getUser(id)
 }
-const checkUserName = async function checkUserName(username){
+const checkUserName = async function checkUserName(username) {
     //This function is for searching if a username or email already exists in the collection. 
-        const lcUsername = username.toLowerCase();
-        const usersCollection = await users();
-       const checkUser= await usersCollection.findOne({username: lcUsername});
-       if(checkUser === null){
-         return true;
-       }
-       else{
-         return false;
-       }
+    const lcUsername = username.toLowerCase();
+    const usersCollection = await users();
+    const checkUser = await usersCollection.findOne({ username: lcUsername });
+    if (checkUser === null) {
+        return true;
     }
-    
-    
-   const checkEmail = async function checkEmail(email){
-      //This function is for searching if a username or email already exists in the collection. 
-          const lcEmail = email.toLowerCase();
-          const usersCollection = await users();
-         const checkUser = await usersCollection.findOne({email: lcEmail});
-    
-         if(checkUser == null){
-           return true;
-         }
-         else{
-           return false;
-         }
-      }
+    else {
+        return false;
+    }
+}
+
+
+const checkEmail = async function checkEmail(email) {
+    //This function is for searching if a username or email already exists in the collection. 
+    const lcEmail = email.toLowerCase();
+    const usersCollection = await users();
+    const checkUser = await usersCollection.findOne({ email: lcEmail });
+
+    if (checkUser == null) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 
 module.exports = {
@@ -248,8 +259,8 @@ module.exports = {
     createUser,
     removeUser,
     //updateduser,
-    patchUser, 
-    checkUserName, 
+    patchUser,
+    checkUserName,
     checkEmail
 }
 

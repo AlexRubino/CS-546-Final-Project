@@ -1,4 +1,5 @@
 const mongoCollections = require("./config/mongoCollections")
+const e = require("express")
 const ObjectId = require("mongodb").ObjectID
 const items = mongoCollections.items
 
@@ -22,6 +23,15 @@ function verifyItem(item, strict) {
         }
     } else {
         itemData.itemDescription = item.itemDescription
+        empty = false
+    }
+
+    if (!item.sellerId) {
+        if (strict) {
+            throw "You must provide an seller ID"
+        }
+    } else {
+        itemData.sellerId = item.sellerId
         empty = false
     }
 
@@ -78,6 +88,8 @@ function verifyItem(item, strict) {
     if (item.currentBid) {
         itemData.currentBid = item.currentBid
         empty = false
+    } else {
+        item.currentBid = 0;
     }
 
     if (item.currentBidderId) {
@@ -87,6 +99,8 @@ function verifyItem(item, strict) {
             itemData.currentBidderId = item.currentBidderId
         }
         empty = false
+    } else {
+        item.currentBidderId = undefined;
     }
 
     if (item.tags) {
@@ -96,6 +110,8 @@ function verifyItem(item, strict) {
         } else if (strict) {
             throw "tags must be an Array!"
         }
+    } else {
+        itemData.tags = [];
     }
 
     if (item.commentIds) {
@@ -105,13 +121,14 @@ function verifyItem(item, strict) {
         } else if (strict) {
             throw "commentIds must be an Array!"
         }
+    } else {
+        itemData.commentIds = [];
     }
 
-    if (!strict && !empty) {
-        return itemData
-    } else if (!strict && empty) {
+    if (!strict && empty) {
         throw "You must provide at least one non-empty item field to update!"
     }
+    return itemData;
 }
 
 const getItem = async function get(id) {
@@ -142,7 +159,7 @@ const getAllItems = async function getAll() {
 
 //itemName, itemDescription, askingPrice, sellerId, startDate, endDate, tags
 const createItem = async function create(newitem) {
-    verifyItem(newitem, true)
+    newitem = verifyItem(newitem, true)
 
     const itemCollection = await items()
     const insertInfo = await itemCollection.insertOne(newitem)

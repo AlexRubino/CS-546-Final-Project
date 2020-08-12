@@ -1,21 +1,25 @@
-
 <p>New Item form</p>
-    <form method ="POST" action="/items/new" id="item-form">
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" placeholder="Enter your item name here"/>
-        <label for="short_description">Short Description:</label>
-        <input type="text" name="short_description" id="short_description" placeholder="Enter your short description here"/>
-        <label for="item_img">Image:</label>
-        <input type="file" id="item_img" name="item_img" accept="image/*">
-        <label for="starting_bid">Starting Bid:</label>
-        <input type="number" name="starting_bid" id="starting_bid" placeholder="Enter your starting bid here"/>
-        <label for="start">Starting Date:</label>
-        <input type="date" name="start" id="start" placeholder="Enter your starting date here"/>
-        <label for="end">Ending Date:</label>
-        <input type="date" name="end" id="end" placeholder="Enter your ending date here"/>
-                <button type="submit">Submit</button>
-      </form>
-
-
-
-
+<form method="POST" action="/items/new" id="item-form" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" placeholder="Enter your item name here" />
+    <label for="short_description">Short Description:</label>
+    <input type="text" name="short_description" id="short_description"
+        placeholder="Enter your short description here" />
+    <label for="item_img">Image:</label>
+    {{#if fileErrors}}
+    <input class="input-error" type="file" id="item_img" name="item_img" accept="image/*">
+    {{else}}
+    <input type="file" id="item_img" name="item_img" accept="image/*">
+    {{/if}}
+    <label for="starting_bid">Starting Bid:</label>
+    <input type="number" name="starting_bid" id="starting_bid" placeholder="Enter your starting bid here" />
+    <label for="start">Starting Date:</label>
+    <input type="date" name="start" id="start" placeholder="Enter your starting date here" />
+    <label for="end">Ending Date:</label>
+    <input type="date" name="end" id="end" placeholder="Enter your ending date here" />
+    <button type="submit">Submit</button>
+</form>
+<p class="hidden" name="incomplete-error" id="error"></p>
+{{#if hasErrors}}
+<p name="file-error" id="error">{{errorMessage}}</p>
+{{/if}}

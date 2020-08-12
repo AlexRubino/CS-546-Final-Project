@@ -3,19 +3,20 @@
     <section>
         <h2>My Items Up For Bid</h2>
         {{#each myItems}}
-            <div>
-                <h3><a href="/items/view/{{_id}}">{{itemName}}</a></h3>
-                <img src="/public/images/{{itemImage}}"/>
-            </div>
+        <div>
+            <h3><a href="/items/view/{{_id}}">{{itemName}}</a></h3>
+            <img src="../../public/items/{{itemImage}}" class="listing-page-img" />
+        </div>
         {{/each}}
+        <a href="/items/new"> Auction New Item </a>
     </section>
     <section>
         <h2>My Bids</h2>
         {{#each myBids}}
-            <div>
-                <h3><a href="/items/view/{{_id}}">{{itemName}}</a></h3>
-                <img src="/public/images/{{itemImage}}"/>
-            </div>
+        <div>
+            <h3><a href="/items/view/{{_id}}">{{itemName}}</a></h3>
+            <img src="../../public/items/{{itemImage}}" />
+        </div>
         {{/each}}
     </section>
 </article>
