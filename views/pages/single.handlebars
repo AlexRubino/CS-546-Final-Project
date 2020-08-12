@@ -15,6 +15,9 @@
             <label for="new_bid">Place Bid:</label>
             <input type="number" name="new_bid" id="new_bid" placeholder="Enter your starting bid here" />
         </form>
+        {{#if bidErrorMessage}}
+        <p> {{bidErrorMessage}} </p>
+        </if>
         {{/if}}
     </section>
     <section>
@@ -42,6 +45,9 @@
                 <label for="new_comment">Place Comment</label>
                 <input type="text" name="new_comment" id="new_comment" placeholder="Enter your comment" />
                 </form>
+          {{#if commentErrorMessage}}
+        <p> {{commentErrorMessage}} </p>
+        {{/if}}
         {{/if}}
             <li>This is where you will be able to add a new comment</li>
         </ul>
