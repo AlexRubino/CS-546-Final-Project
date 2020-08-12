@@ -126,7 +126,6 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
 router.get('/view/:id', async (req, res) => {
   try{
     const myItem = await data.getItem(req.params.id);
-    req.session.item = myItem._id;
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
     for (commentId of myItem.commentIds) {
@@ -147,7 +146,7 @@ router.get('/view/:id', async (req, res) => {
 
 router.post("/bid", async(req, res)  => {
   try{
-    const myItem = await data.getItem(req.session.item);
+    const myItem = await data.getItem(req.params.id);
     const newBid = req.body.new_bid.parseInt();
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
@@ -158,7 +157,7 @@ router.post("/bid", async(req, res)  => {
       myComments.push(comment)
     }
     if(newBid <= myItem.currentBid || newBid < myItem.askingPrice){
-      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, bidErrorMessage: "You must bid higher than the current bid." });
+    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, bidErrorMessage: "You must bid higher than the current bid." });
     }
     else{
       const updateItem = {
@@ -181,7 +180,7 @@ router.post("/comments", async(req, res)  => {
   try{
     var today = new Date();
     var date = (today.getMonth()+1)+'-'+today.getDate() + '-' + today.getFullYear();
-    const myItem = await data.getItem(req.session.item);
+    const myItem = await data.getItem(req.params.id);
     const newBid = req.body.new_bid.parseInt();
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
@@ -193,9 +192,9 @@ router.post("/comments", async(req, res)  => {
     }
     
     if(!req.body.new_comment){
-      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
+     res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
     }
-
+    else{
     const newComment = {
       commenterId: req.session.user, 
       comment: req.body.new_comment, 
@@ -206,6 +205,7 @@ router.post("/comments", async(req, res)  => {
     myItem.commentIds.push(comment._id);
     const updateItem = await itemData.patchItem(req.session.item, myItem);  
     res.redirect('back');
+    }
   } catch(e) {
     console.log("oops");
     res.redirect("/");
