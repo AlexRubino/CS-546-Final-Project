@@ -11,13 +11,13 @@
         <p>You can be the first to bid on this item!</p>
         {{/if}}
         {{#if loggedIn}}
-        <form method="POST" action="items/bid/:id" id="new_bid_form" enctype="multipart/form-data">
+        <form method="POST" action="" id="new_bid_form">
             <label for="new_bid">Place Bid:</label>
             <input type="number" name="new_bid" id="new_bid" placeholder="Enter your starting bid here" />
+            <button type="submit">Submit</button>
         </form>
         {{#if bidErrorMessage}}
-        <p> {{bidErrorMessage}} </p>
-        </if>
+        <p>{{bidErrorMessage}}</p> {{/if}}
         {{/if}}
     </section>
     <section>
@@ -40,17 +40,17 @@
             {{#each comments}}
             <li>{{this.dateCommented}} - {{this.commenter}}: {{this.comment}}</li>
             {{/each}}
-            {{#if loggedIn}}
-                <form method="POST" action="/items/comments/:id" id="new_comment_form" enctype="multipart/form-data">
-                <label for="new_comment">Place Comment</label>
-                <input type="text" name="new_comment" id="new_comment" placeholder="Enter your comment" />
-                </form>
-          {{#if commentErrorMessage}}
-        <p> {{commentErrorMessage}} </p>
-        {{/if}}
-        {{/if}}
             <li>This is where you will be able to add a new comment</li>
         </ul>
+    {{#if loggedIn}}
+       <form method="POST" action="/items/comments" id="new_comment_form">
+            <label for="new_comment">Comment:</label>
+            <input type="text" name="new_comment" id="new_comment" placeholder="Enter your comment here" />
+            <button type="submit">Submit</button>
+        </form>
+         {{#if commentErrorMessage}}
+        <p>{{commentErrorMessage}}</p>{{/if}}
+        {{/if}}
     </section>
     <p><a href="/">Back to Home</a></p>
 </article>
