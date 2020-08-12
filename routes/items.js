@@ -57,7 +57,7 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
   let end = req.body["end"];
   let tags = req.body["tags"].split(",");
   var today = new Date();
-  var date = (today.getMonth()+1)+'-'+today.getDate() + '-' + today.getFullYear();
+  var date =  today.getFullYear() + '-' + (today.getMonth()+1)+'-'+ today.getDate();
 
   //console.log(req.file)
 
@@ -89,10 +89,6 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
     // if(!seller){
     //   return res.render("pages/newItems", {hasErrors: true, errorMessage: "Must input seller ID"})      }
 
-    if (!start) {
-      return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must set starting date" })
-    }
-
     if (!end) {
       return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must set ending date" })
     }
@@ -117,7 +113,7 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
       res.render("pages/itemConfirmation", { loggedIn: req.session.user });
     }
   } catch (e) {
-    console.log(e);
+    console.log("oops");
   }
 
 }
@@ -126,6 +122,7 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
 router.get('/view/:id', async (req, res) => {
   try{
     const myItem = await data.getItem(req.params.id);
+    req.session.item = myItem._id;
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
     for (commentId of myItem.commentIds) {
@@ -144,10 +141,10 @@ router.get('/view/:id', async (req, res) => {
 })
 
 
-router.post("/bid/:id", async(req, res)  => {
+router.post("/view/:id", async(req, res)  => {
   try{
-    const myItem = await data.getItem(req.params.id);
-    const newBid = req.body.new_bid.parseInt();
+    let myItem = await data.getItem(req.params.id);
+    let newBid = req.body["new_bid"];
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
     for (commentId of myItem.commentIds) {
@@ -159,29 +156,24 @@ router.post("/bid/:id", async(req, res)  => {
     if(newBid <= myItem.currentBid || newBid < myItem.askingPrice){
     res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, bidErrorMessage: "You must bid higher than the current bid." });
     }
-    else{
-      const updateItem = {
-        currentBid: newBid, 
-        currentbidderId: req.session.user
-    }
-
-    const newCurrentBidItem = await data.patchItem(req.session.item, updateItem)
-    res.redirect('back');
+    else{   
+      myItem.currentBid = newBid;
+      myItem.currentbidderId = req.session.user;
+    
+    const newCurrentBidItem = await data.patchItem(req.params.id, myItem)
+    res.redirect("/items/view/" + req.session.item);
   }
   } catch(e) {
     console.log("oops");
-    res.redirect("/");
+    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments});
   }
-
-  
 })
 
-router.post("/comments/:id", async(req, res)  => {
+router.post("/comments", async(req, res)  => {
   try{
     var today = new Date();
-    var date = (today.getMonth()+1)+'-'+today.getDate() + '-' + today.getFullYear();
-    const myItem = await data.getItem(req.params.id);
-    const newBid = req.body.new_bid.parseInt();
+    var date = today.getFullYear() + '-' + (today.getMonth()+1) +'-'+today.getDate();
+    const myItem = await data.getItem(req.session.item);
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
     for (commentId of myItem.commentIds) {
@@ -203,9 +195,10 @@ router.post("/comments/:id", async(req, res)  => {
 
     const comment = await commentData.createComment(newComment);
     myItem.commentIds.push(comment._id);
-    const updateItem = await itemData.patchItem(req.session.item, myItem);  
-    res.redirect('back');
-    }
+    const updateItem = await data.patchItem(req.session.item, myItem); 
+    res.redirect("/items/view/" + req.session.item);
+
+  }
   } catch(e) {
     console.log("oops");
     res.redirect("/");
