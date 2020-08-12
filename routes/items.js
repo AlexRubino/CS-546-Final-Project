@@ -166,7 +166,7 @@ router.post("/bid", async(req, res)  => {
         currentbidderId: req.session.user
     }
 
-    const newItem = await data.patchItem(req.session.item, updateItem)
+    const newCurrentBidItem = await data.patchItem(req.session.item, updateItem)
     res.redirect('back');
   }
   } catch(e) {
@@ -203,9 +203,8 @@ router.post("/comments", async(req, res)  => {
     }
 
     const comment = await commentData.createComment(newComment);
-    let getItem = await itemData.getItem(req.session.item);
-    getItem.commentIds.push(comment._id);
-    const updateItem = await itemData.patchItem(req.session.item, getItem);  
+    myItem.commentIds.push(comment._id);
+    const updateItem = await itemData.patchItem(req.session.item, myItem);  
     res.redirect('back');
   } catch(e) {
     console.log("oops");
