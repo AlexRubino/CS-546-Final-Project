@@ -24,7 +24,9 @@ async function run() {
         email: "test",
         city: "internet",
         state: "internet",
-        hashedPassword: "$2a$05$AosPY7QIUIwL4OslVfuQy.RpLWz/yX6YqKb1l8ZKSiPDwdG6pgAy6"
+        hashedPassword: "$2a$05$AosPY7QIUIwL4OslVfuQy.RpLWz/yX6YqKb1l8ZKSiPDwdG6pgAy6",
+        listedItems: [],
+        purchasedItems: []
     }
     luotianyi = await userData.createUser(luotianyi)
     // console.log(luotianyi)
@@ -36,7 +38,9 @@ async function run() {
         email: "test@gmail.com",
         city: "internet",
         state: "internet",
-        hashedPassword: "$2a$05$AosPY7QIUIwL4OslVfuQy.RpLWz/yX6YqKb1l8ZKSiPDwdG6pgAy6"
+        hashedPassword: "$2a$05$AosPY7QIUIwL4OslVfuQy.RpLWz/yX6YqKb1l8ZKSiPDwdG6pgAy6",
+        listedItems: [],
+        purchasedItems: []
     }
     yuezhengling = await userData.createUser(yuezhengling)
     // console.log(yuezhengling)

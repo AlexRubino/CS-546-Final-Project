@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const userData = require('../data/users');
 const itemData = require('../data/items');
 const xss = require('xss');
+const users = require('../data/users');
 let err = false;
 
 router.get("/", async (req, res) => {
@@ -21,11 +22,12 @@ router.get("/login", async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const { username, password } = xss(req.body);
+    const { username, password } = req.body;
 
-    users = await userData.getAllUsers();
+    const users = await userData.getAllUsers()
+    console.log(users)
+    console.log(username)
     for (user of users) {
-
         if ((user.username).toUpperCase() == username.toUpperCase()) {
             let compare = false;
             try {
