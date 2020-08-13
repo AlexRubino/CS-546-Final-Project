@@ -54,10 +54,11 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
   let name = xss(req.body["name"]);
   let short_description = xss(req.body["short_description"]);
   let item_image
-  let starting_bid = xss(parseInt(req.body["starting_bid"], 10));
-  let seller = xss(req.body["seller_id"]);
-  let start = xss(req.body["start"]);
+  let starting_bid = parseInt(xss(req.body["starting_bid"], 10));
   let end = xss(req.body["end"]);
+  let tags = xss(req.body["tags"].split(","));
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
   //console.log(req.file)
 
