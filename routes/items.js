@@ -5,6 +5,7 @@ const router = express.Router()
 const data = require("../data/items")
 const userData = require("../data/users")
 const commentData = require("../data/comments")
+const xss = require('xss');
 
 //file upload settings
 const multer = require('multer')
@@ -50,13 +51,13 @@ router.get("/new", async (req, res) => {
 });
 
 router.post("/new", upload.single("item_img"), async (req, res) => {
-  let name = req.body["name"];
-  let short_description = req.body["short_description"];
+  let name = xss(req.body["name"]);
+  let short_description = xss(req.body["short_description"]);
   let item_image
-  let starting_bid = parseInt(req.body["starting_bid"], 10);
-  let seller = req.body["seller_id"];
-  let start = req.body["start"];
-  let end = req.body["end"];
+  let starting_bid = xss(parseInt(req.body["starting_bid"], 10));
+  let seller = xss(req.body["seller_id"]);
+  let start = xss(req.body["start"]);
+  let end = xss(req.body["end"]);
 
   //console.log(req.file)
 
@@ -123,7 +124,7 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
 );
 
 router.get('/view/:id', async (req, res) => {
-  try{
+  try {
     const myItem = await data.getItem(req.params.id);
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
@@ -134,12 +135,12 @@ router.get('/view/:id', async (req, res) => {
       myComments.push(comment)
     }
     res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments });
-  } catch(e) {
+  } catch (e) {
     console.log("oops");
     res.redirect("/");
   }
 
-  
+
 })
 
 
