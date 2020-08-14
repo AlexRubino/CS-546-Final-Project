@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const userData = require('../data/users');
 const itemData = require('../data/items');
+const xss = require('xss');
+const users = require('../data/users');
 let err = false;
 
 router.get("/", async (req, res) => {
@@ -22,9 +24,10 @@ router.get("/login", async (req, res) => {
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    users = await userData.getAllUsers();
+    const users = await userData.getAllUsers()
+    console.log(users)
+    console.log(username)
     for (user of users) {
-
         if ((user.username).toUpperCase() == username.toUpperCase()) {
             let compare = false;
             try {
@@ -43,17 +46,17 @@ router.post('/login', async (req, res) => {
     res.redirect("/login");
 });
 
-router.post("/search", async (req,res) => {
+router.post("/search", async (req, res) => {
     let myItems = [];
     const allItems = await itemData.getAllItems();
-    const search = req.body.search.toUpperCase();
+    const search = xss(req.body.search.toUpperCase());
 
-    for(item of allItems) {
-        if(item.itemName.toUpperCase().includes(search)){
+    for (item of allItems) {
+        if (item.itemName.toUpperCase().includes(search)) {
             myItems.push(item);
-        } else{
-            for(tag of item.tags) {
-                if(tag.toUpperCase().includes(search)){
+        } else {
+            for (tag of item.tags) {
+                if (tag.toUpperCase().includes(search)) {
                     myItems.push(item);
                     break;
                 }
@@ -61,23 +64,23 @@ router.post("/search", async (req,res) => {
         }
     }
 
-    res.render("pages/home", { loggedIn: req.session.user, items: myItems, message: req.body.search});
+    res.render("pages/home", { loggedIn: req.session.user, items: myItems, message: xss(req.body.search) });
 });
 
-router.post("/sort", async(req, res) => {
+router.post("/sort", async (req, res) => {
     res.render("pages/itemConfirmation");
 });
 
 router.get('/profile', async (req, res) => {
     if (req.session.user) {
         const user = await userData.getUser(req.session.user);
-        
+
         let myItems = user.listedItems;
         let newMyItems = [];
         for (item of myItems) {
             newMyItems.push(await itemData.getItem(item));
         }
-        
+
         let myBids = user.purchasedItems;
         let newMyBids = [];
         for (item of myBids) {
