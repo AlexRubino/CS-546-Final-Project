@@ -11,11 +11,14 @@
         <p>You can be the first to bid on this item!</p>
         {{/if}}
         {{#if loggedIn}}
+        {{#unless self}}
         <form method="POST" action="" id="new_bid_form">
             <label for="new_bid">Place Bid:</label>
             <input type="number" name="new_bid" id="new_bid" placeholder="Enter your starting bid here" />
             <button type="submit">Submit</button>
         </form>
+        {{/unless}}
+        {{else}}<p>You can place a bid if you are logged in. <a href="/login">Login</a></p>
         {{#if bidErrorMessage}}
         <p>{{bidErrorMessage}}</p> {{/if}}
         {{/if}}
@@ -40,16 +43,18 @@
             {{#each comments}}
             <li>{{this.dateCommented}} - {{this.commenter}}: {{this.comment}}</li>
             {{/each}}
-            <li>This is where you will be able to add a new comment</li>
+
         </ul>
-    {{#if loggedIn}}
-       <form method="POST" action="/items/comments" id="new_comment_form">
+        {{#if loggedIn}}
+        <form method="POST" action="/items/comments" id="new_comment_form">
             <label for="new_comment">Comment:</label>
             <input type="text" name="new_comment" id="new_comment" placeholder="Enter your comment here" />
             <button type="submit">Submit</button>
         </form>
-         {{#if commentErrorMessage}}
+        {{#if commentErrorMessage}}
         <p>{{commentErrorMessage}}</p>{{/if}}
+        {{else}}
+        <p>You can leave a comment if you are logged in. <a href="/login">Login</a></p>
         {{/if}}
     </section>
     <p><a href="/">Back to Home</a></p>

@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const userData = require('../data/users');
 const itemData = require('../data/items');
 const xss = require('xss');
-const users = require('../data/users');
 let err = false;
 
 router.get("/", async (req, res) => {
@@ -21,12 +20,45 @@ router.get("/login", async (req, res) => {
     }
 });
 
-router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+// router.post('/login', async (req, res) => {
+//     // verifyUser(xss(req.body.username), xss(req.body.password));
+//     // response.json({ message: 'Welcome ' + username + '!' });
+
+//     const username = xss(req.body.username);
+//     const password = xss(req.body.password);
+
+//     const users = await userData.getAllUsers()
+
+//     for (user of users) {
+//         if ((user.username).toUpperCase() == username.toUpperCase()) {
+//             let compare = false;
+//             try {
+//                 compare = await bcrypt.compare(password, user.hashedPassword);
+//             } catch (e) { }
+
+//             if (compare) {
+//                 req.session.user = user._id;
+//             }
+//             break;
+//         }
+//     }
+//     if (!req.session.user) {
+//         err = true;
+//     }
+
+//     res.json({ responseMessage: 'Welcome ' + username + '!' });
+
+// res.redirect("/login");
+// res.json({ message: 'Welcome ' + username + '!' });
+
+// });
+
+router.post('/login', async function (req, res) {
+    const username = xss(req.body.username);
+    const password = xss(req.body.password);
 
     const users = await userData.getAllUsers()
-    console.log(users)
-    console.log(username)
+
     for (user of users) {
         if ((user.username).toUpperCase() == username.toUpperCase()) {
             let compare = false;
@@ -36,14 +68,21 @@ router.post('/login', async (req, res) => {
 
             if (compare) {
                 req.session.user = user._id;
+                res.render("pages/login", { loggedIn: true, enter: true, username: username });
             }
             break;
         }
     }
+
+    if (!username || !password) {
+        res.render("pages/login", { nothing: true });
+        return;
+    }
+
     if (!req.session.user) {
         err = true;
+        res.render("pages/login", { hasErrors: true });
     }
-    res.redirect("/login");
 });
 
 router.post("/search", async (req, res) => {

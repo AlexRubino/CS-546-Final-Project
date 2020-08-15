@@ -4,8 +4,7 @@ const bcrypt = require('bcryptjs');
 const users = require('../data/users')
 const session = require('express-session');
 const data = require("../data/users");
-const { default: xss } = require('xss');
-
+const xss = require('xss');
 
 router.get("/signup", async (req, res) => {
   try {

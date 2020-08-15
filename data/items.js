@@ -10,7 +10,7 @@ function verifyItem(item, strict) {
     //Mandatory
     if (!item.itemName) {
         if (strict) {
-            throw "You must provide a non-empty itemName!"
+            throw "You must provide a non-empty item name!"
         }
     } else {
         itemData.itemName = item.itemName
@@ -19,7 +19,7 @@ function verifyItem(item, strict) {
 
     if (!item.itemDescription) {
         if (strict) {
-            throw "You must provide an non-empty itemDescription!"
+            throw "You must provide an non-empty item description!"
         }
     } else {
         itemData.itemDescription = item.itemDescription
@@ -37,7 +37,7 @@ function verifyItem(item, strict) {
 
     if (!item.itemImage) {
         if (strict) {
-            throw "You must provide an itemImage!"
+            throw "You must provide an item image!"
         }
     } else {
         itemData.itemImage = item.itemImage
@@ -46,29 +46,29 @@ function verifyItem(item, strict) {
 
     if (!item.askingPrice || typeof item.askingPrice !== "number" || item.askingPrice < 0) {
         if (strict) {
-            throw "You must provide a positive number as the askingPrice!"
+            throw "You must provide a positive number as the asking price!"
         }
     } else {
         itemData.askingPrice = item.askingPrice
         empty = false
     }
 
-//     if (!item.sellerId) {
-//         if (strict) {
-//             throw "You must provide a non-empty sellerId!"
-//         }
-//     } else {
-//         if (typeof item.sellerId === "string") {
-//             itemData.sellerId = ObjectId(item.sellerId)
-//         } else {
-//             itemData.sellerId = item.sellerId
-//         }
-//         empty = false
-//     }
+    //     if (!item.sellerId) {
+    //         if (strict) {
+    //             throw "You must provide a non-empty sellerId!"
+    //         }
+    //     } else {
+    //         if (typeof item.sellerId === "string") {
+    //             itemData.sellerId = ObjectId(item.sellerId)
+    //         } else {
+    //             itemData.sellerId = item.sellerId
+    //         }
+    //         empty = false
+    //     }
 
     if (!item.startDate || !item.startDate instanceof Date) {
         if (strict) {
-            throw "You must provide a non-empty date as the startDate!"
+            throw "You must provide a non-empty date as the start date!"
         }
     } else {
         itemData.startDate = item.startDate
@@ -77,7 +77,7 @@ function verifyItem(item, strict) {
 
     if (!item.endDate || !item.endDate instanceof Date) {
         if (strict) {
-            throw "You must provide a non-empty date as the startDate!"
+            throw "You must provide a non-empty date as the start date!"
         }
     } else {
         itemData.endDate = item.endDate
@@ -108,7 +108,7 @@ function verifyItem(item, strict) {
             itemData.tags = item.tags
             empty = false
         } else if (strict) {
-            throw "tags must be an Array!"
+            throw "tags must be an array!"
         }
     } else {
         itemData.tags = [];
@@ -119,21 +119,28 @@ function verifyItem(item, strict) {
             itemData.commentIds = item.commentIds
             empty = false
         } else if (strict) {
-            throw "commentIds must be an Array!"
+            throw "comment ID's must be an array!"
         }
     } else {
         itemData.commentIds = [];
     }
 
+    if (item.sold === undefined) {
+        throw "Sold is undefined"
+    } else {
+        itemData.sold = item.sold;
+    }
+
     if (!strict && empty) {
         throw "You must provide at least one non-empty item field to update!"
     }
+
     return itemData;
 }
 
 const getItem = async function get(id) {
     if (!id) {
-        throw "You must provide an id!"
+        throw "You must provide an ID!"
     }
 
     if (typeof id === "string") {
@@ -146,7 +153,7 @@ const getItem = async function get(id) {
     if (item !== null) {
         return item
     } else {
-        throw "Unable to locate item with id: " + id
+        throw "Unable to locate item with ID: " + id
     }
 }
 
@@ -159,6 +166,7 @@ const getAllItems = async function getAll() {
 
 //itemName, itemDescription, askingPrice, sellerId, startDate, endDate, tags
 const createItem = async function create(newitem) {
+    newitem.tags = newitem.tags.split(",");
     newitem = verifyItem(newitem, true)
 
     const itemCollection = await items()
@@ -173,7 +181,7 @@ const createItem = async function create(newitem) {
 
 const removeItem = async function remove(id) {
     if (!id) {
-        throw "You must provide an id!"
+        throw "You must provide an ID!"
     }
 
     if (typeof id === "string") {
@@ -183,7 +191,7 @@ const removeItem = async function remove(id) {
     const itemCollection = await items()
     const deleteInfo = await itemCollection.removeOne({ _id: id })
     if (deleteInfo.deletedCount === 0) {
-        throw "Failed to delete item with id: " + id
+        throw "Failed to delete item with ID: " + id
     }
     return true
 }
@@ -232,7 +240,7 @@ const removeItem = async function remove(id) {
 
 const patchItem = async function patch(id, updateditem) {
     if (!id) {
-        throw "You must provide non-empty id and name!"
+        throw "You must provide non-empty ID and name!"
     }
 
     if (typeof id === "string") {
@@ -244,7 +252,7 @@ const patchItem = async function patch(id, updateditem) {
     const itemCollection = await items()
     const updateInfo = await itemCollection.updateOne({ _id: id }, { $set: updateditemData })
     if (updateInfo.updatedCount === 0) {
-        throw "Could not update item with id: " + id
+        throw "Could not update item with ID: " + id
     }
 
     return await getItem(id)

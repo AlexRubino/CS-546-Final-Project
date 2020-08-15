@@ -9,7 +9,7 @@ function verifyUser(user, strict) {
     //Mandatory
     if (!user.firstName) {
         if (strict) {
-            throw "You must provide a non-empty firstName!"
+            throw "You must provide a non-empty first name!"
         }
     } else {
         userData.firstName = user.firstName
@@ -18,7 +18,7 @@ function verifyUser(user, strict) {
 
     if (!user.lastName) {
         if (strict) {
-            throw "You must provide a non-empty lastName!"
+            throw "You must provide a non-empty last name!"
         }
     } else {
         userData.lastName = user.lastName
@@ -26,7 +26,7 @@ function verifyUser(user, strict) {
     }
     if (!user.username) {
         if (strict) {
-            throw "You must provide a non-empty firstName!"
+            throw "You must provide a non-empty first name!"
         }
     } else {
         userData.username = user.username;
@@ -53,7 +53,7 @@ function verifyUser(user, strict) {
 
     if (!user.hashedPassword) {
         if (strict) {
-            throw "You must provide a non-empty hashedPassword!"
+            throw "You must provide a non-empty password!"
         }
     } else {
         userData.hashedPassword = user.hashedPassword
