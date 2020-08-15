@@ -30,10 +30,12 @@
         </div>
     </header>
     <main>
-        <p>Welcome to NerdBay!!! NerdBay is the haven every sci-fi and fantasy fan has always dreamed of. We are a
+        <p id="description">Welcome to NerdBay!!! NerdBay is the haven every sci-fi and fantasy fan has always dreamed
+            of. We are a
             buying and selling platform for many kinds of sci-fi and fantasy memorabilia. Fans can buy and sell any
             special items they have to other big fans in the NerdBay community in a clean, auction setting.
             Additionally, media companies can sell their own merchandise exclusively to NerdBay members.</p>
+        <hr />
         {{{body}}}
         <br>
     </main>
@@ -41,15 +43,21 @@
         <img src="..\..\public\img\NerdBay.png" class="logo"> <br>
         <div class="bottomnav">
             <a href="/"> Home </a>
+            <form action="/search" class="search" method="POST" id="search-form">
+                <label for="search">
+                    Search
+                    <input type="text" name="search" id="search" />
+                </label>
+                <button type="submit">Submit</button>
+            </form>
         </div>
-        <br>
-        Team Members: James Lepore || Alex Rubino || Justin Wing || Steven Zhao
-        <br>
+        <p>Founders of NerdBay: James Lepore, Alex Rubino, Justin Wing, and Steven Zhao</p>
         <br>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/public/js/validate.js"></script>
     <script src="/public/js/sort.js"></script>
+    <script src="/public/js/ajax.js"></script>
 </body>
 
 </html>
