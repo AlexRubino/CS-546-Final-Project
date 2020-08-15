@@ -78,7 +78,8 @@ async function run() {
         'currentBid': 75,
         'currentBidderId': yuezhengling._id,
         'tags': ['power', 'space', 'reality', 'soul', 'time', 'mind'],
-        'commentIds': [comment1._id, comment2._id]
+        'commentIds': [comment1._id, comment2._id], 
+        'sold': true
     }
     gauntlet = await itemData.createItem(gauntlet)
 
@@ -93,7 +94,8 @@ async function run() {
         'currentBid': 6000000,
         'currentBidderId': luotianyi._id,
         'tags': ['star wars', 'mandalorian'],
-        'commentIds': [comment3._id]
+        'commentIds': [comment3._id], 
+        'sold': false
     }
     the_child = await itemData.createItem(the_child)
 

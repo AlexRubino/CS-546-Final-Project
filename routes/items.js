@@ -134,7 +134,9 @@ router.get('/view/:id', async (req, res) => {
       comment.commenter = commenter.firstName + " " + commenter.lastName
       myComments.push(comment)
     }
-    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId });
+    
+    let available = !myItem.sold;
+    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available });
   } catch (e) {
     console.log(e);
     res.redirect("/");
@@ -193,6 +195,7 @@ router.post("/comments", async (req, res) => {
     if (!req.body.new_comment) {
       res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
     }
+
     else {
       const newComment = {
         commenterId: req.session.user,
