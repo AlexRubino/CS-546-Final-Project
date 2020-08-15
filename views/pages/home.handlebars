@@ -3,20 +3,21 @@
     <div>
         <aside>
             <form action="/sort" method="POST" class="sort" name="sort-form" id="sort-form"></form>
-                <label for="sort">Sort by:</label>
-                <select size="1" name="sort" id='sort'>
-                    <option selected disabled></option>
-                    <option value='dl'>Date Listed</option>
-                    <option value='de'>End Date</option>
-                    <option value='al'>Alphabetical</option>
-                    <option value='r-al'>Reverse Alphabetical</option>
-                    <option value='p'>Asking Price - Low to High</option>
-                    <option value='r-p'>Asking Price - High to Low</option>
-                </select>
+            <label for="sort">Sort by:</label>
+            <select size="1" name="sort" id='sort'>
+                <option selected disabled></option>
+                <option value='dl'>Date Listed</option>
+                <option value='de'>End Date</option>
+                <option value='al'>Alphabetical</option>
+                <option value='r-al'>Reverse Alphabetical</option>
+                <option value='p'>Asking Price - Low to High</option>
+                <option value='r-p'>Asking Price - High to Low</option>
+            </select>
+            {{!-- <button type="submit">Submit</button> --}}
             </form>
         </aside>
         {{#if message}}
-            <p>Displaying results for "{{message}}"</p>
+        <p>Displaying results for "{{message}}"</p>
         {{/if}}
         <div id='item_list'>
             {{#each items}}
@@ -26,7 +27,7 @@
                 <p>Date Listed: {{startDate}}</p>
                 <p>End Date: {{endDate}}</p>
                 <p>Asking Price: ${{askingPrice}}</p>
-                <hr/>
+                <hr />
             </article>
             {{/each}}
         </div>

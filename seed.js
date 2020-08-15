@@ -57,7 +57,15 @@ async function run() {
         "comment": "Is this food?",
         "dateCommented": "7/10/2019"
     }
-    commet2 = await commentData.createComment(comment2)
+    // commet2 = await commentData.createComment(comment2)
+    comment2 = await commentData.createComment(comment2)
+
+    let comment3 = {
+        "commenterId": yuezhengling._id,
+        "comment": "Is this really Baby Yoda?",
+        "dateCommented": "8/12/2020"
+    }
+    comment3 = await commentData.createComment(comment3)
 
     let gauntlet = {
         'itemDescription': 'Whoever buys this will have way too much power',
@@ -74,7 +82,24 @@ async function run() {
     }
     gauntlet = await itemData.createItem(gauntlet)
 
+    let the_child = {
+        'itemDescription': 'Baby Yoda is here!',
+        'itemName': 'Baby Yoda',
+        'itemImage': 'The Child.jpg',
+        'askingPrice': 5000000,
+        'sellerId': yuezhengling._id,
+        'startDate': '2020-08-13',
+        'endDate': '2020-08-25',
+        'currentBid': 6000000,
+        'currentBidderId': luotianyi._id,
+        'tags': ['star wars', 'mandalorian'],
+        'commentIds': [comment3._id]
+    }
+    the_child = await itemData.createItem(the_child)
+
     luotianyi = await userData.patchUser(luotianyi._id, { listedItems: [gauntlet._id] })
+
+    yuezhengling = await userData.patchUser(yuezhengling._id, { listedItems: [the_child._id] })
 
     const db = await connection();
     await db.serverConfig.close();
@@ -84,8 +109,3 @@ try {
 } catch (e) {
     console.log(e)
 }
-
-
-
-
-
