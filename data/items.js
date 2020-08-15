@@ -125,9 +125,16 @@ function verifyItem(item, strict) {
         itemData.commentIds = [];
     }
 
+    if (item.sold === undefined) {
+        throw "Sold is undefined"
+    } else {
+        itemData.sold = item.sold;
+    }
+
     if (!strict && empty) {
         throw "You must provide at least one non-empty item field to update!"
     }
+
     return itemData;
 }
 
@@ -159,6 +166,7 @@ const getAllItems = async function getAll() {
 
 //itemName, itemDescription, askingPrice, sellerId, startDate, endDate, tags
 const createItem = async function create(newitem) {
+    newitem.tags = newitem.tags.split(",");
     newitem = verifyItem(newitem, true)
 
     const itemCollection = await items()

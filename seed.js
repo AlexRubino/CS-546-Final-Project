@@ -48,14 +48,14 @@ async function run() {
     let comment1 = {
         "commenterId": yuezhengling._id,
         "comment": "Oops wrong universe.",
-        "dateCommented": "7/10/2019"
+        "dateCommented": "2019-07-10"
     }
     comment1 = await commentData.createComment(comment1)
 
     let comment2 = {
         "commenterId": luotianyi._id,
         "comment": "Is this food?",
-        "dateCommented": "7/10/2019"
+        "dateCommented": "2019-07-10"
     }
     // commet2 = await commentData.createComment(comment2)
     comment2 = await commentData.createComment(comment2)
@@ -63,7 +63,7 @@ async function run() {
     let comment3 = {
         "commenterId": yuezhengling._id,
         "comment": "Is this really Baby Yoda?",
-        "dateCommented": "8/12/2020"
+        "dateCommented": "2020-08-12"
     }
     comment3 = await commentData.createComment(comment3)
 

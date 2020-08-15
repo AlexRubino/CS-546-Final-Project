@@ -20,10 +20,10 @@
                   })
             };
 
-            console.log(requestConfig);
+            // console.log(requestConfig);
 
             $.ajax(requestConfig).then(function (responseMessage) {
-                  console.log(responseMessage);
+                  // console.log(responseMessage);
                   newContent.html(responseMessage);
             })
       });
