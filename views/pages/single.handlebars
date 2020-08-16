@@ -1,5 +1,7 @@
 <article>
     <h1>{{item.itemName}}</h1>
+    {{#unless available}}<h2>This item is off the market!</h2>{{/unless}}
+
     <address>Listed by {{seller.firstName}} {{seller.lastName}}</address>
     <img src="../../public/items/{{item.itemImage}}" class="single-page-img" />
     <p>{{item.itemDescription}}</p>
@@ -11,6 +13,7 @@
         <p>You can be the first to bid on this item!</p>
         {{/if}}
         {{#if loggedIn}}
+        {{#if available}}
         {{#unless self}}
         <form method="POST" action="" id="new_bid_form">
             <label for="new_bid">Place Bid:</label>
@@ -18,9 +21,10 @@
             <button type="submit">Submit</button>
         </form>
         {{/unless}}
-        {{else}}<p>You can place a bid if you are logged in. <a href="/login">Login</a></p>
+        {{else}}{{#if available}}<p>You can place a bid if you are logged in. <a href="/login">Login</a></p>{{/if}}
         {{#if bidErrorMessage}}
         <p>{{bidErrorMessage}}</p> {{/if}}
+        {{/if}}
         {{/if}}
     </section>
     <section>
