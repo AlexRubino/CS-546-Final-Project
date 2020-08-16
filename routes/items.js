@@ -149,7 +149,7 @@ router.get('/view/:id', async (req, res) => {
 router.post("/view/:id", async (req, res) => {
   try {
     let myItem = await data.getItem(req.params.id);
-    let newBid = req.body["new_bid"];
+    let newBid = xss(req.body["new_bid"]);
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
     for (commentId of myItem.commentIds) {
@@ -199,7 +199,7 @@ router.post("/comments", async (req, res) => {
     else {
       const newComment = {
         commenterId: req.session.user,
-        comment: req.body.new_comment,
+        comment: xss(req.body.new_comment),
         dateCommented: date
       }
 
