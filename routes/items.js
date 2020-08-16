@@ -54,14 +54,16 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
   let name = xss(req.body["name"]);
   let short_description = xss(req.body["short_description"]);
   let item_image
-
   let starting_bid = parseInt(xss(req.body["starting_bid"], 10));
   let end = xss(req.body["end"]);
+  let time = xss(req.body["endtime"]);
   let tags = xss(req.body["tags"].split(","));
-  var today = new Date();
-  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  const today = new Date();
+  const currentMonth = ('0' + (today.getMonth()+1)).slice(-2)
+  let date = today.getFullYear() + '-' + currentMonth + '-' + today.getDate() +" " + today.getHours()+":"+ today.getMinutes();
 
-  //console.log(req.file)
+  let endDateandTime = xss(end + " " + time);
+
 
   try {
 
@@ -103,7 +105,7 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
         askingPrice: starting_bid,
         sellerId: req.session.user,
         startDate: date,
-        endDate: end,
+        endDate: endDateandTime ,
         tags: tags,
         sold: false
       }
