@@ -1,7 +1,5 @@
 <article>
     <h1>{{item.itemName}}</h1>
-    {{#unless available}}<h2>This item is off the market!</h2>{{/unless}}
-
     <address>Listed by {{seller.firstName}} {{seller.lastName}}</address>
     <img src="../../public/items/{{item.itemImage}}" class="single-page-img" />
     <p>{{item.itemDescription}}</p>
@@ -29,7 +27,9 @@
     </section>
     <section>
         <p>Start Date: {{item.startDate}}</p>
-        <p>End Date: {{item.endDate}}</p>
+        <p id="endDate">End Date: {{item.endDate}}</p>
+        <p id="timer"></p>
+
     </section>
     {{#if item.tags.length}}
     <section>
@@ -62,4 +62,5 @@
         {{/if}}
     </section>
     <p><a href="/">Back to Home</a></p>
+<script src="../../public/js/countdown.js" async></script>
 </article>
