@@ -166,7 +166,9 @@ const getAllItems = async function getAll() {
 
 //itemName, itemDescription, askingPrice, sellerId, startDate, endDate, tags
 const createItem = async function create(newitem) {
+    if(!Array.isArray(newitem.tags)){
     newitem.tags = newitem.tags.split(",");
+    }
     newitem = verifyItem(newitem, true)
 
     const itemCollection = await items()

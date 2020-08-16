@@ -15,7 +15,9 @@
             startBid.classList.remove("input-error")
             const endDate = document.getElementById("end")
             endDate.classList.remove("input-error")
-
+            const endTime = document.getElementById("endtime")
+            endTime.classList.remove("input-error")
+            const dateTime = endDate.value + " " + endTime.value;
             let err = false
 
             if (!name.value) {
@@ -48,6 +50,12 @@
                 err = true
             }
 
+            if (!endTime.value) {
+                endTime.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+
             if (startBid.value < 0) {
                 event.preventDefault()
                 startBid.classList.add("input-error")
@@ -55,11 +63,15 @@
                 document.getElementsByName("incomplete-error")[0].textContent = "The starting bid must not be negative!"
             }
 
-            if (Date.now() > Date.parse(endDate.value)) {
+            if (Date.now() > Date.parse(dateTime)) {
+                // alert(Date.now())
+                // alert(Date.now()> Date.parse(endDate.value)) ;
+                // alert(endDate.value);
                 event.preventDefault()
                 endDate.classList.add("input-error")
+                endTime.classList.add("input-error")
                 document.getElementsByName("incomplete-error")[0].classList.remove("hidden")
-                document.getElementsByName("incomplete-error")[0].textContent = "The end date must be later than the current date!"
+                document.getElementsByName("incomplete-error")[0].textContent = "The end date and time must be later than now!"
             }
 
             if (err) {

@@ -54,14 +54,16 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
   let name = xss(req.body["name"]);
   let short_description = xss(req.body["short_description"]);
   let item_image
-
   let starting_bid = parseInt(xss(req.body["starting_bid"], 10));
   let end = xss(req.body["end"]);
+  let time = xss(req.body["endtime"]);
   let tags = xss(req.body["tags"].split(","));
-  var today = new Date();
-  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  const today = new Date();
+  const currentMonth = ('0' + (today.getMonth()+1)).slice(-2)
+  let date = today.getFullYear() + '-' + currentMonth + '-' + today.getDate() +" " + today.getHours()+":"+ today.getMinutes();
 
-  //console.log(req.file)
+  let endDateandTime = xss(end + " " + time);
+
 
   try {
 
@@ -103,7 +105,7 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
         askingPrice: starting_bid,
         sellerId: req.session.user,
         startDate: date,
-        endDate: end,
+        endDate: endDateandTime ,
         tags: tags,
         sold: false
       }
@@ -134,7 +136,9 @@ router.get('/view/:id', async (req, res) => {
       comment.commenter = commenter.firstName + " " + commenter.lastName
       myComments.push(comment)
     }
-    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId });
+    
+    let available = !myItem.sold;
+    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available });
   } catch (e) {
     console.log(e);
     res.redirect("/");
@@ -147,7 +151,7 @@ router.get('/view/:id', async (req, res) => {
 router.post("/view/:id", async (req, res) => {
   try {
     let myItem = await data.getItem(req.params.id);
-    let newBid = req.body["new_bid"];
+    let newBid = xss(req.body["new_bid"]);
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
     for (commentId of myItem.commentIds) {
@@ -193,10 +197,11 @@ router.post("/comments", async (req, res) => {
     if (!req.body.new_comment) {
       res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
     }
+
     else {
       const newComment = {
         commenterId: req.session.user,
-        comment: req.body.new_comment,
+        comment: xss(req.body.new_comment),
         dateCommented: date
       }
 
