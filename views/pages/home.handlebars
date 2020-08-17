@@ -22,7 +22,7 @@
             </form>
             <br/>
             <form class="hide" name="hide-form" id="hide-form">
-                <label for="hide-form">Hide Sold?</label>
+                <label for="hide-form-checkbox">Hide Sold?</label>
                 <input type="checkbox" name="hide-form-checkbox" id="hide-form-checkbox" value="hide"/>
             </form>
         </aside>
@@ -35,9 +35,9 @@
             <article dl='{{startDate}}' de='{{endDate}}' p='{{askingPrice}}' sold='{{sold}}'>
                 <h2><a href="/items/view/{{_id}}">{{itemName}}</a></h2>
                 <div class='img-container'>
-                    <img src="../../public/items/{{itemImage}}" class="item-img"/>
+                    <img src="../../public/items/{{itemImage}}" class="item-img" alt="{{itemName}}"/>
                     {{#if sold}}
-                        <img src="../../public/img/sold.png" class="sold-overlay"/>
+                        <img src="../../public/img/sold.png" class="sold-overlay" alt="sold"/>
                     {{/if}}
                 </div>
                 <p>Date Listed: {{startDate}}</p>

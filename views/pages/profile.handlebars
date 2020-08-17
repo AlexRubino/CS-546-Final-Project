@@ -27,6 +27,19 @@
                     <img src="../../public/img/sold.png" class="sold-overlay"/>
                 {{/if}}
             </div>
+            {{#if winning}}
+                {{#if sold}}
+                    <p>You won this item!</p>
+                {{else}}
+                    <p>You currently have the highest bid for this item!</p>
+                {{/if}}
+            {{else}}
+                {{#if sold}}
+                    <p>You did not win this item.</p>
+                {{else}}
+                    <p>Someone outbid you - place a higher bid if you want to win.</p>
+                {{/if}}
+            {{/if}}
         </div>
         {{/each}}
     </section>

@@ -9,7 +9,8 @@
 
 <body>
     <header>
-        <img src="..\..\public\img\NerdBay.png" class="logo"> <br>
+        <img src="..\..\public\img\NerdBay.png" class="logo" alt="NerdBay"> 
+        <br/>
         <div class="topnav">
             <a href="/"> Home </a>
             {{#if loggedIn}}
@@ -21,9 +22,9 @@
             <a href="/users/signup"> Sign Up </a>
             {{/if}}
             <form action="/search" class="search" method="POST" id="search-form">
-                <label for="search">
+                <label for="search1">
                     Search
-                    <input type="text" name="search"/>
+                    <input type="text" name="search" id='search1'/>
                 </label>
                 <button type="submit">Submit</button>
             </form>
@@ -34,13 +35,14 @@
         <br>
     </main>
     <footer>
-        <img src="..\..\public\img\NerdBay.png" class="logo"> <br>
+        <img src="..\..\public\img\NerdBay.png" class="logo" alt='NerdBay'>
+        <br/>
         <div class="bottomnav">
             <a href="/"> Home </a>
             <form action="/search" class="search" method="POST" id="search-form">
-                <label for="search">
+                <label for="search2">
                     Search
-                    <input type="text" name="search" />
+                    <input type="text" name="search" id='search2'/>
                 </label>
                 <button type="submit">Submit</button>
             </form>
