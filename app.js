@@ -7,6 +7,7 @@ const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 const nodemailer = require('nodemailer');
 const itemData = require("./data/items")
+const userData = require("./data/users")
 
 app.use('/public', static);
 app.use(cookieParser());
@@ -70,7 +71,27 @@ app.use(async (req, res, next) => { // check if item was sold since last time
   const ItemList = await itemData.getAllItems();
   for(item of ItemList) {
     if(Date.now() > Date.parse(item.endDate) && !item.sold) {
-      // get seller and buyer and send email
+      const seller = await userData.getUser(item.sellerId);
+      let recipient, subject, text = "";
+
+      if(item.currentBid) {
+        // if someone bid, send email to seller and buyer
+        console.log("todo");
+      } else {
+        // if no one bid, send email to seller only
+        recipient = seller.email;
+        subject = "Your item was not sold.";
+        text = 
+        `Hi ${seller.firstName},
+
+        We're sorry to inform you that your no one has purhchased your item: ${item.itemName}. We encourage you to try listing it again with a lower asking price.
+
+        Sincerely,
+        The NerdBay Team
+        `
+        await emailNotify(recipient, subject, text);
+        console.log("sent");
+      }
 
       await itemData.patchItem(item._id, {sold: true});
     }

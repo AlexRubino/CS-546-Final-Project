@@ -106,9 +106,9 @@ router.post("/search", async (req, res) => {
     res.render("pages/home", { loggedIn: req.session.user, items: myItems, message: xss(req.body.search) });
 });
 
-router.post("/sort", async (req, res) => {
-    res.render("pages/itemConfirmation");
-});
+// router.post("/sort", async (req, res) => {
+//     res.render("pages/itemConfirmation");
+// });
 
 router.get('/profile', async (req, res) => {
     if (req.session.user) {
