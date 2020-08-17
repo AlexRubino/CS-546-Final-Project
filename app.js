@@ -3,18 +3,44 @@ const app = express();
 const session = require('express-session');
 const static = express.static(__dirname + '/public');
 const cookieParser = require('cookie-parser');
-
-
-
-
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
+const nodemailer = require('nodemailer');
 
 app.use('/public', static);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+async function emailNotify(recipient, subject, text) {
+  return new Promise((resolve, reject) => {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'NerdBay546@gmail.com',
+        pass: 'cs546squad'
+      }
+    })
+
+    const email = {
+      from: 'NerdBay546@gmail.com',
+      to: recipient,
+      subject: subject,
+      text: text
+    }
+
+    transporter.sendMail(email, (error, info) => {
+      if (error) {
+        console.log("Encountered an error while attempting to send email: ")
+        console.log(error)
+        resolve(false)
+      } else {
+        console.log(`[` + new Date().toUTCString() + "] " + "email sent to: " + recipient)
+        resolve(true)
+      }
+    })
+  })
+}
 
 app.use(session({
   name: 'AuthCookie',

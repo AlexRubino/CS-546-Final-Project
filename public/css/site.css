@@ -139,7 +139,7 @@ footer {
 }
 
 .bottomnav {
-	background-color: blue;
+	background-color: green;
 	overflow: hidden;
 }
 
@@ -177,4 +177,8 @@ footer {
 .listing-page-img {
 	width: 100px;
 	height: 100px
+}
+
+#description {
+	font-size: smaller;
 }

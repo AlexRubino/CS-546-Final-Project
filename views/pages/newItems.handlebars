@@ -15,11 +15,14 @@
     <input type="number" name="starting_bid" id="starting_bid" placeholder="Enter your starting bid here" />
     <label for="end">Ending Date:</label>
     <input type="date" name="end" id="end" placeholder="Enter your ending date here" />
+    <label for="endtime">Ending Date:</label>
+    <input type="time" name="endtime" id="endtime" placeholder="Enter your ending time here" />
+    
     <label for="tags">Tags - Seperate tags with comma</label>
-    <input type="text" name="tags" id="tags" placeholder="Enter your tags here"/>
+    <input type="text" name="tags" id="tags" placeholder="Enter your tags here" />
     <button type="submit">Submit</button>
 </form>
 <p class="hidden" name="incomplete-error" id="error"></p>
-{{#if hasErrors}}
+{{!-- {{#if hasErrors}} --}}
 <p name="file-error" id="error">{{errorMessage}}</p>
-{{/if}}
+{{!-- {{/if}} --}}
