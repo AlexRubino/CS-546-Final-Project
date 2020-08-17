@@ -1,19 +1,29 @@
 <section>
-    <h1>Home Page</h1>
+    <h1>NerdBay</h1>
+    <p id="description">Welcome to NerdBay!!! NerdBay is the haven every sci-fi and fantasy fan has always dreamed
+        of. We are a
+        buying and selling platform for many kinds of sci-fi and fantasy memorabilia. Fans can buy and sell any
+        special items they have to other big fans in the NerdBay community in a clean, auction setting.
+        Additionally, media companies can sell their own merchandise exclusively to NerdBay members.</p>
+    <hr />
     <div>
         <aside>
-            <form action="/sort" method="POST" class="sort" name="sort-form" id="sort-form"></form>
-            <label for="sort">Sort by:</label>
-            <select size="1" name="sort" id='sort'>
-                <option selected disabled></option>
-                <option value='dl'>Date Listed</option>
-                <option value='de'>End Date</option>
-                <option value='al'>Alphabetical</option>
-                <option value='r-al'>Reverse Alphabetical</option>
-                <option value='p'>Asking Price - Low to High</option>
-                <option value='r-p'>Asking Price - High to Low</option>
-            </select>
-            {{!-- <button type="submit">Submit</button> --}}
+            <form class="sort" name="sort-form" id="sort-form">
+                <label for="sort">Sort by:</label>
+                <select size="1" name="sort" id='sort'>
+                    <option selected disabled></option>
+                    <option value='dl'>Date Listed</option>
+                    <option value='de'>End Date</option>
+                    <option value='al'>Alphabetical</option>
+                    <option value='r-al'>Reverse Alphabetical</option>
+                    <option value='p'>Asking Price - Low to High</option>
+                    <option value='r-p'>Asking Price - High to Low</option>
+                </select>
+            </form>
+            <br/>
+            <form class="hide" name="hide-form" id="hide-form">
+                <label for="hide-form">Hide Sold?</label>
+                <input type="checkbox" name="hide-form-checkbox" id="hide-form-checkbox" value="hide"/>
             </form>
         </aside>
         <hr />
@@ -22,9 +32,14 @@
         {{/if}}
         <div id='item_list'>
             {{#each items}}
-            <article dl='{{startDate}}' de='{{endDate}}' p='{{askingPrice}}'>
+            <article dl='{{startDate}}' de='{{endDate}}' p='{{askingPrice}}' sold='{{sold}}'>
                 <h2><a href="/items/view/{{_id}}">{{itemName}}</a></h2>
-                <img src="../../public/items/{{itemImage}}" class="listing-page-img" />
+                <div class='img-container'>
+                    <img src="../../public/items/{{itemImage}}" class="item-img"/>
+                    {{#if sold}}
+                        <img src="../../public/img/sold.png" class="sold-overlay"/>
+                    {{/if}}
+                </div>
                 <p>Date Listed: {{startDate}}</p>
                 <p>End Date: {{endDate}}</p>
                 <p>Asking Price: ${{askingPrice}}</p>

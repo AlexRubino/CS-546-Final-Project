@@ -169,14 +169,37 @@ footer {
   	width: 50%;
 }
 
-.single-page-img {
-	width: 1000px;
-	height: 1000px
+.img-container {
+	width: 150px;
+	/* height: 100px; */
+	position: relative;
+	top: 0;
+	left: 0;
 }
 
-.listing-page-img {
-	width: 100px;
-	height: 100px
+.indiv-img-container {
+	width: 400px;
+	/* height: 100px; */
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+.item-img {
+	max-width: 100%;
+	max-height: 100%;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+.sold-overlay {
+	position: absolute;
+	max-width: 100%;
+	max-height: 100%;
+	opacity: 70%;
+	top: 0;
+	right: 0;
 }
 
 #description {

@@ -1,7 +1,12 @@
 <article>
     <h1>{{item.itemName}}</h1>
     <address>Listed by {{seller.firstName}} {{seller.lastName}}</address>
-    <img src="../../public/items/{{item.itemImage}}" class="single-page-img" />
+    <div class='indiv-img-container'>
+        <img src="../../public/items/{{item.itemImage}}" class="item-img"/>
+        {{#if item.sold}}
+            <img src="../../public/img/sold.png" class="sold-overlay"/>
+        {{/if}}
+    </div>
     <p>{{item.itemDescription}}</p>
     <section>
         <p>Asking Price: ${{item.askingPrice}}</p>

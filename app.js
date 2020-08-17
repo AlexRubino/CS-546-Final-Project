@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 const nodemailer = require('nodemailer');
+const itemData = require("./data/items")
 
 app.use('/public', static);
 app.use(cookieParser());
@@ -62,6 +63,19 @@ app.use('/items/new', async (req, res, next) => {
   if (!req.session.user) {
     return res.status(403).redirect('/login');
   }
+  next();
+});
+
+app.use(async (req, res, next) => { // check if item was sold since last time
+  const ItemList = await itemData.getAllItems();
+  for(item of ItemList) {
+    if(Date.now() > Date.parse(item.endDate) && !item.sold) {
+      // get seller and buyer and send email
+
+      await itemData.patchItem(item._id, {sold: true});
+    }
+  }
+
   next();
 });
 
