@@ -33,7 +33,12 @@
     <section>
         <p id="startDate">Start Date: {{item.startDate}}</p>
         <p id="endDate">End Date: {{item.endDate}}</p>
-        <p id="timer"></p>
+        <div>
+            {{#unless item.sold}}
+                <span>Time Remaining:</span>
+            {{/unless}}
+            <p id="timer"></p>
+        </div>
 
     </section>
     {{#if item.tags.length}}

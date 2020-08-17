@@ -76,7 +76,31 @@ app.use(async (req, res, next) => { // check if item was sold since last time
 
       if(item.currentBid) {
         // if someone bid, send email to seller and buyer
-        console.log("todo");
+        const bidder = await userData.getUser(item.currentBidderId);
+        
+        recipient = seller.email;
+        subject = "Your item was sold!";
+        text = 
+        `Hi ${seller.firstName},
+
+        Great news! Someone purchased your item: ${item.itemName}. The buyer's name is ${bidder.firstName} ${bidder.lastName}, and their bid on your item is ${item.currentBid}. Reach out to them at ${bidder.email} to set up how you will complete the transaction.
+
+        Sincerely,
+        The NerdBay Team
+        `
+        await emailNotify(recipient, subject, text);
+
+        recipient = bidder.email;
+        subject = "You won the auction!";
+        text = 
+        `Hi ${bidder.firstName},
+
+        Great news! You had the highest bid on the item: ${item.itemName}. The seller's name is ${seller.firstName} ${seller.lastName}; reach out to them at ${seller.email} to set up how you will complete the transaction.
+
+        Sincerely,
+        The NerdBay Team
+        `
+        await emailNotify(recipient, subject, text);
       } else {
         // if no one bid, send email to seller only
         recipient = seller.email;
@@ -84,7 +108,7 @@ app.use(async (req, res, next) => { // check if item was sold since last time
         text = 
         `Hi ${seller.firstName},
 
-        We're sorry to inform you that your no one has purhchased your item: ${item.itemName}. We encourage you to try listing it again with a lower asking price.
+        We're sorry to inform you that no one has purchased your item: ${item.itemName}. We encourage you to try listing it again with a lower asking price.
 
         Sincerely,
         The NerdBay Team
