@@ -154,6 +154,7 @@ router.post("/view/:id", async (req, res) => {
     let newBid = xss(req.body["new_bid"]);
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
+    let available = !myItem.sold;
     for (commentId of myItem.commentIds) {
       let comment = await commentData.getComment(commentId)
       const commenter = await userData.getUser(comment.commenterId)
@@ -161,10 +162,10 @@ router.post("/view/:id", async (req, res) => {
       myComments.push(comment)
     }
     if (newBid <= myItem.currentBid || newBid < myItem.askingPrice) {
-      res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, bidErrorMessage: "You must bid higher than the current bid." });
+      res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available,  bidErrorMessage: "You must bid higher than the current bid." });
     }
     else {
-      myItem.currentBid = newBid;
+      myItem.currentBid = parseFloat(newBid);
       myItem.currentBidderId = req.session.user;
 
       let currentUser = await userData.getUser(req.session.user);
@@ -176,7 +177,7 @@ router.post("/view/:id", async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments });
+    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available });
   }
 })
 

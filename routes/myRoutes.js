@@ -20,39 +20,6 @@ router.get("/login", async (req, res) => {
     }
 });
 
-// router.post('/login', async (req, res) => {
-//     // verifyUser(xss(req.body.username), xss(req.body.password));
-//     // response.json({ message: 'Welcome ' + username + '!' });
-
-//     const username = xss(req.body.username);
-//     const password = xss(req.body.password);
-
-//     const users = await userData.getAllUsers()
-
-//     for (user of users) {
-//         if ((user.username).toUpperCase() == username.toUpperCase()) {
-//             let compare = false;
-//             try {
-//                 compare = await bcrypt.compare(password, user.hashedPassword);
-//             } catch (e) { }
-
-//             if (compare) {
-//                 req.session.user = user._id;
-//             }
-//             break;
-//         }
-//     }
-//     if (!req.session.user) {
-//         err = true;
-//     }
-
-//     res.json({ responseMessage: 'Welcome ' + username + '!' });
-
-// res.redirect("/login");
-// res.json({ message: 'Welcome ' + username + '!' });
-
-// });
-
 router.post('/login', async function (req, res) {
     const username = xss(req.body.username);
     const password = xss(req.body.password);
@@ -106,9 +73,9 @@ router.post("/search", async (req, res) => {
     res.render("pages/home", { loggedIn: req.session.user, items: myItems, message: xss(req.body.search) });
 });
 
-router.post("/sort", async (req, res) => {
-    res.render("pages/itemConfirmation");
-});
+// router.post("/sort", async (req, res) => {
+//     res.render("pages/itemConfirmation");
+// });
 
 router.get('/profile', async (req, res) => {
     if (req.session.user) {
@@ -123,7 +90,9 @@ router.get('/profile', async (req, res) => {
         let myBids = user.purchasedItems;
         let newMyBids = [];
         for (item of myBids) {
-            newMyBids.push(await itemData.getItem(item));;
+            let newItem = await itemData.getItem(item);;
+            newItem.winning = req.session.user==newItem.currentBidderId;
+            newMyBids.push(newItem);
         }
 
         res.render('pages/profile', { loggedIn: req.session.user, myItems: newMyItems, myBids: newMyBids });
