@@ -19,7 +19,14 @@ document.getElementById("hours").innerHTML =  hours;
 document.getElementById("minutes").innerHTML = minutes;
 document.getElementById("seconds").innerHTML = seconds;
 // If the count down is finished, write some text
-if (distance < 0) {
- clearInterval(x);
+if (distance < 2) {
+    clearInterval(x);
+    document.getElementById("new_bid_form").innerHTML = "Bidding is now over. This item has been sold";
+    document.getElementById("days").innerHTML = 0;
+    document.getElementById("hours").innerHTML =  0;
+    document.getElementById("minutes").innerHTML =0;
+    document.getElementById("seconds").innerHTML = 0;
+    
+// If the count down is finished, write some text
 }
 }, 1000);
