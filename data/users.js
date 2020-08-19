@@ -42,6 +42,15 @@ function verifyUser(user, strict) {
         empty = false
     }
 
+    if (!user.email) {
+        if (strict) {
+            throw "You must provide a non-empty email!"
+        }
+    } else {
+        userData.email = user.email
+        empty = false
+    }
+
     if (!user.state) {
         if (strict) {
             throw "You must provide a non-empty state!"

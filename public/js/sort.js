@@ -26,7 +26,6 @@ $(document).ready(function () {
 
     $('#sort').on('change', function () {
         let option = $(this).val();
-        console.log("changed to", option);
         let list, i, switching, b, shouldSwitch;
         list = document.getElementById("item_list");
         switching = true;
@@ -45,6 +44,5 @@ $(document).ready(function () {
                 switching = true;
             }
         }
-        console.log("done");
     });
 });

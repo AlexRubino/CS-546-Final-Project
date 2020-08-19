@@ -129,6 +129,7 @@ function verifyItem(item, strict) {
         throw "Sold is undefined"
     } else {
         itemData.sold = item.sold;
+        empty=false;
     }
 
     if (!strict && empty) {
