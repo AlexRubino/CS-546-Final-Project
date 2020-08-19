@@ -206,6 +206,36 @@ footer {
 	font-size: smaller;
 }
 
-#timer {
-	display: inline;
+
+
+#countdown{
+    font-family: sans-serif;
+    color: white;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+	font-size: 30px;
+
 }
+
+#countdown > div{
+	padding: 20px;
+	border: rounded;
+	border-radius: 24px;
+	border-width: .5px;
+	border-color: rgb(34, 34, 34);
+	border-style: groove ;
+	background: #bf830063;
+	display: inline-block;
+}
+
+.units{
+	font-family: sans-serif;
+	color: white;
+	font-size: 15px
+}
+
+#timeheader{
+	text-align: left;
+}
+
