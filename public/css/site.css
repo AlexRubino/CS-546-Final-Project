@@ -220,7 +220,6 @@ footer {
 
 #countdown > div{
 	padding: 20px;
-	border: rounded;
 	border-radius: 24px;
 	border-width: .5px;
 	border-color: rgb(34, 34, 34);
@@ -237,5 +236,14 @@ footer {
 
 #timeheader{
 	text-align: left;
+}
+
+#item-img{
+float:left;
+
+}
+
+.bid-block{
+text-align: center;
 }
 

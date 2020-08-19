@@ -19,7 +19,7 @@ document.getElementById("hours").innerHTML =  hours;
 document.getElementById("minutes").innerHTML = minutes;
 document.getElementById("seconds").innerHTML = seconds;
 // If the count down is finished, write some text
-if (distance < 2) {
+if (distance < 0 ) {
     clearInterval(x);
     document.getElementById("new_bid_form").innerHTML = "Bidding is now over. This item has been sold";
     document.getElementById("days").innerHTML = 0;
