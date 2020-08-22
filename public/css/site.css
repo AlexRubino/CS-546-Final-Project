@@ -7,6 +7,11 @@ body {
 	font-size: 14pt;
 }
 
+main{
+	margin-top: 3%;
+	margin-left: 3%;
+}
+
 body {
 	background: #dedede;
 	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
@@ -51,12 +56,11 @@ label {
 }
 
 .input-error {
-	border: 1px solid #DDDDDD;
+	border: 1px solid #EE0000;
 	border-radius: 7px;
-	border-color: #EE0000;
 }
 
-#error {
+#incomplete-error, .error {
 	color: #ff0000;
 	margin-bottom: 5px;
 }
@@ -115,9 +119,10 @@ footer {
 	float: left;
 	color: #f2f2f2;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 20px;
 	text-decoration: none;
 	font-size: 17px;
+	height: 100%;
 }
 
 .topnav a:hover {
@@ -137,6 +142,7 @@ footer {
 	margin-top: 8px;
 	margin-right: 16px;
 	font-size: 17px;
+	height: 100%;
 }
 
 .bottomnav {
@@ -148,7 +154,7 @@ footer {
 	float: left;
 	color: #f2f2f2;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 20px;
 	text-decoration: none;
 	font-size: 17px;
 }
@@ -215,7 +221,7 @@ footer {
 	color: #0072ee;
 }
 
-#titles {
+.titles {
 	text-decoration: underline;
 }
 

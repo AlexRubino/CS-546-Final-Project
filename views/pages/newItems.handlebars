@@ -36,7 +36,7 @@
     </div>
     <input class="btn btn-primary" type="submit" value="Submit" />
 </form>
-<p class="hidden" name="incomplete-error" id="error"></p>
-{{!-- {{#if hasErrors}} --}}
-<p name="file-error" id="error">{{errorMessage}}</p>
-{{!-- {{/if}} --}}
+<p class="error hidden" id="incomplete-error" ></p>
+{{#if hasErrors}}
+<p class="error">{{errorMessage}}</p>
+{{/if}}

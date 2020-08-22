@@ -3,8 +3,8 @@
     const signupForm = document.getElementById("signup-form")
     if (itemForm) {
         itemForm.addEventListener("submit", (event) => {
-            document.getElementsByName("incomplete-error")[0].classList.add("hidden")
-            document.getElementsByName("file-error")[0].classList.add("hidden")
+            document.getElementById("incomplete-error").classList.add("hidden")
+            document.getElementById("file-error").classList.add("hidden")
 
             const name = document.getElementById("name")
             name.classList.remove("input-error")
@@ -60,8 +60,8 @@
             if (startBid.value < 0) {
                 event.preventDefault()
                 startBid.classList.add("input-error")
-                document.getElementsByName("incomplete-error")[0].classList.remove("hidden")
-                document.getElementsByName("incomplete-error")[0].textContent = "The starting bid must not be negative!"
+                document.getElementById("incomplete-error").classList.remove("hidden")
+                document.getElementById("incomplete-error").textContent = "The starting bid must not be negative!"
             }
 
             if (Date.now() > Date.parse(dateTime)) {
@@ -71,19 +71,19 @@
                 event.preventDefault()
                 endDate.classList.add("input-error")
                 endTime.classList.add("input-error")
-                document.getElementsByName("incomplete-error")[0].classList.remove("hidden")
-                document.getElementsByName("incomplete-error")[0].textContent = "The end date and time must be later than now!"
+                document.getElementById("incomplete-error").classList.remove("hidden")
+                document.getElementById("incomplete-error").textContent = "The end date and time must be later than now!"
             }
 
             if (err) {
                 event.preventDefault()
-                document.getElementsByName("incomplete-error")[0].classList.remove("hidden")
-                document.getElementsByName("incomplete-error")[0].textContent = "Please fill in the required fields!"
+                document.getElementById("incomplete-error").classList.remove("hidden")
+                document.getElementById("incomplete-error").textContent = "Please fill in the required fields!"
             }
         })
     } else if (signupForm) {
         signupForm.addEventListener("submit", (event) => {
-            document.getElementsByName("incomplete-error")[0].classList.add("hidden")
+            document.getElementById("incomplete-error").classList.add("hidden")
 
             const fname = document.getElementById("fname")
             fname.classList.remove("input-error")
@@ -105,6 +105,7 @@
 
             if (!fname.value) {
                 fname.classList.add("input-error")
+                
                 event.preventDefault()
                 err = true
             }
@@ -158,14 +159,14 @@
                 event.preventDefault()
                 password.classList.add("input-error")
                 confirm.classList.add("input-error")
-                document.getElementsByName("incomplete-error")[0].classList.remove("hidden")
-                document.getElementsByName("incomplete-error")[0].textContent = "Confirmation password and password does not match!"
+                document.getElementById("incomplete-error").classList.remove("hidden")
+                document.getElementById("incomplete-error").textContent = "Confirmation password and password does not match!"
             }
 
             if (err) {
                 event.preventDefault()
-                document.getElementsByName("incomplete-error")[0].classList.remove("hidden")
-                document.getElementsByName("incomplete-error")[0].textContent = "Please fill in the required fields!"
+                document.getElementById("incomplete-error").classList.remove("hidden")
+                document.getElementById("incomplete-error").textContent = "Please fill in the required fields!"
             }
         })
     }
