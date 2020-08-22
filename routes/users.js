@@ -16,6 +16,39 @@ router.get("/signup", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
 
+  if (typeof req.body.username != "string") {
+    return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string as username" })
+  }
+
+  if (typeof req.body.password != "string") {
+    return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string as password" })
+  }
+
+  if(typeof req.body.email != "string"){
+    return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input valid email" })
+
+  }
+
+  if (typeof req.body.confirm != "string") {
+    return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for confirming password" })
+  }
+
+  if (typeof req.body.fname != "string") {
+    return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for first name" })
+  }
+
+  if (typeof req.body.lname != "string") {
+    return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for last name" })
+  }
+
+  if (typeof req.body.city != "string") {
+    return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for city" })
+  }
+
+  if (typeof req.body.state != "string") {
+    return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for state" })
+  }
+
   let user = xss(req.body.username.toLowerCase());
   let password = xss(req.body.password);
   let email = xss(req.body.email.toLowerCase());

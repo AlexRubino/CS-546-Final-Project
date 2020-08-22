@@ -51,6 +51,27 @@ router.get("/new", async (req, res) => {
 });
 
 router.post("/new", upload.single("item_img"), async (req, res) => {
+  if(typeof req.body["name"] != "string" || !isNaN(req.body["name"])){
+    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Item name must be string" })
+  }
+
+  if(typeof req.body["short_description"] != "string" || !isNaN(req.body["short_description"]) || !req.body["short_description"]){
+    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Short Description must be string" })
+  }
+  
+  if(isNaN(req.body["starting_bid"]) || !req.body["starting_bid"]){
+    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input number for starting bid." })
+  }
+
+  if(typeof Date.parse(req.body["end"]) != "number" || !req.body["end"]){
+    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input valid date"})
+  }
+
+
+    if(typeof req.body["tags"] != "string"){
+    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Tags must be strings" })
+  }
+
   let name = xss(req.body["name"]);
   let short_description = xss(req.body["short_description"]);
   let item_image
@@ -149,6 +170,10 @@ router.get('/view/:id', async (req, res) => {
 
 
 router.post("/view/:id", async (req, res) => {
+  if(typeof req.body["new_bid"] != "number"){
+    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available,  bidErrorMessage: "You must input a number for bid." });
+  }
+  
   try {
     let myItem = await data.getItem(req.params.id);
     let newBid = xss(req.body["new_bid"]);
