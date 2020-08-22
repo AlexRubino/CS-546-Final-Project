@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 const nodemailer = require('nodemailer');
+require('dotenv').config()
 const itemData = require("./data/items")
 const userData = require("./data/users")
 
@@ -19,13 +20,13 @@ async function emailNotify(recipient, subject, text) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'NerdBay546@gmail.com',
-        pass: 'cs546squad'
+        user: process.env.NB_EMAIL,
+        pass: process.env.NB_PASS
       }
     })
 
     const email = {
-      from: 'NerdBay546@gmail.com',
+      from: process.env.NB_EMAIL,
       to: recipient,
       subject: subject,
       text: text
@@ -69,19 +70,19 @@ app.use('/items/new', async (req, res, next) => {
 
 app.use(async (req, res, next) => { // check if item was sold since last time
   const ItemList = await itemData.getAllItems();
-  for(item of ItemList) {
-    if(Date.now() > Date.parse(item.endDate) && !item.sold) {
+  for (item of ItemList) {
+    if (Date.now() > Date.parse(item.endDate) && !item.sold) {
       const seller = await userData.getUser(item.sellerId);
       let recipient, subject, text = "";
 
-      if(item.currentBid) {
+      if (item.currentBid) {
         // if someone bid, send email to seller and buyer
         const bidder = await userData.getUser(item.currentBidderId);
-        
+
         recipient = seller.email;
         subject = "Your item was sold!";
-        text = 
-        `Hi ${seller.firstName},
+        text =
+          `Hi ${seller.firstName},
 
         Great news! Someone purchased your item: ${item.itemName}. The buyer's name is ${bidder.firstName} ${bidder.lastName}, and their bid on your item is ${item.currentBid}. Reach out to them at ${bidder.email} to set up how you will complete the transaction.
 
@@ -92,8 +93,8 @@ app.use(async (req, res, next) => { // check if item was sold since last time
 
         recipient = bidder.email;
         subject = "You won the auction!";
-        text = 
-        `Hi ${bidder.firstName},
+        text =
+          `Hi ${bidder.firstName},
 
         Great news! You had the highest bid on the item: ${item.itemName}. The seller's name is ${seller.firstName} ${seller.lastName}; reach out to them at ${seller.email} to set up how you will complete the transaction.
 
@@ -105,8 +106,8 @@ app.use(async (req, res, next) => { // check if item was sold since last time
         // if no one bid, send email to seller only
         recipient = seller.email;
         subject = "Your item was not sold.";
-        text = 
-        `Hi ${seller.firstName},
+        text =
+          `Hi ${seller.firstName},
 
         We're sorry to inform you that no one has purchased your item: ${item.itemName}. We encourage you to try listing it again with a lower asking price.
 
@@ -117,7 +118,7 @@ app.use(async (req, res, next) => { // check if item was sold since last time
         console.log("sent");
       }
 
-      await itemData.patchItem(item._id, {sold: true});
+      await itemData.patchItem(item._id, { sold: true });
     }
   }
 
