@@ -1,7 +1,8 @@
 (function () {
-    const form = document.getElementById("item-form")
-    if (form) {
-        form.addEventListener("submit", (event) => {
+    const itemForm = document.getElementById("item-form")
+    const signupForm = document.getElementById("signup-form")
+    if (itemForm) {
+        itemForm.addEventListener("submit", (event) => {
             document.getElementsByName("incomplete-error")[0].classList.add("hidden")
             document.getElementsByName("file-error")[0].classList.add("hidden")
 
@@ -72,6 +73,93 @@
                 endTime.classList.add("input-error")
                 document.getElementsByName("incomplete-error")[0].classList.remove("hidden")
                 document.getElementsByName("incomplete-error")[0].textContent = "The end date and time must be later than now!"
+            }
+
+            if (err) {
+                event.preventDefault()
+                document.getElementsByName("incomplete-error")[0].classList.remove("hidden")
+                document.getElementsByName("incomplete-error")[0].textContent = "Please fill in the required fields!"
+            }
+        })
+    } else if (signupForm) {
+        signupForm.addEventListener("submit", (event) => {
+            document.getElementsByName("incomplete-error")[0].classList.add("hidden")
+
+            const fname = document.getElementById("fname")
+            fname.classList.remove("input-error")
+            const lname = document.getElementById("lname")
+            lname.classList.remove("input-error")
+            const city = document.getElementById("city")
+            city.classList.remove("input-error")
+            const state = document.getElementById("state")
+            state.classList.remove("input-error")
+            const email = document.getElementById("email")
+            email.classList.remove("input-error")
+            const username = document.getElementById("username")
+            username.classList.remove("input-error")
+            const password = document.getElementById("password")
+            password.classList.remove("input-error")
+            const confirm = document.getElementById("confirm")
+            password.classList.remove("input-error")
+            let err = false
+
+            if (!fname.value) {
+                fname.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+
+            if (!lname.value) {
+                lname.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+
+            if (!city.value) {
+                city.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+
+            if (!state.value) {
+                state.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+
+            if (!email.value) {
+                email.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+
+            if (!username.value) {
+                username.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+
+            if (!password.value) {
+                password.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+
+            if (!confirm.value) {
+                confirm.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+
+            if (confirm.value !== password.value) {
+                // alert(Date.now())
+                // alert(Date.now()> Date.parse(endDate.value)) ;
+                // alert(endDate.value);
+                event.preventDefault()
+                password.classList.add("input-error")
+                confirm.classList.add("input-error")
+                document.getElementsByName("incomplete-error")[0].classList.remove("hidden")
+                document.getElementsByName("incomplete-error")[0].textContent = "Confirmation password and password does not match!"
             }
 
             if (err) {

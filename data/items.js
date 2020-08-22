@@ -53,19 +53,6 @@ function verifyItem(item, strict) {
         empty = false
     }
 
-    //     if (!item.sellerId) {
-    //         if (strict) {
-    //             throw "You must provide a non-empty sellerId!"
-    //         }
-    //     } else {
-    //         if (typeof item.sellerId === "string") {
-    //             itemData.sellerId = ObjectId(item.sellerId)
-    //         } else {
-    //             itemData.sellerId = item.sellerId
-    //         }
-    //         empty = false
-    //     }
-
     if (!item.startDate || !item.startDate instanceof Date) {
         if (strict) {
             throw "You must provide a non-empty date as the start date!"
@@ -129,7 +116,7 @@ function verifyItem(item, strict) {
         throw "Sold is undefined"
     } else {
         itemData.sold = item.sold;
-        empty=false;
+        empty = false;
     }
 
     if (!strict && empty) {
@@ -167,8 +154,8 @@ const getAllItems = async function getAll() {
 
 //itemName, itemDescription, askingPrice, sellerId, startDate, endDate, tags
 const createItem = async function create(newitem) {
-    if(!Array.isArray(newitem.tags)){
-    newitem.tags = newitem.tags.split(",");
+    if (!Array.isArray(newitem.tags)) {
+        newitem.tags = newitem.tags.split(",");
     }
     newitem = verifyItem(newitem, true)
 

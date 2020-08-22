@@ -21,7 +21,7 @@ async function run() {
         firstName: "Luo",
         lastName: "Tianyi",
         username: "ILYZL",
-        email: "test",
+        email: "test2@gmail.com",
         city: "internet",
         state: "internet",
         hashedPassword: "$2a$05$AosPY7QIUIwL4OslVfuQy.RpLWz/yX6YqKb1l8ZKSiPDwdG6pgAy6",
@@ -78,7 +78,7 @@ async function run() {
         'currentBid': 75,
         'currentBidderId': yuezhengling._id,
         'tags': ['power', 'space', 'reality', 'soul', 'time', 'mind'],
-        'commentIds': [comment1._id, comment2._id], 
+        'commentIds': [comment1._id, comment2._id],
         'sold': true
     }
     gauntlet = await itemData.createItem(gauntlet)
@@ -94,7 +94,7 @@ async function run() {
         'currentBid': 6000000,
         'currentBidderId': luotianyi._id,
         'tags': ['star wars', 'mandalorian'],
-        'commentIds': [comment3._id], 
+        'commentIds': [comment3._id],
         'sold': false
     }
     the_child = await itemData.createItem(the_child)
