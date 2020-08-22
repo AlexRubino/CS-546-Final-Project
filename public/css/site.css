@@ -10,7 +10,7 @@ body {
 body {
 	background: #dedede;
 	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-	max-width: 75%;
+	max-width: 100%;
 	margin: auto;
 }
 
@@ -34,7 +34,7 @@ p {
 }
 
 .index, .result {
-	width: 75%;
+	width: 100%;
 	padding-bottom: 1em;
 }
 
@@ -43,7 +43,7 @@ p {
 	display: block;
 	min-height: 3em;
 	margin: 10px 0;
-	width: 100%;
+	width: 50%;
 }
 
 label {
@@ -77,8 +77,13 @@ label {
 	color:#FF0000;
 }
 
+a {
+	color: #0072ee;
+	padding: 8px;
+}
+
 .result a {
-	color: blue;
+	color: #0072ee;
 	text-decoration: underline;
 	display: block;
 	margin-top: 20px;
@@ -94,10 +99,6 @@ label {
 	text-decoration: underline;
 }
 
-a {
-	padding: 8px;
-}
-
 footer {
 	justify-content: center;
 	color: white;
@@ -106,7 +107,7 @@ footer {
 }
 
 .topnav {
-	background-color: goldenrod;
+	background-color: #8d6900;
 	overflow: hidden;
 }
 
@@ -206,7 +207,25 @@ footer {
 	font-size: smaller;
 }
 
+#timer {
+	display: inline;
+}
 
+#blue {
+	color: #0072ee;
+}
+
+#titles {
+	text-decoration: underline;
+}
+
+#bad {
+	color: red;
+}
+
+#good {
+	color: green;
+}
 
 #countdown{
     font-family: sans-serif;
@@ -239,11 +258,13 @@ footer {
 }
 
 #item-img{
-float:left;
-
+	float:left;
 }
 
 .bid-block{
-text-align: center;
+	text-align: center;
 }
 
+.form-group {
+	width: 25%;	
+}

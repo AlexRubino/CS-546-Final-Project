@@ -31,9 +31,11 @@
         <p>Displaying results for "{{message}}"</p>
         {{/if}}
         <div id='item_list'>
+            
             {{#each items}}
+            
             <article dl='{{startDate}}' de='{{endDate}}' p='{{askingPrice}}' sold='{{sold}}'>
-                <h2><a href="/items/view/{{_id}}">{{itemName}}</a></h2>
+                <h4><a href="/items/view/{{_id}}" id="blue">{{itemName}}</a></h4>
                 <div class='img-container'>
                     <img src="../../public/items/{{itemImage}}" class="item-img" alt="{{itemName}}"/>
                     {{#if sold}}
@@ -46,6 +48,7 @@
                 <hr />
             </article>
             {{/each}}
+            </div>
         </div>
     </div>
 </section>
