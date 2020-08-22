@@ -1,10 +1,11 @@
 <article>
     <h1>{{item.itemName}}</h1>
     <address>Listed by {{seller.firstName}} {{seller.lastName}}</address>
+    <hr />
     <div class='indiv-img-container'>
-        <img src="../../public/items/{{item.itemImage}}" class="item-img"/>
+        <img src="../../public/items/{{item.itemImage}}" class="item-img" alt="Image description"/>
         {{#if item.sold}}
-            <img src="../../public/img/sold.png" class="sold-overlay"/>
+            <img src="../../public/img/sold.png" class="sold-overlay" alt="SOLD"/>
         {{/if}}
     </div>
     <p>{{item.itemDescription}}</p>
@@ -14,9 +15,9 @@
         <p>Current Bid: ${{item.currentBid}}</p>
         {{else}}
             {{#if self}}
-                <p>No one has placed a bid on your item yet</p>
+                <p id="bad">No one has placed a bid on your item yet</p>
             {{else}}
-                <p>You can be the first to bid on this item!</p>
+                <p id="good">You can be the first to bid on this item!</p>
             {{/if}}
         {{/if}}
         {{#if loggedIn}}
@@ -29,7 +30,7 @@
                 </form>
                 {{/unless}}
                 {{#if bidErrorMessage}}
-                    <p>{{bidErrorMessage}}</p> 
+                    <span class="badge badge-danger">{{bidErrorMessage}}</span> 
                 {{/if}}
             {{/if}}           
         {{else}}
@@ -68,6 +69,7 @@
     <p>This item has been sold!</p>
     {{/unless}}
     </section>
+    <hr />
     {{#if item.tags.length}}
     <section>
         <h2>Tags:</h2>
@@ -78,6 +80,7 @@
         </ul>
     </section>
     {{/if}}
+    <hr />
     <section>
         <h2>Comments:</h2>
         <ul>
@@ -93,12 +96,13 @@
                 <button type="submit">Submit</button>
             </form>
             {{#if commentErrorMessage}}
-                <p>{{commentErrorMessage}}</p>
+                <span class="badge badge-pill badge-danger">{{commentErrorMessage}}</span>
             {{/if}}
         {{else}}
-            <p>You can leave a comment if you are logged in. <a href="/login">Login</a></p>
+            <p>You can leave a comment if you are logged in. <a href="/login" id="blue">Login</a></p>
         {{/if}}
     </section>
-    <p><a href="/">Back to Home</a></p>
+    <hr />
+    <p><a href="/" id="blue">Back to Home</a></p>
 <script src="../../public/js/countdown.js" async></script>
 </article>

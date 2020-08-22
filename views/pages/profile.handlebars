@@ -1,43 +1,48 @@
 <article>
     <h1>My Profile</h1>
     <section>
-        <h2>My Items Up For Bid</h2>
+        <hr />
+        <h2 id="titles">My Items Up For Bid</h2>
         {{#each myItems}}
+
         <div>
-            <h3><a href="/items/view/{{_id}}">{{itemName}}</a></h3>
+            <h4><a href="/items/view/{{_id}}" id="blue">{{itemName}}</a></h4>
             <div class='img-container'>
-                <img src="../../public/items/{{itemImage}}" class="item-img"/>
+                <img src="../../public/items/{{itemImage}}" class="item-img" alt="Item Description"/>
                 {{#if sold}}
-                    <img src="../../public/img/sold.png" class="sold-overlay"/>
+                    <img src="../../public/img/sold.png" class="sold-overlay" alt="SOLD"/>
                 {{/if}}
             </div>
         </div>
         {{/each}}
         <br/>
-        <a href="/items/new"> Auction New Item </a>
+        <button type="button" class="btn btn-warning"><a href="/items/new" id="blue"> Auction New Item </a></button>
+        {{!-- <a href="/items/new" id="blue"> Auction New Item </a> --}}
     </section>
     <section>
-        <h2>My Bids</h2>
+        <hr />
+        <h2 id="titles">My Bids</h2>
         {{#each myBids}}
+
         <div>
-            <h3><a href="/items/view/{{_id}}">{{itemName}}</a></h3>
+            <h4><a href="/items/view/{{_id}}" id="blue">{{itemName}}</a></h4>
             <div class='img-container'>
-                <img src="../../public/items/{{itemImage}}" class="item-img"/>
+                <img src="../../public/items/{{itemImage}}" class="item-img" alt="Item Description"/>
                 {{#if sold}}
-                    <img src="../../public/img/sold.png" class="sold-overlay"/>
+                    <img src="../../public/img/sold.png" class="sold-overlay" alt="SOLD"/>
                 {{/if}}
             </div>
             {{#if winning}}
                 {{#if sold}}
-                    <p>You won this item!</p>
+                    <span class="badge badge-success">You won this item!</span>
                 {{else}}
-                    <p>You currently have the highest bid for this item!</p>
+                    <span class="badge badge-info">You currently have the highest bid for this item!</span>
                 {{/if}}
             {{else}}
                 {{#if sold}}
-                    <p>You did not win this item.</p>
+                    <span class="badge badge-failure">You did not win this item.</span>
                 {{else}}
-                    <p>Someone outbid you - place a higher bid if you want to win.</p>
+                    <span class="badge badge-danger">Someone outbid you - place a higher bid if you want to win.</span>
                 {{/if}}
             {{/if}}
         </div>
