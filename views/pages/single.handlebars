@@ -44,11 +44,30 @@
         <p id="endDate">End Date: {{item.endDate}}</p>
         <div>
             {{#unless item.sold}}
-                <span>Time Remaining:</span>
-            {{/unless}}
-            <p id="timer"></p>
+                <p id="timeheader">Time Remaining</p>
+            
+                 <div id="countdown">
+                    <div>
+                        <span id="days" class="timer"></span>
+                      <div class="units">Days</div>
+                    </div>
+                 <div>
+                        <span id= "hours" class="timer"></span>
+                        <div class="units">Hours</div>
+                </div>
+                <div>
+                        <span id="minutes" class="timer"></span>
+                        <div class="units">Minutes</div>
+                </div>
+                <div>
+                        <span id="seconds" class="timer"></span>
+                        <div class="units">Seconds</div>
+                </div>
         </div>
-
+    {{/unless}}
+    {{#unless available}}
+    <p>This item has been sold!</p>
+    {{/unless}}
     </section>
     <hr />
     {{#if item.tags.length}}
