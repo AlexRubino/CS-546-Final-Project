@@ -16,32 +16,32 @@ router.get("/signup", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
 
-  if (typeof req.body.username != "string") {
+  if (typeof req.body.username != "string" || !req.body.username) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string as username" })
   }
 
-  if (typeof req.body.password != "string") {
+  if (typeof req.body.password != "string"|| !req.body.password) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string as password" })
   }
 
-  if(typeof req.body.email != "string"){
+  if(typeof req.body.email != "string" || !req.body.email){
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input valid email" })
 
   }
 
-  if (typeof req.body.confirm != "string") {
+  if (typeof req.body.confirm != "string"|| !req.body.string) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for confirming password" })
   }
 
-  if (typeof req.body.fname != "string") {
+  if (typeof req.body.fname != "string"|| !req.body.fname) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for first name" })
   }
 
-  if (typeof req.body.lname != "string") {
+  if (typeof req.body.lname != "string"|| !req.body.lname) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for last name" })
   }
 
-  if (typeof req.body.city != "string") {
+  if (typeof req.body.city != "string"|| !req.body.city) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for city" })
   }
 
