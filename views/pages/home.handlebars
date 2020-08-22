@@ -34,8 +34,8 @@
             
             {{#each items}}
             
-            <article dl='{{startDate}}' de='{{endDate}}' p='{{askingPrice}}' sold='{{sold}}'>
-                <h4><a href="/items/view/{{_id}}" id="blue">{{itemName}}</a></h4>
+            <article>
+                <h4><a href="/items/view/{{_id}}" class="blue">{{itemName}}</a></h4>
                 <div class='img-container'>
                     <img src="../../public/items/{{itemImage}}" class="item-img" alt="{{itemName}}"/>
                     {{#if sold}}
