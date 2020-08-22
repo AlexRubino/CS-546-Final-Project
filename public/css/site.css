@@ -43,7 +43,7 @@ p {
 	display: block;
 	min-height: 3em;
 	margin: 10px 0;
-	width: 100%;
+	width: 50%;
 }
 
 label {
@@ -227,7 +227,6 @@ footer {
 	color: green;
 }
 
-
 #countdown{
     font-family: sans-serif;
     color: white;
@@ -259,10 +258,13 @@ footer {
 }
 
 #item-img{
-float:left;
-
+	float:left;
 }
 
 .bid-block{
-text-align: center;
+	text-align: center;
+}
+
+.form-group {
+	width: 25%;	
 }
