@@ -10,6 +10,7 @@
     </div>
     <p>{{item.itemDescription}}</p>
     <section>
+        <h2>Bidding</h2>
         <p>Asking Price: ${{item.askingPrice}}</p>
         {{#if item.currentBidderId}}
         <p>Current Bid: ${{item.currentBid}}</p>
@@ -23,11 +24,15 @@
         {{#if loggedIn}}
             {{#if available}}
                 {{#unless self}}
-                <form method="POST" action="" id="new_bid_form">
+                <form method="POST" action="/items/newbid" id="new_bid_form">
                     <label for="new_bid">Place Bid:</label>
                     <input type="number" name="new_bid" id="new_bid" placeholder="Enter your bid here" />
                     <button type="submit">Submit</button>
                 </form>
+                <p class="error hidden" id="incomplete-error" ></p>
+                    {{#if hasErrors}}
+                        <p class="error">{{errorMessage}}</p>
+                    {{/if}}
                 {{/unless}}
                 {{#if bidErrorMessage}}
                     <span class="badge badge-danger">{{bidErrorMessage}}</span> 
@@ -40,6 +45,7 @@
         {{/if}}
     </section>
     <section>
+        <h2>Dates</h2>
         <p id="startDate">Start Date: {{item.startDate}}</p>
         <p id="endDate">End Date: {{item.endDate}}</p>
         <div>
@@ -100,10 +106,10 @@
                 <span class="badge badge-pill badge-danger">{{commentErrorMessage}}</span>
             {{/if}}
         {{else}}
-            <p>You can leave a comment if you are logged in. <a href="/login" id="blue">Login</a></p>
+            <p>You can leave a comment if you are logged in. <a href="/login" class="blue">Login</a></p>
         {{/if}}
     </section>
     <hr />
-    <p><a href="/" id="blue">Back to Home</a></p>
+    <p><a href="/" class="blue">Back to Home</a></p>
 <script src="../../public/js/countdown.js" async></script>
 </article>

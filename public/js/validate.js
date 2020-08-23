@@ -1,6 +1,7 @@
 (function () {
     const itemForm = document.getElementById("item-form")
     const signupForm = document.getElementById("signup-form")
+    const bidForm = document.getElementById("new_bid_form");
     if (itemForm) {
         itemForm.addEventListener("submit", (event) => {
             document.getElementById("incomplete-error").classList.add("hidden")
@@ -90,7 +91,7 @@
                 document.getElementById("incomplete-error").textContent = "Please fill in the required fields!"
             }
         })
-    } else if (signupForm) {
+    } if (signupForm) {
         signupForm.addEventListener("submit", (event) => {
             document.getElementById("incomplete-error").classList.add("hidden")
 
@@ -179,4 +180,19 @@
             }
         })
     }
-})()
+
+    if(bidForm){
+        bidForm.addEventListener("submit", (event)  => {
+            document.getElementById("incomplete-error").classList.add("hidden")
+            const bid = document.getElementById("new_bid")
+            bid.classList.remove("input-error")
+            let err = false
+
+            if (!bid.value) {
+                bid.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+    }
+        )
+}})()

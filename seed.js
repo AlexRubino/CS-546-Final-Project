@@ -86,7 +86,7 @@ async function run() {
     let the_child = {
         'itemDescription': 'Baby Yoda is here!',
         'itemName': 'Baby Yoda',
-        'itemImage': 'The Child.jpg',
+        'itemImage': 'The\sChild.jpg',
         'askingPrice': 5000000,
         'sellerId': yuezhengling._id,
         'startDate': '2020-08-13',
