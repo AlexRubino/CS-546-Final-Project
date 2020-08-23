@@ -20,48 +20,51 @@ router.get("/login", async (req, res) => {
     }
 });
 
-router.post('/login', async function (req, res) {
 
-    if(typeof req.body.username != "string"){
-        res.render("pages/login", { hasErrors: true })
-    }
 
-    if(typeof req.body.password != "string"){
-        res.render("pages/login", { hasErrors: true })
-    }
 
-    const username = xss(req.body.username);
-    const password = xss(req.body.password);
-
-    if (!username || !password) {
-        res.render("pages/login", { nothing: true });
-        return;
-    }
-
-    if (!req.session.user) {
-        err = true;
-        res.render("pages/login", { hasErrors: true });
-    }
-});
-
+    router.post('/login', async function (req, res) {
+        if(typeof req.body.username != "string"){
+            res.render("pages/login", { hasErrors: true })
+        }
+    
+        if(typeof req.body.password != "string"){
+            res.render("pages/login", { hasErrors: true })
+        }
+        const username = xss(req.body.username);
+        const password = xss(req.body.password);
+    
+        const users = await userData.getAllUsers()
+    
+        for (user of users) {
+            if ((user.username).toUpperCase() == username.toUpperCase()) {
+                let compare = false;
+                try {
+                    compare = await bcrypt.compare(password, user.hashedPassword);
+                } catch (e) { }
+    
+                if (compare) {
+                    req.session.user = user._id;
+                    res.render("pages/login", { loggedIn: true, enter: true, username: username });
+                }
+                break;
+            }
+        }
+    
+        if (!username || !password) {
+            res.render("pages/login", { nothing: true });
+            return;
+        }
+    
+        if (!req.session.user) {
+            err = true;
+            res.render("pages/login", { hasErrors: true });
+        }
+    });
+    
   
 
-    const users = await userData.getAllUsers()
 
-    for (user of users) {
-        if ((user.username).toUpperCase() == username.toUpperCase()) {
-            let compare = false;
-            try {
-                compare = await bcrypt.compare(password, user.hashedPassword);
-            } catch (e) { }
-
-            if (compare) {
-                req.session.user = user._id;
-                res.render("pages/login", { loggedIn: true, enter: true, username: username });
-            }
-            break;
-        }
-    }
 
 
 

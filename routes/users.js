@@ -16,36 +16,36 @@ router.get("/signup", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
 
-  if (typeof req.body.username != "string" || !req.body.username) {
+  if (typeof req.body.username != "string" || !req.body.username || !isNaN(req.body["username"])) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string as username" })
   }
 
-  if (typeof req.body.password != "string"|| !req.body.password) {
+  if (typeof req.body.password != "string"|| !req.body.password|| !isNaN(req.body["password"])) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string as password" })
   }
 
-  if(typeof req.body.email != "string" || !req.body.email){
+  if(typeof req.body.email != "string" || !req.body.email|| !isNaN(req.body["email"])){
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input valid email" })
 
   }
 
-  if (typeof req.body.confirm != "string"|| !req.body.confirm) {
+  if (typeof req.body.confirm != "string"|| !req.body.confirm|| !isNaN(req.body["confirm"])) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for confirming password"})
   }
 
-  if (typeof req.body.fname != "string"|| !req.body.fname) {
+  if (typeof req.body.fname != "string"|| !req.body.fname|| !isNaN(req.body["fname"])) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for first name" })
   }
 
-  if (typeof req.body.lname != "string"|| !req.body.lname) {
+  if (typeof req.body.lname != "string"|| !req.body.lname|| !isNaN(req.body["lname"])) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for last name" })
   }
 
-  if (typeof req.body.city != "string"|| !req.body.city) {
+  if (typeof req.body.city != "string"|| !req.body.city|| !isNaN(req.body["city"])) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for city" })
   }
 
-  if (typeof req.body.state != "string" || !req.body.state) {
+  if (typeof req.body.state != "string" || !req.body.state|| !isNaN(req.body["state"])) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for state" })
   }
 

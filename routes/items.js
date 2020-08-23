@@ -51,7 +51,7 @@ router.get("/new", async (req, res) => {
 });
 
 router.post("/new", upload.single("item_img"), async (req, res) => {
-  if (typeof req.body["name"] != "string" || !isNaN(req.body["name"])) {
+  if (typeof req.body["name"] != "string" || !isNaN(req.body["name"]|| !req.body["name"])) {
     return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Item name must be string" })
   }
 
@@ -59,7 +59,7 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
     return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Short Description must be string" })
   }
 
-  if (isNaN(req.body["starting_bid"]) || !req.body["starting_bid"]) {
+  if (isNaN(req.body["starting_bid"]) || !req.body["starting_bid"] || !req.body["starting_bid"]) {
     return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input number for starting bid." })
   }
 
@@ -96,14 +96,7 @@ if(!regex.test(req.body["endtime"])){
 
   try {
 
-    if (!name) {
-      return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input item name" })
-    }
-
-    if (!short_description) {
-      return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input short description" })
-    }
-
+ 
     // if (!item_image) {
     //   return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input image of item" })
     // }
@@ -114,19 +107,6 @@ if(!regex.test(req.body["endtime"])){
     } else {
       item_image = path.parse(req.file.path).base
     }
-
-    if (!starting_bid) {
-      return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must set starting bid" })
-    }
-
-    // if(!seller){
-    //   return res.render("pages/newItems", {hasErrors: true, errorMessage: "Must input seller ID"})      }
-
-    if (!end) {
-      return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must set ending date" })
-    }
-
-    else {
       let listedItem = {
         itemName: name,
         itemDescription: short_description,
@@ -145,7 +125,7 @@ if(!regex.test(req.body["endtime"])){
       const updatedUser = await userData.patchUser(req.session.user, getUser);
       // const updateUserItems = await userData.updateListedItems(req.session.user["username"], newItems["_id"]);
       res.render("pages/itemConfirmation", { loggedIn: req.session.user });
-    }
+    
   } catch (e) {
     console.log(e);
   }
@@ -215,9 +195,7 @@ router.post("/newbid", async (req, res) => {
 
 router.post("/comments", async (req, res) => {
   try {
-    if (!req.body.new_comment || typeof req.body.new_comment != "string") {
-      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
-    }
+
 
     var today = new Date();
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -230,6 +208,11 @@ router.post("/comments", async (req, res) => {
       comment.commenter = commenter.firstName + " " + commenter.lastName
       myComments.push(comment)
     }
+
+    if (!req.body["new_comment"] || typeof req.body["new_comment"] != "string"|| !isNaN(req.body["new_comment"])) {
+      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
+    }
+
       const newComment = {
         commenterId: req.session.user,
         comment: xss(req.body.new_comment),
