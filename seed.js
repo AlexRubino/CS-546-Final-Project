@@ -4,18 +4,6 @@ const commentData = require("./data/comments")
 const connection = require("./data/config/mongoConnection")
 const bcrypt = require('bcryptjs');
 
-// async function hash() {
-//     let luotianyiPass = await bcrypt.hash("66ccff", 5)
-//     let yuezhenglingPass = await bcrypt.hash("ee0000", 5)
-//     console.log(luotianyiPass)
-//     console.log(yuezhenglingPass)
-//     console.log(await bcrypt.compare("66ccff", "$2a$05$54mIY9mYgKksc.hq0N/gOuVrtyQlCYLY7W/QHhLH6gg80X/LPgZeq"))
-//     console.log(await bcrypt.compare("ee0000", "$2a$05$AosPY7QIUIwL4OslVfuQy.RpLWz/yX6YqKb1l8ZKSiPDwdG6pgAy6"))
-//     process.exit()
-// }
-
-// hash()
-
 async function run() {
     let luotianyi = {
         firstName: "Luo",
