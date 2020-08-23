@@ -15,7 +15,7 @@ router.get("/signup", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const symbolregex = /[-!$%_^&*()+|~=`{}\[\]:";'<>?,.\/]/
+  const symbolregex = /[!$%_^&*()+|~=`{}\[\]:";'<>?\/]/
 
   if (typeof req.body.username != "string" || !req.body.username || !isNaN(req.body["username"])) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must not be empty or just numbers for username" })
