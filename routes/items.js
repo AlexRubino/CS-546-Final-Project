@@ -73,6 +73,7 @@ if(!regex.test(req.body["endtime"])){
   if(req.body["endtime"] != "24:00"){
     return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input valid time" })
   }
+}
 
 
   if (typeof req.body["tags"] != "string") {
@@ -193,7 +194,7 @@ router.post("/newbid", async (req, res) => {
     }
 
     if (newBid <= myItem.currentBid || newBid < myItem.askingPrice || isNaN(req.body["new_bid"])) {
-     return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available,  bidErrorMessage: "You must bid higher than the current bid." });
+      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available, bidErrorMessage: "You must bid higher than the current bid." });
     }
 
     else {
@@ -205,7 +206,7 @@ router.post("/newbid", async (req, res) => {
       const updatedUser = await userData.patchUser(req.session.user, currentUser);
 
       const newCurrentBidItem = await data.patchItem(req.session.item, myItem)
-    return  res.redirect("/items/view/" + req.session.item);
+      return res.redirect("/items/view/" + req.session.item);
     }
   } catch (e) {
     console.log(e);
