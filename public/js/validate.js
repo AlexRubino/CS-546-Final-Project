@@ -4,7 +4,9 @@
     if (itemForm) {
         itemForm.addEventListener("submit", (event) => {
             document.getElementById("incomplete-error").classList.add("hidden")
-            document.getElementById("file-error").classList.add("hidden")
+            if (document.getElementById("file-error")) {
+                document.getElementById("file-error").classList.add("hidden")
+            }
 
             const name = document.getElementById("name")
             name.classList.remove("input-error")
@@ -64,6 +66,13 @@
                 document.getElementById("incomplete-error").textContent = "The starting bid must not be negative!"
             }
 
+            if (!/jpeg|jpg|png|gif/.test(img.value.split('.').pop())) {
+                event.preventDefault()
+                img.classList.add("input-error")
+                document.getElementById("incomplete-error").classList.remove("hidden")
+                document.getElementById("incomplete-error").textContent = "The file is not an image!"
+            }
+
             if (Date.now() > Date.parse(dateTime)) {
                 // alert(Date.now())
                 // alert(Date.now()> Date.parse(endDate.value)) ;
@@ -105,7 +114,7 @@
 
             if (!fname.value) {
                 fname.classList.add("input-error")
-                
+
                 event.preventDefault()
                 err = true
             }

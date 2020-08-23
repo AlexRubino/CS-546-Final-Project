@@ -51,24 +51,24 @@ router.get("/new", async (req, res) => {
 });
 
 router.post("/new", upload.single("item_img"), async (req, res) => {
-  if(typeof req.body["name"] != "string" || !isNaN(req.body["name"])){
+  if (typeof req.body["name"] != "string" || !isNaN(req.body["name"])) {
     return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Item name must be string" })
   }
 
-  if(typeof req.body["short_description"] != "string" || !isNaN(req.body["short_description"]) || !req.body["short_description"]){
+  if (typeof req.body["short_description"] != "string" || !isNaN(req.body["short_description"]) || !req.body["short_description"]) {
     return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Short Description must be string" })
   }
-  
-  if(isNaN(req.body["starting_bid"]) || !req.body["starting_bid"]){
+
+  if (isNaN(req.body["starting_bid"]) || !req.body["starting_bid"]) {
     return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input number for starting bid." })
   }
 
-  if(typeof Date.parse(req.body["end"]) != "number" || !req.body["end"]){
-    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input valid date"})
+  if (typeof Date.parse(req.body["end"]) != "number" || !req.body["end"]) {
+    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input valid date" })
   }
 
 
-    if(typeof req.body["tags"] != "string"){
+  if (typeof req.body["tags"] != "string") {
     return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Tags must be strings" })
   }
 
@@ -80,8 +80,8 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
   let time = xss(req.body["endtime"]);
   let tags = xss(req.body["tags"].split(","));
   const today = new Date();
-  const currentMonth = ('0' + (today.getMonth()+1)).slice(-2)
-  let date = today.getFullYear() + '-' + currentMonth + '-' + today.getDate() +" " + today.getHours()+":"+ today.getMinutes();
+  const currentMonth = ('0' + (today.getMonth() + 1)).slice(-2)
+  let date = today.getFullYear() + '-' + currentMonth + '-' + today.getDate() + " " + today.getHours() + ":" + today.getMinutes();
 
   let endDateandTime = xss(end + " " + time);
 
@@ -126,7 +126,7 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
         askingPrice: starting_bid,
         sellerId: req.session.user,
         startDate: date,
-        endDate: endDateandTime ,
+        endDate: endDateandTime,
         tags: tags,
         sold: false
       }
@@ -157,7 +157,7 @@ router.get('/view/:id', async (req, res) => {
       comment.commenter = commenter.firstName + " " + commenter.lastName
       myComments.push(comment)
     }
-    
+
     let available = !myItem.sold;
     res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available });
   } catch (e) {
@@ -170,10 +170,10 @@ router.get('/view/:id', async (req, res) => {
 
 
 router.post("/view/:id", async (req, res) => {
-  if(typeof req.body["new_bid"] != "number"){
-    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available,  bidErrorMessage: "You must input a number for bid." });
+  if (typeof req.body["new_bid"] != "number") {
+    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available, bidErrorMessage: "You must input a number for bid." });
   }
-  
+
   try {
     let myItem = await data.getItem(req.params.id);
     let newBid = xss(req.body["new_bid"]);
@@ -187,7 +187,7 @@ router.post("/view/:id", async (req, res) => {
       myComments.push(comment)
     }
     if (newBid <= myItem.currentBid || newBid < myItem.askingPrice) {
-      res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available,  bidErrorMessage: "You must bid higher than the current bid." });
+      res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available, bidErrorMessage: "You must bid higher than the current bid." });
     }
     else {
       myItem.currentBid = parseFloat(newBid);
