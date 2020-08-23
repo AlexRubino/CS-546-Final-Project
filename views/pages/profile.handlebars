@@ -2,7 +2,7 @@
     <h1>My Profile</h1>
     <section>
         <hr />
-        <h2 id="titles">My Items Up For Bid</h2>
+        <h2 class="titles">My Items Up For Bid</h2>
         {{#each myItems}}
 
         <div>
@@ -16,12 +16,12 @@
         </div>
         {{/each}}
         <br/>
-        <button type="button" class="btn btn-warning"><a href="/items/new" id="blue"> Auction New Item </a></button>
+        <a href="/items/new" id="blue" class="btn btn-warning"> Auction New Item </a>
         {{!-- <a href="/items/new" id="blue"> Auction New Item </a> --}}
     </section>
     <section>
         <hr />
-        <h2 id="titles">My Bids</h2>
+        <h2 class="titles">My Bids</h2>
         {{#each myBids}}
 
         <div>

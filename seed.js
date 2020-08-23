@@ -24,7 +24,7 @@ async function run() {
         email: "test2@gmail.com",
         city: "internet",
         state: "internet",
-        hashedPassword: "$2a$05$AosPY7QIUIwL4OslVfuQy.RpLWz/yX6YqKb1l8ZKSiPDwdG6pgAy6",
+        hashedPassword: "$2a$05$fCUHE6nufuo4mGKG8kuineNkUgl7dTuQMy/pOx6Dw4OfKmlKlE1hq",
         listedItems: [],
         purchasedItems: []
     }
@@ -48,14 +48,14 @@ async function run() {
     let comment1 = {
         "commenterId": yuezhengling._id,
         "comment": "Oops wrong universe.",
-        "dateCommented": "2019-07-10"
+        "dateCommented": "2020-7-10"
     }
     comment1 = await commentData.createComment(comment1)
 
     let comment2 = {
         "commenterId": luotianyi._id,
         "comment": "Is this food?",
-        "dateCommented": "2019-07-10"
+        "dateCommented": "2020-7-10"
     }
     // commet2 = await commentData.createComment(comment2)
     comment2 = await commentData.createComment(comment2)
@@ -63,7 +63,7 @@ async function run() {
     let comment3 = {
         "commenterId": yuezhengling._id,
         "comment": "Is this really Baby Yoda?",
-        "dateCommented": "2020-08-12"
+        "dateCommented": "2020-8-12"
     }
     comment3 = await commentData.createComment(comment3)
 
@@ -73,8 +73,8 @@ async function run() {
         'itemImage': 'gauntlet.jpg',
         'askingPrice': 3,
         'sellerId': luotianyi._id,
-        'startDate': '2020-07-10',
-        'endDate': '2020-07-17',
+        'startDate': '2020-7-10 12:00',
+        'endDate': '2020-7-17 12:00',
         'currentBid': 75,
         'currentBidderId': yuezhengling._id,
         'tags': ['power', 'space', 'reality', 'soul', 'time', 'mind'],
@@ -86,11 +86,11 @@ async function run() {
     let the_child = {
         'itemDescription': 'Baby Yoda is here!',
         'itemName': 'Baby Yoda',
-        'itemImage': 'The Child.jpg',
+        'itemImage': 'TheChild.jpg',
         'askingPrice': 5000000,
         'sellerId': yuezhengling._id,
-        'startDate': '2020-08-13',
-        'endDate': '2020-08-25',
+        'startDate': '2020-8-13 12:00',
+        'endDate': '2020-8-25 12:00',
         'currentBid': 6000000,
         'currentBidderId': luotianyi._id,
         'tags': ['star wars', 'mandalorian'],

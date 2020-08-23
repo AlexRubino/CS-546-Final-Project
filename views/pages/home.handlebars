@@ -11,7 +11,7 @@
             <form class="sort" name="sort-form" id="sort-form">
                 <label for="sort">Sort by:</label>
                 <select size="1" name="sort" id='sort'>
-                    <option selected disabled></option>
+                    {{!-- <option selected disabled></option> --}}
                     <option value='dl'>Date Listed</option>
                     <option value='de'>End Date</option>
                     <option value='al'>Alphabetical</option>
@@ -34,8 +34,8 @@
             
             {{#each items}}
             
-            <article dl='{{startDate}}' de='{{endDate}}' p='{{askingPrice}}' sold='{{sold}}'>
-                <h4><a href="/items/view/{{_id}}" id="blue">{{itemName}}</a></h4>
+            <article data-dl='{{startDate}}' data-de='{{endDate}}' data-p='{{askingPrice}}' data-sold='{{sold}}'>
+                <h4><a href="/items/view/{{_id}}" class="blue">{{itemName}}</a></h4>
                 <div class='img-container'>
                     <img src="../../public/items/{{itemImage}}" class="item-img" alt="{{itemName}}"/>
                     {{#if sold}}
