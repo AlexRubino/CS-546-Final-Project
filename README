@@ -1,0 +1,15 @@
+Welcome to NerdBay!
+
+To get started, please follow these steps:
+1. Navigate to the project directory in the terminal
+2. To install the necessary dependencies, type "npm install"
+3. To seed the database, type "node seed.js"
+4. To start the server, type "npm start"
+5. Go to your web browser, and navigate to "http://localhost:3000"
+
+We hope you have a great time using NerdBay!
+
+- The NerdBay Team 
+James Lepore, Alex Rubino, Justin Wing, Steven Zhao
+
+GitHub Repo: https://github.com/AlexRubino/CS-546-Final-Project
