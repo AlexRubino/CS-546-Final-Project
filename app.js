@@ -118,7 +118,9 @@ app.use(async (req, res, next) => { // check if item was sold since last time
         console.log("sent");
       }
 
-      await itemData.patchItem(item._id, { sold: true });
+      item.sold = true;
+
+      await itemData.patchItem(item._id, item);
     }
   }
 
