@@ -2,10 +2,10 @@ $(document).ready(function () {
     function compare(option, b, i) {
         switch (option) {
             case "dl":
-                return Date.parse(b[i].getAttribute("dl")) > Date.parse(b[i + 1].getAttribute("dl"));
+                return Date.parse(b[i].getAttribute("data-dl")) > Date.parse(b[i + 1].getAttribute("data-dl"));
                 break;
             case "de":
-                return Date.parse(b[i].getAttribute("de")) > Date.parse(b[i + 1].getAttribute("de"));
+                return Date.parse(b[i].getAttribute("data-de")) > Date.parse(b[i + 1].getAttribute("data-de"));
                 break;
             case "al":
                 return b[i].innerText.toLowerCase() > b[i + 1].innerText.toLowerCase();
@@ -14,10 +14,10 @@ $(document).ready(function () {
                 return b[i].innerText.toLowerCase() <= b[i + 1].innerText.toLowerCase();
                 break;
             case "p":
-                return parseFloat(b[i].getAttribute("p")) > parseFloat(b[i + 1].getAttribute("p"));
+                return parseFloat(b[i].getAttribute("data-p")) > parseFloat(b[i + 1].getAttribute("data-p"));
                 break;
             case "r-p":
-                return parseFloat(b[i].getAttribute("p")) < parseFloat(b[i + 1].getAttribute("p"));
+                return parseFloat(b[i].getAttribute("data-p")) < parseFloat(b[i + 1].getAttribute("data-p"));
                 break;
             default:
                 return false;
