@@ -67,6 +67,13 @@ router.post("/new", upload.single("item_img"), async (req, res) => {
     return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input valid date" })
   }
 
+  const regex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+
+if(!regex.test(req.body["endtime"])){
+  if(req.body["endtime"] != "24:00"){
+    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input valid time" })
+  }
+
 
   if (typeof req.body["tags"] != "string") {
     return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Tags must be strings" })
@@ -169,16 +176,8 @@ router.get('/view/:id', async (req, res) => {
 })
 
 
-<<<<<<< HEAD
-router.post("/view/:id", async (req, res) => {
-  if (typeof req.body["new_bid"] != "number") {
-    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available, bidErrorMessage: "You must input a number for bid." });
-  }
-
-=======
 router.post("/newbid", async (req, res) => {
   
->>>>>>> cd6940c1e5f0eb4cf53dd27ea2ae64a454950e58
   try {
     let myItem = await data.getItem(req.session.item);
     let newBid = xss(req.body["new_bid"]);
@@ -192,14 +191,9 @@ router.post("/newbid", async (req, res) => {
       comment.commenter = commenter.firstName + " " + commenter.lastName
       myComments.push(comment)
     }
-<<<<<<< HEAD
-    if (newBid <= myItem.currentBid || newBid < myItem.askingPrice) {
-      res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available, bidErrorMessage: "You must bid higher than the current bid." });
-=======
 
     if (newBid <= myItem.currentBid || newBid < myItem.askingPrice || isNaN(req.body["new_bid"])) {
      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available,  bidErrorMessage: "You must bid higher than the current bid." });
->>>>>>> cd6940c1e5f0eb4cf53dd27ea2ae64a454950e58
     }
 
     else {
@@ -220,6 +214,10 @@ router.post("/newbid", async (req, res) => {
 
 router.post("/comments", async (req, res) => {
   try {
+    if (!req.body.new_comment || typeof req.body.new_comment != "string") {
+      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
+    }
+
     var today = new Date();
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const myItem = await data.getItem(req.session.item);
@@ -231,12 +229,6 @@ router.post("/comments", async (req, res) => {
       comment.commenter = commenter.firstName + " " + commenter.lastName
       myComments.push(comment)
     }
-
-    if (!req.body.new_comment) {
-      res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
-    }
-
-    else {
       const newComment = {
         commenterId: req.session.user,
         comment: xss(req.body.new_comment),
@@ -248,7 +240,7 @@ router.post("/comments", async (req, res) => {
       const updateItem = await data.patchItem(req.session.item, myItem);
       res.redirect("/items/view/" + req.session.item);
 
-    }
+    
   } catch (e) {
     console.log(e);
     res.redirect("/");

@@ -45,7 +45,7 @@ router.post("/signup", async (req, res) => {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for city" })
   }
 
-  if (typeof req.body.state != "string") {
+  if (typeof req.body.state != "string" || !req.body.state) {
     return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must input string for state" })
   }
 

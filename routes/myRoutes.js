@@ -21,8 +21,30 @@ router.get("/login", async (req, res) => {
 });
 
 router.post('/login', async function (req, res) {
+
+    if(typeof req.body.username != "string"){
+        res.render("pages/login", { hasErrors: true })
+    }
+
+    if(typeof req.body.password != "string"){
+        res.render("pages/login", { hasErrors: true })
+    }
+
     const username = xss(req.body.username);
     const password = xss(req.body.password);
+
+    if (!username || !password) {
+        res.render("pages/login", { nothing: true });
+        return;
+    }
+
+    if (!req.session.user) {
+        err = true;
+        res.render("pages/login", { hasErrors: true });
+    }
+});
+
+  
 
     const users = await userData.getAllUsers()
 
@@ -41,16 +63,7 @@ router.post('/login', async function (req, res) {
         }
     }
 
-    if (!username || !password) {
-        res.render("pages/login", { nothing: true });
-        return;
-    }
 
-    if (!req.session.user) {
-        err = true;
-        res.render("pages/login", { hasErrors: true });
-    }
-});
 
 router.post("/search", async (req, res) => {
     let myItems = [];
