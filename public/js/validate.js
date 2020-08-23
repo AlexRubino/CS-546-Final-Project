@@ -1,7 +1,9 @@
 (function () {
     const itemForm = document.getElementById("item-form")
     const signupForm = document.getElementById("signup-form")
-    const bidForm = document.getElementById("new_bid_form");
+    const bidForm = document.getElementById("new_bid_form")
+    const loginForm = document.getElementById("login-form")
+    const commentForm = document.getElementById("new_comment_form")
     if (itemForm) {
         itemForm.addEventListener("submit", (event) => {
             document.getElementById("incomplete-error").classList.add("hidden")
@@ -91,7 +93,9 @@
                 document.getElementById("incomplete-error").textContent = "Please fill in the required fields!"
             }
         })
-    } if (signupForm) {
+    }
+
+    if (signupForm) {
         signupForm.addEventListener("submit", (event) => {
             document.getElementById("incomplete-error").classList.add("hidden")
 
@@ -181,8 +185,8 @@
         })
     }
 
-    if(bidForm){
-        bidForm.addEventListener("submit", (event)  => {
+    if (bidForm) {
+        bidForm.addEventListener("submit", (event) => {
             document.getElementById("incomplete-error").classList.add("hidden")
             const bid = document.getElementById("new_bid")
             bid.classList.remove("input-error")
@@ -193,6 +197,49 @@
                 event.preventDefault()
                 err = true
             }
+        })
     }
-        )
-}})()
+
+    if (loginForm) {
+        loginForm.addEventListener("submit", (event) => {
+            console.log("in loginForm")
+            // document.getElementById("incomplete-error").classList.add("hidden")
+            const username = document.getElementById("username")
+            username.classList.remove("input-error")
+            const password = document.getElementById("password")
+            password.classList.remove("input-error")
+            let err = false
+
+            console.log(username.value)
+            console.log(password.value)
+
+            if (!username.value || username.value === "") {
+                username.classList.add("input-error")
+                event.preventDefault()
+                err = true
+                console.log("username error finished.")
+            }
+
+            if (!password.value || password.value === "") {
+                password.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+        })
+    }
+
+    if (commentForm) {
+        commentForm.addEventListener("submit", (event) => {
+            // document.getElementById("incomplete-error").classList.add("hidden")
+            const comment = document.getElementById("new_comment")
+            comment.classList.remove("input-error")
+            let err = false
+
+            if (!comment.value) {
+                comment.classList.add("input-error")
+                event.preventDefault()
+                err = true
+            }
+        })
+    }
+})()

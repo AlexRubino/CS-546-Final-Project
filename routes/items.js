@@ -169,16 +169,8 @@ router.get('/view/:id', async (req, res) => {
 })
 
 
-<<<<<<< HEAD
-router.post("/view/:id", async (req, res) => {
-  if (typeof req.body["new_bid"] != "number") {
-    res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available, bidErrorMessage: "You must input a number for bid." });
-  }
-
-=======
 router.post("/newbid", async (req, res) => {
-  
->>>>>>> cd6940c1e5f0eb4cf53dd27ea2ae64a454950e58
+
   try {
     let myItem = await data.getItem(req.session.item);
     let newBid = xss(req.body["new_bid"]);
@@ -192,14 +184,9 @@ router.post("/newbid", async (req, res) => {
       comment.commenter = commenter.firstName + " " + commenter.lastName
       myComments.push(comment)
     }
-<<<<<<< HEAD
-    if (newBid <= myItem.currentBid || newBid < myItem.askingPrice) {
-      res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available, bidErrorMessage: "You must bid higher than the current bid." });
-=======
 
     if (newBid <= myItem.currentBid || newBid < myItem.askingPrice || isNaN(req.body["new_bid"])) {
-     return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available,  bidErrorMessage: "You must bid higher than the current bid." });
->>>>>>> cd6940c1e5f0eb4cf53dd27ea2ae64a454950e58
+      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available, bidErrorMessage: "You must bid higher than the current bid." });
     }
 
     else {
@@ -211,7 +198,7 @@ router.post("/newbid", async (req, res) => {
       const updatedUser = await userData.patchUser(req.session.user, currentUser);
 
       const newCurrentBidItem = await data.patchItem(req.session.item, myItem)
-    return  res.redirect("/items/view/" + req.session.item);
+      return res.redirect("/items/view/" + req.session.item);
     }
   } catch (e) {
     console.log(e);

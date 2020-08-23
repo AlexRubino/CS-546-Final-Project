@@ -73,14 +73,6 @@ label {
 	display: inline;
 }
 
-.is-palindrome {
-	color: #0000FF;
-}
-
-.not-palindrome {
-	color:#FF0000;
-}
-
 a {
 	color: #0072ee;
 	padding: 8px;

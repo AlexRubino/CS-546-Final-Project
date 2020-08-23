@@ -3,9 +3,9 @@
     <address>Listed by {{seller.firstName}} {{seller.lastName}}</address>
     <hr />
     <div class='indiv-img-container'>
-        <img src="../../public/items/{{item.itemImage}}" class="item-img" alt="Image description"/>
+        <img src="../../public/items/{{item.itemImage}}" class="item-img" alt="Image description" />
         {{#if item.sold}}
-            <img src="../../public/img/sold.png" class="sold-overlay" alt="SOLD"/>
+        <img src="../../public/img/sold.png" class="sold-overlay" alt="SOLD" />
         {{/if}}
     </div>
     <p>{{item.itemDescription}}</p>
@@ -15,33 +15,33 @@
         {{#if item.currentBidderId}}
         <p>Current Bid: ${{item.currentBid}}</p>
         {{else}}
-            {{#if self}}
-                <p id="bad">No one has placed a bid on your item yet</p>
-            {{else}}
-                <p id="good">You can be the first to bid on this item!</p>
-            {{/if}}
+        {{#if self}}
+        <p id="bad">No one has placed a bid on your item yet</p>
+        {{else}}
+        <p id="good">You can be the first to bid on this item!</p>
+        {{/if}}
         {{/if}}
         {{#if loggedIn}}
-            {{#if available}}
-                {{#unless self}}
-                <form method="POST" action="/items/newbid" id="new_bid_form">
-                    <label for="new_bid">Place Bid:</label>
-                    <input type="number" name="new_bid" id="new_bid" placeholder="Enter your bid here" />
-                    <button type="submit">Submit</button>
-                </form>
-                <p class="error hidden" id="incomplete-error" ></p>
-                    {{#if hasErrors}}
-                        <p class="error">{{errorMessage}}</p>
-                    {{/if}}
-                {{/unless}}
-                {{#if bidErrorMessage}}
-                    <span class="badge badge-danger">{{bidErrorMessage}}</span> 
-                {{/if}}
-            {{/if}}           
+        {{#if available}}
+        {{#unless self}}
+        <form method="POST" action="/items/newbid" id="new_bid_form">
+            <label for="new_bid">Place Bid:</label>
+            <input type="number" name="new_bid" id="new_bid" placeholder="Enter your bid here" />
+            <button type="submit">Submit</button>
+        </form>
+        <p class="error hidden" id="incomplete-error"></p>
+        {{#if hasErrors}}
+        <p class="error">{{errorMessage}}</p>
+        {{/if}}
+        {{/unless}}
+        {{#if bidErrorMessage}}
+        <span class="badge badge-danger">{{bidErrorMessage}}</span>
+        {{/if}}
+        {{/if}}
         {{else}}
-            {{#if available}}
-                <p>You can place a bid if you are logged in.<a href="/login">Login</a></p>
-            {{/if}}
+        {{#if available}}
+        <p>You can place a bid if you are logged in.<a href="/login">Login</a></p>
+        {{/if}}
         {{/if}}
     </section>
     <section>
@@ -50,32 +50,32 @@
         <p id="endDate">End Date: {{item.endDate}}</p>
         <div>
             {{#unless item.sold}}
-                <p id="timeheader">Time Remaining</p>
-            
-                 <div id="countdown">
-                    <div>
-                        <span id="days" class="timer"></span>
-                      <div class="units">Days</div>
-                    </div>
-                 <div>
-                        <span id= "hours" class="timer"></span>
-                        <div class="units">Hours</div>
+            <p id="timeheader">Time Remaining</p>
+
+            <div id="countdown">
+                <div>
+                    <span id="days" class="timer"></span>
+                    <div class="units">Days</div>
                 </div>
                 <div>
-                        <span id="minutes" class="timer"></span>
-                        <div class="units">Minutes</div>
+                    <span id="hours" class="timer"></span>
+                    <div class="units">Hours</div>
                 </div>
                 <div>
-                        <span id="seconds" class="timer"></span>
-                        <div class="units">Seconds</div>
+                    <span id="minutes" class="timer"></span>
+                    <div class="units">Minutes</div>
                 </div>
-        </div>
-    {{/unless}}
-    {{#unless available}}
-    <p>This item has been sold!</p>
-    {{/unless}}
+                <div>
+                    <span id="seconds" class="timer"></span>
+                    <div class="units">Seconds</div>
+                </div>
+            </div>
+            {{/unless}}
+            {{#unless available}}
+            <p>This item has been sold!</p>
+            {{/unless}}
     </section>
-    
+
     {{#if item.tags.length}}
     <hr />
     <section>
@@ -97,19 +97,20 @@
 
         </ul>
         {{#if loggedIn}}
-            <form method="POST" action="/items/comments" id="new_comment_form">
-                <label for="new_comment">Comment:</label>
-                <input type="text" name="new_comment" id="new_comment" placeholder="Enter your comment here" />
-                <button type="submit">Submit</button>
-            </form>
-            {{#if commentErrorMessage}}
-                <span class="badge badge-pill badge-danger">{{commentErrorMessage}}</span>
-            {{/if}}
+        <form method="POST" action="/items/comments" id="new_comment_form">
+            <label for="new_comment">Comment:</label>
+            <input type="text" name="new_comment" id="new_comment" placeholder="Enter your comment here" />
+            <button type="submit">Submit</button>
+        </form>
+        <p class="error hidden" id="incomplete-error"></p>
+        {{#if commentErrorMessage}}
+        <span class="badge badge-pill badge-danger">{{commentErrorMessage}}</span>
+        {{/if}}
         {{else}}
-            <p>You can leave a comment if you are logged in. <a href="/login" class="blue">Login</a></p>
+        <p>You can leave a comment if you are logged in. <a href="/login" class="blue">Login</a></p>
         {{/if}}
     </section>
     <hr />
     <p><a href="/" class="blue">Back to Home</a></p>
-<script src="../../public/js/countdown.js" async></script>
+    <script src="../../public/js/countdown.js" async></script>
 </article>
