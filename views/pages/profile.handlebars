@@ -6,7 +6,7 @@
         {{#each myItems}}
 
         <div>
-            <h4><a href="/items/view/{{_id}}" id="blue">{{itemName}}</a></h4>
+            <h4><a href="/items/view/{{_id}}" class="blue">{{itemName}}</a></h4>
             <div class='img-container'>
                 <img src="../../public/items/{{itemImage}}" class="item-img" alt="Item Description"/>
                 {{#if sold}}
@@ -16,7 +16,7 @@
         </div>
         {{/each}}
         <br/>
-        <a href="/items/new" id="blue" class="btn btn-warning"> Auction New Item </a>
+        <a href="/items/new" class="blue" class="btn btn-warning"> Auction New Item </a>
         {{!-- <a href="/items/new" id="blue"> Auction New Item </a> --}}
     </section>
     <section>
@@ -25,7 +25,7 @@
         {{#each myBids}}
 
         <div>
-            <h4><a href="/items/view/{{_id}}" id="blue">{{itemName}}</a></h4>
+            <h4><a href="/items/view/{{_id}}" class="blue">{{itemName}}</a></h4>
             <div class='img-container'>
                 <img src="../../public/items/{{itemImage}}" class="item-img" alt="Item Description"/>
                 {{#if sold}}
