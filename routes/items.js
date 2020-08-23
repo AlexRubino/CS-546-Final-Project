@@ -52,11 +52,11 @@ router.get("/new", async (req, res) => {
 
 router.post("/new", upload.single("item_img"), async (req, res) => {
   if (typeof req.body["name"] != "string" || !isNaN(req.body["name"]|| !req.body["name"])) {
-    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Item name must be string" })
+    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Item name must not be empty or just numbersg" })
   }
 
   if (typeof req.body["short_description"] != "string" || !isNaN(req.body["short_description"]) || !req.body["short_description"]) {
-    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Short Description must be string" })
+    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Short Description must not be empty or just numbers" })
   }
 
   if (isNaN(req.body["starting_bid"]) || !req.body["starting_bid"] || !req.body["starting_bid"]) {
@@ -178,8 +178,8 @@ router.post("/newbid", async (req, res) => {
     }
 
     else {
-      myItem.currentBid = parseFloat(newBid);
-      myItem.currentBidderId = req.session.user;
+      myItem.currentBid = newBid;
+      myItem.currentBidderId = xss(req.session.user);
 
       let currentUser = await userData.getUser(req.session.user);
       currentUser.purchasedItems.push(myItem._id);
@@ -197,8 +197,8 @@ router.post("/comments", async (req, res) => {
   try {
 
 
-    var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    let today = new Date();
+    let date = xss(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
     const myItem = await data.getItem(req.session.item);
     const mySeller = await userData.getUser(myItem.sellerId)
     let myComments = []
@@ -210,11 +210,11 @@ router.post("/comments", async (req, res) => {
     }
 
     if (!req.body["new_comment"] || typeof req.body["new_comment"] != "string"|| !isNaN(req.body["new_comment"])) {
-      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "You must have text to submit" });
+      return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, commentErrorMessage: "Your comment cannot be empty or just numbers" });
     }
 
       const newComment = {
-        commenterId: req.session.user,
+        commenterId: xss(req.session.user),
         comment: xss(req.body.new_comment),
         dateCommented: date
       }
