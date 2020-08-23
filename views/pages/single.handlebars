@@ -23,7 +23,9 @@
         {{/if}}
         {{#if loggedIn}}
         {{#if available}}
-        {{#unless self}}
+        {{#if self}}
+        <p id="new_bid_form" hidden></p>
+        {{else}}
         <form method="POST" action="/items/newbid" id="new_bid_form">
             <label for="new_bid">Place Bid:</label>
             <input type="number" name="new_bid" id="new_bid" placeholder="Enter your bid here" />
@@ -33,7 +35,7 @@
         {{#if hasErrors}}
         <p class="error">{{errorMessage}}</p>
         {{/if}}
-        {{/unless}}
+        {{/if}}
         {{#if bidErrorMessage}}
         <span class="badge badge-danger">{{bidErrorMessage}}</span>
         {{/if}}
