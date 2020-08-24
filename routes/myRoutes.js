@@ -106,9 +106,9 @@ router.get('/profile', async (req, res) => {
         let myBids = user.purchasedItems;
         let newMyBids = [];
         for (item of myBids) {
-            let newItem = await itemData.getItem(item);;
+            let newItem = await itemData.getItem(item);
             newItem.winning = req.session.user==newItem.currentBidderId;
-            newMyBids.push(newItem);
+            newMyBids.push(newItem); 
         }
 
         res.render('pages/profile', { loggedIn: req.session.user, myItems: newMyItems, myBids: newMyBids });

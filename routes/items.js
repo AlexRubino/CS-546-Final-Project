@@ -173,7 +173,7 @@ router.post("/newbid", async (req, res) => {
       myComments.push(comment)
     }
 
-    if (newBid <= myItem.currentBid || newBid < myItem.askingPrice || isNaN(req.body["new_bid"])) {
+    if (isNaN(req.body["new_bid"]) || parseFloat(newBid) <= parseFloat(myItem.currentBid) || parseFloat(newBid) < parseFloat(myItem.askingPrice)) {
       return res.render('pages/single', { loggedIn: req.session.user, item: myItem, seller: mySeller, comments: myComments, self: req.session.user == myItem.sellerId, available: available, bidErrorMessage: "You must bid higher than the current bid." });
     }
 
