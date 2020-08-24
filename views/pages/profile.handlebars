@@ -2,11 +2,11 @@
     <h1>My Profile</h1>
     <section>
         <hr />
-        <h2 id="titles">My Items Up For Bid</h2>
+        <h2 class="titles">My Items Up For Bid</h2>
         {{#each myItems}}
 
         <div>
-            <h4><a href="/items/view/{{_id}}" id="blue">{{itemName}}</a></h4>
+            <h4><a href="/items/view/{{_id}}" class="blue">{{itemName}}</a></h4>
             <div class='img-container'>
                 <img src="../../public/items/{{itemImage}}" class="item-img" alt="Item Description"/>
                 {{#if sold}}
@@ -14,18 +14,19 @@
                 {{/if}}
             </div>
         </div>
+        <br/>
         {{/each}}
         <br/>
-        <button type="button" class="btn btn-warning"><a href="/items/new" id="blue"> Auction New Item </a></button>
+        <a href="/items/new" class="blue" class="btn btn-warning"> Auction New Item </a>
         {{!-- <a href="/items/new" id="blue"> Auction New Item </a> --}}
     </section>
     <section>
         <hr />
-        <h2 id="titles">My Bids</h2>
+        <h2 class="titles">My Bids</h2>
         {{#each myBids}}
 
         <div>
-            <h4><a href="/items/view/{{_id}}" id="blue">{{itemName}}</a></h4>
+            <h4><a href="/items/view/{{_id}}" class="blue">{{itemName}}</a></h4>
             <div class='img-container'>
                 <img src="../../public/items/{{itemImage}}" class="item-img" alt="Item Description"/>
                 {{#if sold}}
@@ -46,6 +47,7 @@
                 {{/if}}
             {{/if}}
         </div>
+        <br/>
         {{/each}}
     </section>
 </article>

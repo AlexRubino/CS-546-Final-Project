@@ -8,7 +8,7 @@
 
             var newUser = newUserInput.val();
             var newPass = newPassInput.val();
-            var newContent = $('body');
+            var newContent = $('html');
 
             var requestConfig = {
                   method: 'POST',

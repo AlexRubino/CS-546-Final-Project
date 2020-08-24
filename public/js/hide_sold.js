@@ -4,7 +4,7 @@ $(document).ready(function () {
         let items = list.getElementsByTagName("article");
         if(this.checked) {
             for(item of items) {
-                if(item.getAttribute("sold") == "true"){
+                if(item.getAttribute("data-sold") == "true"){
                     item.hidden = true;
                 }
             }
