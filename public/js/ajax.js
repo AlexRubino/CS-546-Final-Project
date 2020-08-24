@@ -24,6 +24,7 @@
 
             $.ajax(requestConfig).then(function (responseMessage) {
                   // console.log(responseMessage);
+                  console.log(responseMessage);
                   newContent.html(responseMessage);
             })
       });
