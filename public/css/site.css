@@ -5,19 +5,20 @@
 html,
 body {
 	font-size: 14pt;
+	background: #dedede;
+	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+	max-width: 100%;
+	margin: auto;
 }
 
 main{
 	margin-top: 3%;
 	margin-left: 3%;
 }
-
+/* 
 body {
-	background: #dedede;
-	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-	max-width: 100%;
-	margin: auto;
-}
+	
+} */
 
 header {
 	border-bottom: 1px solid #afafaf;

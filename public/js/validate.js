@@ -202,7 +202,7 @@
 
     if (loginForm) {
         loginForm.addEventListener("submit", (event) => {
-            console.log("in loginForm")
+            // console.log("in loginForm")
             // document.getElementById("incomplete-error").classList.add("hidden")
             const username = document.getElementById("username")
             username.classList.remove("input-error")
@@ -210,14 +210,14 @@
             password.classList.remove("input-error")
             let err = false
 
-            console.log(username.value)
-            console.log(password.value)
+            // console.log(username.value)
+            // console.log(password.value)
 
             if (!username.value || username.value === "") {
                 username.classList.add("input-error")
                 event.preventDefault()
                 err = true
-                console.log("username error finished.")
+                // console.log("username error finished.")
             }
 
             if (!password.value || password.value === "") {
