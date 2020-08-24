@@ -1,6 +1,5 @@
 <h1>Login</h1>
 <hr />
-<div id="new-content"></div>
 <div class="form-group">
   {{#unless enter}}
   <form id="login-form">
@@ -13,6 +12,8 @@
   </form>
   {{/unless}}
 </div>
+
+<div id="new-content"></div>
 
 {{#if enter}}
 <p class="enter">Welcome, {{username}}! <a href="/profile" id="blue">Go to My Profile</a></p>
