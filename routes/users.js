@@ -48,7 +48,7 @@ router.post("/signup", async (req, res) => {
   }
 
   if(symbolregex.test(req.body.lname)){
-    return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must not have symbols in first name." })
+    return res.render("pages/signup", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Must not have symbols in last name." })
   }
 
   if (typeof req.body.city != "string"|| !req.body.city|| !isNaN(req.body["city"])) {

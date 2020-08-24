@@ -52,7 +52,7 @@ router.get("/new", async (req, res) => {
 
 router.post("/new", upload.single("item_img"), async (req, res) => {
   if (typeof req.body["name"] != "string" || !isNaN(req.body["name"]|| !req.body["name"])) {
-    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Item name must not be empty or just numbersg" })
+    return res.render("pages/newItems", { loggedIn: req.session.user, hasErrors: true, errorMessage: "Item name must not be empty or just numbers" })
   }
 
   if (typeof req.body["short_description"] != "string" || !isNaN(req.body["short_description"]) || !req.body["short_description"]) {
